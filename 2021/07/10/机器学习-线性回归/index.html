@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="线性回归这部分是我学习线性回归的记录，同时完成了吴恩达机器学习ex1，用python实现了简单的线性回归，参考了和鲸社区中大佬的代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习 线性回归">
+<meta property="og:url" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/index.html">
+<meta property="og:site_name" content="gch&#39;home">
+<meta property="og:description" content="线性回归这部分是我学习线性回归的记录，同时完成了吴恩达机器学习ex1，用python实现了简单的线性回归，参考了和鲸社区中大佬的代码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_36_0-1625977550088.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/pz93k52pek.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/591785837c95bca369021efa14a8bb1c.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/41797ceb7293b838a3125ba945624cf6.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/6bdaff07783e37fcbb1f8765ca06b01b.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/dd33179ceccbd8b0b59a5ae698847049.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/966e5a9b00687678374b8221fdd33475.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b8167ff0926046e112acf789dba98057.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/cd4e3df45c34f6a8e2bb7cd3a2849e6c.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/8ffaa10ae1138f1873bc65e1e3657bd4.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/3a47e15258012b06b34d4e05fb3af2cf.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/a47ec797d8a9c331e02ed90bca48a24b.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/261a11d6bce6690121f26ee369b9e9d1.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/c8eedc42ed9feb21fac64e4de8d39a06.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b62d24a1f709496a6d7c65f87464e911.jpg">
+<meta property="article:published_time" content="2021-07-10T08:59:15.000Z">
+<meta property="article:modified_time" content="2021-07-13T05:35:22.964Z">
+<meta property="article:author" content="gch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png">
+
+
+<link rel="canonical" href="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/","path":"2021/07/10/机器学习-线性回归/","title":"机器学习 线性回归"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>机器学习 线性回归 | gch'home</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">gch'home</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">1.</span> <span class="nav-text">线性回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92-1"><span class="nav-number">2.</span> <span class="nav-text">线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text">python实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%AE%80%E5%8D%95%E7%BB%83%E4%B9%A0"><span class="nav-number">3.</span> <span class="nav-text">1 简单练习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%8D%95%E5%8F%98%E9%87%8F%E7%9A%84%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">4.</span> <span class="nav-text">2 单变量的线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Plotting-the-Data"><span class="nav-number">4.1.</span> <span class="nav-text">2.1 Plotting the Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">4.2.</span> <span class="nav-text">2.2 梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E5%85%AC%E5%BC%8F"><span class="nav-number">4.2.1.</span> <span class="nav-text">2.2.1 公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.2.2实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3%E8%AE%A1%E7%AE%97J-%CE%B8"><span class="nav-number">4.2.3.</span> <span class="nav-text">2.2.3计算J(θ)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">4.2.4.</span> <span class="nav-text">2.2.4 梯度下降</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E5%8F%AF%E8%A7%86%E5%8C%96J-%CE%B8"><span class="nav-number">4.3.</span> <span class="nav-text">2.4 可视化J(θ)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E4%B8%8D%E4%BC%9A%E7%94%A8python%E5%A4%8D%E7%8E%B0%EF%BC%8C%E6%88%AA%E4%B8%AA%E5%9B%BE%E6%84%8F%E6%80%9D%E4%B8%80%E4%B8%8B"><span class="nav-number">5.</span> <span class="nav-text">并不会用python复现，截个图意思一下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%A4%9A%E5%8F%98%E9%87%8F%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">6.</span> <span class="nav-text">3 多变量线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">6.1.</span> <span class="nav-text">3.1 特征归一化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">6.2.</span> <span class="nav-text">3.2 梯度下降</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B"><span class="nav-number">6.3.</span> <span class="nav-text">3.3 正规方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%84%E6%B5%B7%E5%B9%BF%E5%8D%9A%E5%A3%AB%E7%9A%84%E7%AC%94%E8%AE%B0"><span class="nav-number">6.4.</span> <span class="nav-text">黄海广博士的笔记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A4%9A%E5%8F%98%E9%87%8F%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92-Linear-Regression-with-Multiple-Variables"><span class="nav-number">6.5.</span> <span class="nav-text">四、多变量线性回归(Linear Regression with Multiple Variables)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%A4%9A%E7%BB%B4%E7%89%B9%E5%BE%81"><span class="nav-number">6.5.1.</span> <span class="nav-text">4.1 多维特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%A4%9A%E5%8F%98%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">6.5.2.</span> <span class="nav-text">4.2 多变量梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E5%AE%9E%E8%B7%B51-%E7%89%B9%E5%BE%81%E7%BC%A9%E6%94%BE"><span class="nav-number">6.5.3.</span> <span class="nav-text">4.3 梯度下降法实践1-特征缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E5%AE%9E%E8%B7%B52-%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="nav-number">6.5.4.</span> <span class="nav-text">4.4 梯度下降法实践2-学习率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E7%89%B9%E5%BE%81%E5%92%8C%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%9B%9E%E5%BD%92"><span class="nav-number">6.5.5.</span> <span class="nav-text">4.5 特征和多项式回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B"><span class="nav-number">6.5.6.</span> <span class="nav-text">4.6 正规方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B%E5%8F%8A%E4%B8%8D%E5%8F%AF%E9%80%86%E6%80%A7%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="nav-number">6.5.7.</span> <span class="nav-text">4.7 正规方程及不可逆性（可选）</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="gch"
+      src="https://c-ssl.duitang.com/uploads/item/201605/26/20160526160556_FcBGT.jpeg">
+  <p class="site-author-name" itemprop="name">gch</p>
+  <div class="site-description" itemprop="description">This is gch' home</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/coding-famer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;coding-famer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gchseu@outlook.com" title="E-Mail → mailto:gchseu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/FC3vM8yn6Dl9Yyg" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;FC3vM8yn6Dl9Yyg" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100068779494099" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100068779494099" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://c-ssl.duitang.com/uploads/item/201605/26/20160526160556_FcBGT.jpeg">
+      <meta itemprop="name" content="gch">
+      <meta itemprop="description" content="This is gch' home">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gch'home">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习 线性回归
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-10 16:59:15" itemprop="dateCreated datePublished" datetime="2021-07-10T16:59:15+08:00">2021-07-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-13 13:35:22" itemprop="dateModified" datetime="2021-07-13T13:35:22+08:00">2021-07-13</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h1><p>这部分是我学习线性回归的记录，同时完成了吴恩达机器学习ex1，用python实现了简单的线性回归，参考了<a target="_blank" rel="noopener" href="https://www.heywhale.com/mw/project/5da16a37037db3002d441810">和鲸社区中大佬的代码</a> </p>
+<span id="more"></span>
+<h1 id="线性回归-1"><a href="#线性回归-1" class="headerlink" title="线性回归"></a>线性回归</h1><p>线性回归其实就是把所有特征和标签的关系拟合成一条直线，即$h_{ \theta }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 } }+…+{ \theta_{ n } } { x_{ n } }$ 线性回归就是求参数$\theta_0$ 到 $\theta_n$ ，实际上就是参数估计的问题。</p>
+<h2 id="python实现"><a href="#python实现" class="headerlink" title="python实现"></a>python实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<h1 id="1-简单练习"><a href="#1-简单练习" class="headerlink" title="1 简单练习"></a>1 简单练习</h1><p>输出一个5*5的单位矩阵</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = np.eye(<span class="number">5</span>)</span><br><span class="line">A</span><br></pre></td></tr></table></figure>
+<pre><code>array([[1., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0.],
+       [0., 0., 1., 0., 0.],
+       [0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 1.]])
+</code></pre><h1 id="2-单变量的线性回归"><a href="#2-单变量的线性回归" class="headerlink" title="2 单变量的线性回归"></a>2 单变量的线性回归</h1><p>整个2的部分需要根据城市人口数量，预测开小吃店的利润<br>数据在ex1data1.txt里，可以在网站中获得，第一列是城市人口数量，第二列是该城市小吃店利润。</p>
+<h2 id="2-1-Plotting-the-Data"><a href="#2-1-Plotting-the-Data" class="headerlink" title="2.1 Plotting the Data"></a>2.1 Plotting the Data</h2><p>读入数据，然后展示数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">path =  <span class="string">&#x27;./ex1data1.txt&#x27;</span></span><br><span class="line">data = pd.read_csv(path, header=<span class="literal">None</span>, names=[<span class="string">&#x27;Population&#x27;</span>, <span class="string">&#x27;Profit&#x27;</span>])</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p>&lt;/style&gt;</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Population</th>
+      <th>Profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6.1101</td>
+      <td>17.5920</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.5277</td>
+      <td>9.1302</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8.5186</td>
+      <td>13.6620</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7.0032</td>
+      <td>11.8540</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.8598</td>
+      <td>6.8233</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>&lt;/div&gt;</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.plot(kind=<span class="string">&#x27;scatter&#x27;</span>, x=<span class="string">&#x27;Population&#x27;</span>, y=<span class="string">&#x27;Profit&#x27;</span>, figsize=(<span class="number">12</span>,<span class="number">8</span>))plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png" alt="png"><br>​    </p>
+<h2 id="2-2-梯度下降"><a href="#2-2-梯度下降" class="headerlink" title="2.2 梯度下降"></a>2.2 梯度下降</h2><p>这个部分你需要在现有数据集上，训练线性回归的参数θ</p>
+<h3 id="2-2-1-公式"><a href="#2-2-1-公式" class="headerlink" title="2.2.1 公式"></a>2.2.1 公式</h3><script type="math/tex; mode=display">
+J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\theta } }\left( { {x}^{(i)} } \right)-{ {y}^{(i)} } \right)}^{2} } }</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost</span>(<span class="params">X, y, theta</span>):</span>    </span><br><span class="line">    inner = np.power(((X * theta.T) - y), <span class="number">2</span>)    </span><br><span class="line">    <span class="keyword">return</span> np.<span class="built_in">sum</span>(inner) / (<span class="number">2</span> * <span class="built_in">len</span>(X))<span class="comment">#这个部分计算J(Ѳ)，X是矩阵</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost2</span>(<span class="params">X, y, theta</span>):</span>      </span><br><span class="line">    m = <span class="built_in">len</span>(y)    </span><br><span class="line">    J = <span class="number">0</span>    </span><br><span class="line">    J = (np.transpose(X * theta.T - y)) * (X * theta.T - y) / (<span class="number">2</span> * m)  </span><br><span class="line">    <span class="keyword">return</span> J</span><br><span class="line">    <span class="comment">#不看上面cell，尝试自己实现一下</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##computeCost(X, y, theta)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##computeCost2(X, y, theta)#实现好之后，用相同的方法调用一遍看答案是否一致</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-2实现"><a href="#2-2-2实现" class="headerlink" title="2.2.2实现"></a>2.2.2实现</h3><p>数据前面已经读取完毕，我们要为加入一列x，用于更新$\theta_0$，然后我们将$\theta$初始化为0，学习率初始化为0.01，迭代次数为1500次</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.insert(<span class="number">0</span>, <span class="string">&#x27;Ones&#x27;</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>现在我们来做一些变量初始化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化X和y</span></span><br><span class="line">cols = data.shape[<span class="number">1</span>]</span><br><span class="line">X = data.iloc[:,:-<span class="number">1</span>]<span class="comment">#X是data里的除最后列</span></span><br><span class="line">y = data.iloc[:,cols-<span class="number">1</span>:cols]<span class="comment">#y是data最后一列</span></span><br></pre></td></tr></table></figure>
+<p>观察下 X (训练集) and y (目标变量)是否正确.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X.head()<span class="comment">#head()是观察前5行</span></span><br></pre></td></tr></table></figure>
+<p>&lt;/style&gt;</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Ones</th>
+      <th>Population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>6.1101</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>5.5277</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>8.5186</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>7.0032</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>5.8598</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>&lt;/div&gt;</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y.head()</span><br></pre></td></tr></table></figure>
+<p>&lt;/style&gt;</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>17.5920</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9.1302</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13.6620</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.8540</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6.8233</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<p>&lt;/div&gt;</p>
+<p>代价函数是应该是numpy矩阵，所以我们需要转换X和Y，然后才能使用它们。 我们还需要初始化theta。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = np.matrix(X.values)</span><br><span class="line">y = np.matrix(y.values)</span><br><span class="line">theta = np.matrix(np.array([<span class="number">0</span>,<span class="number">0</span>]))</span><br></pre></td></tr></table></figure>
+<p>看下维度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X.shape, theta.shape, y.shape</span><br></pre></td></tr></table></figure>
+<pre><code>((97, 2), (1, 2), (97, 1))
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">computeCost(X, y, theta)</span><br></pre></td></tr></table></figure>
+<pre><code>32.072733877455676
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">computeCost2(X, y, theta)</span><br></pre></td></tr></table></figure>
+<pre><code>matrix([[32.07273388]])
+</code></pre><h3 id="2-2-3计算J-θ"><a href="#2-2-3计算J-θ" class="headerlink" title="2.2.3计算J(θ)"></a>2.2.3计算J(θ)</h3><p>计算代价函数 (theta初始值为0)，答案应该是32.07</p>
+<h3 id="2-2-4-梯度下降"><a href="#2-2-4-梯度下降" class="headerlink" title="2.2.4 梯度下降"></a>2.2.4 梯度下降</h3><p>记住J($\theta$)的变量是$\theta$，而不是X和y，意思是说，我们变化$\theta$的值来使J($\theta$)变化，而不是变化X和y的值。<br>一个检查梯度下降是不是在正常运作的方式，是打印出每一步J($\theta$)的值，看他是不是一直都在减小，并且最后收敛至一个稳定的值。<br>$\theta$最后的结果会用来预测小吃店在35000及70000人城市规模的利润。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradientDescent</span>(<span class="params">X, y, theta, alpha, iters</span>):</span>    </span><br><span class="line">    temp = np.matrix(np.zeros(theta.shape))    </span><br><span class="line">    parameters = <span class="built_in">int</span>(theta.ravel().shape[<span class="number">1</span>])    </span><br><span class="line">    cost = np.zeros(iters)        </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(iters):        </span><br><span class="line">        error = (X * theta.T) - y                </span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(parameters):            </span><br><span class="line">            term = np.multiply(error, X[:,j])            </span><br><span class="line">            temp[<span class="number">0</span>,j] = theta[<span class="number">0</span>,j] - ((alpha / <span class="built_in">len</span>(X)) * np.<span class="built_in">sum</span>(term))                    		  theta = temp        </span><br><span class="line">        cost[i] = computeCost(X, y, theta)            </span><br><span class="line">     <span class="keyword">return</span> theta, cost<span class="comment">#这个部分实现了Ѳ的更新</span></span><br></pre></td></tr></table></figure>
+<p>初始化一些附加变量 - 学习速率α和要执行的迭代次数，2.2.2中已经提到。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alpha = <span class="number">0.01</span></span><br><span class="line">iters = <span class="number">1500</span></span><br></pre></td></tr></table></figure>
+<p>现在让我们运行梯度下降算法来将我们的参数θ适合于训练集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g, cost = gradientDescent(X, y, theta, alpha, iters)g</span><br></pre></td></tr></table></figure>
+<pre><code>matrix([[-3.63029144,  1.16636235]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cost</span><br></pre></td></tr></table></figure>
+<pre><code>array([6.73719046, 5.93159357, 5.90115471, ..., 4.48343473, 4.48341145,       4.48338826])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predict1 = [<span class="number">1</span>,<span class="number">3.5</span>]*g.Tprint(<span class="string">&quot;predict1:&quot;</span>,predict1)predict2 = [<span class="number">1</span>,<span class="number">7</span>]*g.Tprint(<span class="string">&quot;predict2:&quot;</span>,predict2)<span class="comment">#预测35000和70000城市规模的小吃摊利润</span></span><br></pre></td></tr></table></figure>
+<pre><code>predict1: [[0.45197679]]predict2: [[4.53424501]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">x = np.linspace(data.Population.<span class="built_in">min</span>(), data.Population.<span class="built_in">max</span>(), <span class="number">100</span>)</span><br><span class="line">f = g[<span class="number">0</span>, <span class="number">0</span>] + (g[<span class="number">0</span>, <span class="number">1</span>] * x)</span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>))</span><br><span class="line">ax.plot(x, f, <span class="string">&#x27;r&#x27;</span>, label=<span class="string">&#x27;Prediction&#x27;</span>)</span><br><span class="line">ax.scatter(data.Population, data.Profit, label=<span class="string">&#x27;Traning Data&#x27;</span>)</span><br><span class="line">ax.legend(loc=<span class="number">2</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">&#x27;Population&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Profit&#x27;</span>)</span><br><span class="line">ax.set_title(<span class="string">&#x27;Predicted Profit vs. Population Size&#x27;</span>)</span><br><span class="line">plt.show()<span class="comment">#原始数据以及拟合的直线</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_36_0-1625977550088.png" alt="png"><br>​    </p>
+<h2 id="2-4-可视化J-θ"><a href="#2-4-可视化J-θ" class="headerlink" title="2.4 可视化J(θ)"></a>2.4 可视化J(θ)</h2><p>此步可以便于你理解J($\theta$)以及梯度下降。<br>三维图显示了${   {  \theta  } _ {  0  }   }$和$ {   {  \theta  } _ {  1  }   } $与J($\theta$)的对应关系，J($\theta$)是一个碗状的图形，并且有全局最小值。这个最小值就是$ {   {  \theta  } _ {  0  }   } $和$ {   {  \theta  } _ {  1  }   } $的最优解。梯度下降的每一步都会更接近这个最小值</p>
+<h1 id="并不会用python复现，截个图意思一下"><a href="#并不会用python复现，截个图意思一下" class="headerlink" title="并不会用python复现，截个图意思一下"></a>并不会用python复现，截个图意思一下</h1><p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/pz93k52pek.jpg" alt="Image Name"></p>
+<h1 id="3-多变量线性回归"><a href="#3-多变量线性回归" class="headerlink" title="3 多变量线性回归"></a>3 多变量线性回归</h1><p>ex1data2.txt里的数据，第一列是房屋大小，第二列是卧室数量，第三列是房屋售价<br>根据已有数据，建立模型，预测房屋的售价</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path =  <span class="string">&#x27;./ex1data2.txt&#x27;</span>data2 = pd.read_csv(path, header=<span class="literal">None</span>, names=[<span class="string">&#x27;Size&#x27;</span>, <span class="string">&#x27;Bedrooms&#x27;</span>, <span class="string">&#x27;Price&#x27;</span>])data2.head()</span><br></pre></td></tr></table></figure>
+<p>&lt;/style&gt;</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Size</th>
+      <th>Bedrooms</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2104</td>
+      <td>3</td>
+      <td>399900</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1600</td>
+      <td>3</td>
+      <td>329900</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2400</td>
+      <td>3</td>
+      <td>369000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1416</td>
+      <td>2</td>
+      <td>232000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3000</td>
+      <td>4</td>
+      <td>539900</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<p>&lt;/div&gt;</p>
+<h2 id="3-1-特征归一化"><a href="#3-1-特征归一化" class="headerlink" title="3.1 特征归一化"></a>3.1 特征归一化</h2><p>观察数据发现，size变量是bedrooms变量的1000倍大小,统一量级会让梯度下降收敛的更快。做法就是，将每类特征减去他的平均值后除以标准差</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data2 = (data2 - data2.mean()) / data2.std()</span><br><span class="line">data2.head()</span><br></pre></td></tr></table></figure>
+<p>&lt;/style&gt;</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Size</th>
+      <th>Bedrooms</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.130010</td>
+      <td>-0.223675</td>
+      <td>0.475747</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.504190</td>
+      <td>-0.223675</td>
+      <td>-0.084074</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.502476</td>
+      <td>-0.223675</td>
+      <td>0.228626</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.735723</td>
+      <td>-1.537767</td>
+      <td>-0.867025</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.257476</td>
+      <td>1.090417</td>
+      <td>1.595389</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<p>&lt;/div&gt;</p>
+<h2 id="3-2-梯度下降"><a href="#3-2-梯度下降" class="headerlink" title="3.2 梯度下降"></a>3.2 梯度下降</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加一列常数项</span></span><br><span class="line">data2.insert(<span class="number">0</span>, <span class="string">&#x27;Ones&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化X和y</span></span><br><span class="line">cols = data2.shape[<span class="number">1</span>]</span><br><span class="line">X2 = data2.iloc[:,<span class="number">0</span>:cols-<span class="number">1</span>]</span><br><span class="line">y2 = data2.iloc[:,cols-<span class="number">1</span>:cols]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换成matrix格式，初始化theta</span></span><br><span class="line">X2 = np.matrix(X2.values)</span><br><span class="line">y2 = np.matrix(y2.values)</span><br><span class="line">theta2 = np.matrix(np.array([<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行梯度下降算法</span></span><br><span class="line">g2, cost2 = gradientDescent(X2, y2, theta2, alpha, iters)</span><br><span class="line">g2</span><br></pre></td></tr></table></figure>
+<pre><code>matrix([[-1.10856950e-16,  8.84042349e-01, -5.24551809e-02]])
+</code></pre><h2 id="3-3-正规方程"><a href="#3-3-正规方程" class="headerlink" title="3.3 正规方程"></a>3.3 正规方程</h2><p>正规方程是通过求解下面的方程来找出使得代价函数最小的参数的：$\frac {  \partial   }  {  \partial  {   {  \theta   } _ {  j  }   }   } J\left(  {   {  \theta   } _ {  j  }   }  \right)=0$ 。<br> 假设我们的训练集特征矩阵为 X（包含了$ {   {  x  } _ {  0  }   } =1$）并且我们的训练集结果为向量 y，则利用正规方程解出向量 $\theta = {   {  \left(  {   {  X  } ^ {  T  }   } X \right)  } ^ {  -1  }   }  {   {  X  } ^ {  T  }   } y$ 。<br>上标T代表矩阵转置，上标-1 代表矩阵的逆。设矩阵$A= {   {  X  } ^ {  T  }   } X$，则：$ {   {  \left(  {   {  X  } ^ {  T  }   } X \right)  } ^ {  -1  }   } = {   {  A  } ^ {  -1  }   } $</p>
+<p>梯度下降与正规方程的比较：</p>
+<p>梯度下降：需要选择学习率α，需要多次迭代，当特征数量n大时也能较好适用，适用于各种类型的模型    </p>
+<p>正规方程：不需要选择学习率α，一次计算得出，需要计算$ {   {  \left(  {   {  X  } ^ {  T  }   } X \right)  } ^ {  -1  }   } $，如果特征数量n较大则运算代价大，因为矩阵逆的计算时间复杂度为$O(n^3)$，通常来说当$n$小于10000 时还是可以接受的，只适用于线性模型，不适合逻辑回归模型等其他模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正规方程</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalEqn</span>(<span class="params">X, y</span>):</span></span><br><span class="line">    theta = np.linalg.inv(X.T@X)@X.T@y<span class="comment">#X.T@X等价于X.T.dot(X)</span></span><br><span class="line">    <span class="keyword">return</span> theta</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final_theta2=normalEqn(X, y)<span class="comment">#这里用的是data1的数据</span></span><br><span class="line">final_theta2</span><br></pre></td></tr></table></figure>
+<pre><code>matrix([[-3.89578088],
+        [ 1.19303364]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#梯度下降得到的结果是matrix([[-3.24140214,  1.1272942 ]])</span></span><br></pre></td></tr></table></figure>
+<h2 id="黄海广博士的笔记"><a href="#黄海广博士的笔记" class="headerlink" title="黄海广博士的笔记"></a>黄海广博士的笔记</h2><p>=====</p>
+<h2 id="四、多变量线性回归-Linear-Regression-with-Multiple-Variables"><a href="#四、多变量线性回归-Linear-Regression-with-Multiple-Variables" class="headerlink" title="四、多变量线性回归(Linear Regression with Multiple Variables)"></a>四、多变量线性回归(Linear Regression with Multiple Variables)</h2><h3 id="4-1-多维特征"><a href="#4-1-多维特征" class="headerlink" title="4.1 多维特征"></a>4.1 多维特征</h3><p>目前为止，我们探讨了单变量/特征的回归模型，现在我们对房价模型增加更多的特征，例如房间数楼层等，构成一个含有多个变量的模型，模型中的特征为$\left( { x_{ 1 } },{ x_{ 2 } },…,{ x_{ n } } \right)$。</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/591785837c95bca369021efa14a8bb1c.png" alt></p>
+<p>增添更多特征后，我们引入一系列新的注释：</p>
+<p>$n$ 代表特征的数量</p>
+<p>${ x^{ \left( i \right) } }$代表第 $i$ 个训练实例，是特征矩阵中的第$i$行，是一个<strong>向量</strong>（<strong>vector</strong>）。</p>
+<p>比方说，上图的</p>
+<p>${ x }^{ (2) }\text{ = }\begin{bmatrix} 1416\\\ 3\\\ 2\\\ 40 \end{bmatrix}$，</p>
+<p>${ x }_{ j }^{ \left( i \right) }$代表特征矩阵中第 $i$ 行的第 $j$ 个特征，也就是第 $i$ 个训练实例的第 $j$ 个特征。</p>
+<p>如上图的$x_{ 2 }^{ \left( 2 \right) }=3,x_{ 3 }^{ \left( 2 \right) }=2$，</p>
+<p>支持多变量的假设 $h$ 表示为：$h_{ \theta }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 } }+…+{ \theta_{ n } } { x_{ n } }$，</p>
+<p>这个公式中有$n+1$个参数和$n$个变量，为了使得公式能够简化一些，引入$x_{ 0 }=1$，则公式转化为：$h_{ \theta } \left( x \right)={ \theta_{ 0 } } { x_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 } }+…+{ \theta_{ n } } { x_{ n } }$</p>
+<p>此时模型中的参数是一个$n+1$维的向量，任何一个训练实例也都是$n+1$维的向量，特征矩阵$X$的维度是 $m*(n+1)$。 因此公式可以简化为：$h_{ \theta } \left( x \right)={ \theta^{ T } }X$，其中上标$T$代表矩阵转置。</p>
+<h3 id="4-2-多变量梯度下降"><a href="#4-2-多变量梯度下降" class="headerlink" title="4.2 多变量梯度下降"></a>4.2 多变量梯度下降</h3><p>参考视频: 4 - 2 - Gradient Descent for Multiple Variables (5 min).mkv</p>
+<p>与单变量线性回归类似，在多变量线性回归中，我们也构建一个代价函数，则这个代价函数是所有建模误差的平方和，即：$J\left( { \theta_{ 0 } },{ \theta_{ 1 } }…{ \theta_{ n } } \right)=\frac{ 1 } { 2m }\sum\limits_{ i=1 }^{ m } { { { \left( h_{ \theta } \left({ x }^{ \left( i \right) } \right)-{ y }^{ \left( i \right) } \right) }^{ 2 } } }$ ，</p>
+<p>其中：$h_{ \theta }\left( x \right)=\theta^{ T }X={ \theta_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 } }+…+{ \theta_{ n } } { x_{ n } }$ ，</p>
+<p>我们的目标和单变量线性回归问题中一样，是要找出使得代价函数最小的一系列参数。<br>多变量线性回归的批量梯度下降算法为：</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/41797ceb7293b838a3125ba945624cf6.png" alt></p>
+<p>即：</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/6bdaff07783e37fcbb1f8765ca06b01b.png" alt></p>
+<p>求导数后得到：</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/dd33179ceccbd8b0b59a5ae698847049.png" alt></p>
+<p>当$n&gt;=1$时，<br>${ { \theta  }_{ 0 } }:={ { \theta  }_{ 0 } }-a\frac{ 1 } { m }\sum\limits_{ i=1 }^{ m } { ({ { h }_{ \theta  } }({ { x }^{ (i) } })-{ { y }^{ (i) } }) }x_{ 0 }^{ (i) }$</p>
+<p>${ { \theta  }_{ 1 } }:={ { \theta  }_{ 1 } }-a\frac{ 1 } { m }\sum\limits_{ i=1 }^{ m } { ({ { h }_{ \theta  } }({ { x }^{ (i) } })-{ { y }^{ (i) } }) }x_{ 1 }^{ (i) }$</p>
+<p>${ { \theta  }_{ 2 } }:={ { \theta  }_{ 2 } }-a\frac{ 1 } { m }\sum\limits_{ i=1 }^{ m } { ({ { h }_{ \theta  } }({ { x }^{ (i) } })-{ { y }^{ (i) } }) }x_{ 2 }^{ (i) }$</p>
+<p>我们开始随机选择一系列的参数值，计算所有的预测结果后，再给所有的参数一个新的值，如此循环直到收敛。</p>
+<p>代码示例：</p>
+<p>计算代价函数<br>$J\left( \theta  \right)=\frac{ 1 } { 2m }\sum\limits_{ i=1 }^{ m } { { { \left( { h_{ \theta } }\left( { x^{ (i) } } \right)-{ y^{ (i) } } \right) }^{ 2 } } }$<br>其中：${ h_{ \theta } }\left( x \right)={ \theta^{ T } }X={ \theta_{ 0 } } { x_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 } }+…+{ \theta_{ n } } { x_{ n } }$</p>
+<p><strong>Python</strong> 代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost</span>(<span class="params">X, y, theta</span>):</span></span><br><span class="line">    inner = np.power(((X * theta.T) - y), <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> np.<span class="built_in">sum</span>(inner) / (<span class="number">2</span> * <span class="built_in">len</span>(X))</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-梯度下降法实践1-特征缩放"><a href="#4-3-梯度下降法实践1-特征缩放" class="headerlink" title="4.3 梯度下降法实践1-特征缩放"></a>4.3 梯度下降法实践1-特征缩放</h3><p>参考视频: 4 - 3 - Gradient Descent in Practice I - Feature Scaling (9 min).mkv</p>
+<p>在我们面对多维特征问题的时候，我们要保证这些特征都具有相近的尺度，这将帮助梯度下降算法更快地收敛。</p>
+<p>以房价问题为例，假设我们使用两个特征，房屋的尺寸和房间的数量，尺寸的值为 0-2000平方英尺，而房间数量的值则是0-5，以两个参数分别为横纵坐标，绘制代价函数的等高线图能，看出图像会显得很扁，梯度下降算法需要非常多次的迭代才能收敛。</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/966e5a9b00687678374b8221fdd33475.jpg" alt></p>
+<p>解决的方法是尝试将所有特征的尺度都尽量缩放到-1到1之间。如图：</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b8167ff0926046e112acf789dba98057.png" alt></p>
+<p>最简单的方法是令：${ { x }_{ n } }=\frac{ { { x }_{ n } }-{ { \mu }_{ n } } } { { { s }_{ n } } }$，其中 ${ \mu_{ n } }$是平均值，${ s_{ n } }$是标准差。</p>
+<h3 id="4-4-梯度下降法实践2-学习率"><a href="#4-4-梯度下降法实践2-学习率" class="headerlink" title="4.4 梯度下降法实践2-学习率"></a>4.4 梯度下降法实践2-学习率</h3><p>参考视频: 4 - 4 - Gradient Descent in Practice II - Learning Rate (9 min).mkv</p>
+<p>梯度下降算法收敛所需要的迭代次数根据模型的不同而不同，我们不能提前预知，我们可以绘制迭代次数和代价函数的图表来观测算法在何时趋于收敛。</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/cd4e3df45c34f6a8e2bb7cd3a2849e6c.jpg" alt></p>
+<p>也有一些自动测试是否收敛的方法，例如将代价函数的变化值与某个阀值（例如0.001）进行比较，但通常看上面这样的图表更好。</p>
+<p>梯度下降算法的每次迭代受到学习率的影响，如果学习率$a$过小，则达到收敛所需的迭代次数会非常高；如果学习率$a$过大，每次迭代可能不会减小代价函数，可能会越过局部最小值导致无法收敛。</p>
+<p>通常可以考虑尝试些学习率：</p>
+<p>$\alpha=0.01，0.03，0.1，0.3，1，3，10$</p>
+<h3 id="4-5-特征和多项式回归"><a href="#4-5-特征和多项式回归" class="headerlink" title="4.5 特征和多项式回归"></a>4.5 特征和多项式回归</h3><p>参考视频: 4 - 5 - Features and Polynomial Regression (8 min).mkv</p>
+<p>如房价预测问题，</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/8ffaa10ae1138f1873bc65e1e3657bd4.png" alt></p>
+<p>$h_{ \theta }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } }\times{ frontage }+{ \theta_{ 2 } }\times{ depth }$ </p>
+<p>${ x_{ 1 } }=frontage$（临街宽度），${ x_{ 2 } }=depth$（纵向深度），$x=frontage*depth=area$（面积），则：${ h_{ \theta } }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } }x$。<br>线性回归并不适用于所有数据，有时我们需要曲线来适应我们的数据，比如一个二次方模型：$h_{ \theta }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 }^2 }$<br> 或者三次方模型： $h_{ \theta }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 }^2 }+{ \theta_{ 3 } } { x_{ 3 }^3 }$ </p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/3a47e15258012b06b34d4e05fb3af2cf.jpg" alt></p>
+<p>通常我们需要先观察数据然后再决定准备尝试怎样的模型。 另外，我们可以令：</p>
+<p>${ { x }_{ 2 } }=x_{ 2 }^{ 2 },{ { x }_{ 3 } }=x_{ 3 }^{ 3 }$，从而将模型转化为线性回归模型。</p>
+<p>根据函数图形特性，我们还可以使：</p>
+<p>${ { { h } }_{ \theta } }(x)={ { \theta  }_{ 0 } }\text{ + } { { \theta  }_{ 1 } }(size)+{ { \theta }_{ 2 } } { { (size) }^{ 2 } }$</p>
+<p>或者:</p>
+<p>${ { { h } }_{ \theta } }(x)={ { \theta  }_{ 0 } }\text{ + } { { \theta  }_{ 1 } }(size)+{ { \theta  }_{ 2 } }\sqrt{ size }$</p>
+<p>注：如果我们采用多项式回归模型，在运行梯度下降算法前，特征缩放非常有必要。</p>
+<h3 id="4-6-正规方程"><a href="#4-6-正规方程" class="headerlink" title="4.6 正规方程"></a>4.6 正规方程</h3><p>参考视频: 4 - 6 - Normal Equation (16 min).mkv</p>
+<p>到目前为止，我们都在使用梯度下降算法，但是对于某些线性回归问题，正规方程方法是更好的解决方案。如：</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/a47ec797d8a9c331e02ed90bca48a24b.png" alt></p>
+<p>正规方程是通过求解下面的方程来找出使得代价函数最小的参数的：$\frac{ \partial } { \partial{ \theta_{ j } } }J\left( { \theta_{ j } } \right)=0$ 。<br> 假设我们的训练集特征矩阵为 $X$（包含了 ${ { x }_{ 0 } }=1$）并且我们的训练集结果为向量 $y$，则利用正规方程解出向量 $\theta ={ { \left( { X^T }X \right) }^{ -1 } } { X^{ T } }y$ 。<br>上标<strong>T</strong>代表矩阵转置，上标-1 代表矩阵的逆。设矩阵$A={ X^{ T } }X$，则：${ { \left( { X^T }X \right) }^{ -1 } }={ A^{ -1 } }$<br>以下表示数据为例：</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/261a11d6bce6690121f26ee369b9e9d1.png" alt></p>
+<p>即：</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/c8eedc42ed9feb21fac64e4de8d39a06.png" alt></p>
+<p>运用正规方程方法求解参数：</p>
+<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b62d24a1f709496a6d7c65f87464e911.jpg" alt></p>
+<p>在 <strong>Octave</strong> 中，正规方程写作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pinv(X&#x27;*X)*X&#x27;*y</span><br></pre></td></tr></table></figure>
+<p>注：对于那些不可逆的矩阵（通常是因为特征之间不独立，如同时包含英尺为单位的尺寸和米为单位的尺寸两个特征，也有可能是特征数量大于训练集的数量），正规方程方法是不能用的。</p>
+<p>梯度下降与正规方程的比较：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>梯度下降</th>
+<th>正规方程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需要选择学习率$\alpha$</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>需要多次迭代</td>
+<td>一次运算得出</td>
+</tr>
+<tr>
+<td>当特征数量$n$大时也能较好适用</td>
+<td>需要计算${ { \left( { { X }^{ T } }X \right) }^{ -1 } }$ 如果特征数量n较大则运算代价大，因为矩阵逆的计算时间复杂度为$O\left( { { n }^{ 3 } } \right)$，通常来说当$n$小于10000 时还是可以接受的</td>
+</tr>
+<tr>
+<td>适用于各种类型的模型</td>
+<td>只适用于线性模型，不适合逻辑回归模型等其他模型</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>总结一下，只要特征变量的数目并不大，标准方程是一个很好的计算参数$\theta $的替代方法。具体地说，只要特征变量数量小于一万，我通常使用标准方程法，而不使用梯度下降法。</p>
+<p>随着我们要讲的学习算法越来越复杂，例如，当我们讲到分类算法，像逻辑回归算法，我们会看到，实际上对于那些算法，并不能使用标准方程法。对于那些更复杂的学习算法，我们将不得不仍然使用梯度下降法。因此，梯度下降法是一个非常有用的算法，可以用在有大量特征变量的线性回归问题。或者我们以后在课程中，会讲到的一些其他的算法，因为标准方程法不适合或者不能用在它们上。但对于这个特定的线性回归模型，标准方程法是一个比梯度下降法更快的替代算法。所以，根据具体的问题，以及你的特征变量的数量，这两种算法都是值得学习的。</p>
+<p>正规方程的<strong>python</strong>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">    </span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">normalEqn</span>(<span class="params">X, y</span>):</span></span><br><span class="line">    </span><br><span class="line">   theta = np.linalg.inv(X.T@X)@X.T@y <span class="comment">#X.T@X等价于X.T.dot(X)</span></span><br><span class="line">    </span><br><span class="line">   <span class="keyword">return</span> theta</span><br></pre></td></tr></table></figure>
+<h3 id="4-7-正规方程及不可逆性（可选）"><a href="#4-7-正规方程及不可逆性（可选）" class="headerlink" title="4.7 正规方程及不可逆性（可选）"></a>4.7 正规方程及不可逆性（可选）</h3><p>参考视频: 4 - 7 - Normal Equation Noninvertibility (Optional) (6 min).mkv</p>
+<p>在这段视频中谈谈正规方程 ( <strong>normal equation</strong> )，以及它们的不可逆性。<br>由于这是一种较为深入的概念，并且总有人问我有关这方面的问题，因此，我想在这里来讨论它，由于概念较为深入，所以对这段可选材料大家放轻松吧，也许你可能会深入地探索下去，并且会觉得理解以后会非常有用。但即使你没有理解正规方程和线性回归的关系，也没有关系。</p>
+<p>我们要讲的问题如下：$\theta ={ { \left( { X^{ T } }X \right) }^{ -1 } } { X^{ T } }y$ </p>
+<p>备注：本节最后我把推导过程写下。</p>
+<p>有些同学曾经问过我，当计算 $\theta$=<code>inv(X&#39;X ) X&#39;y</code> ，那对于矩阵$X’X$的结果是不可逆的情况咋办呢?<br>如果你懂一点线性代数的知识，你或许会知道，有些矩阵可逆，而有些矩阵不可逆。我们称那些不可逆矩阵为奇异或退化矩阵。<br>问题的重点在于$X’X$的不可逆的问题很少发生，在<strong>Octave</strong>里，如果你用它来实现$\theta$的计算，你将会得到一个正常的解。在<strong>Octave</strong>里，有两个函数可以求解矩阵的逆，一个被称为<code>pinv()</code>，另一个是<code>inv()</code>，这两者之间的差异是些许计算过程上的，一个是所谓的伪逆，另一个被称为逆。使用<code>pinv()</code> 函数可以展现数学上的过程，这将计算出$\theta$的值，即便矩阵$X’X$是不可逆的。</p>
+<p>在<code>pinv()</code> 和 <code>inv()</code> 之间，又有哪些具体区别呢 ?</p>
+<p>其中<code>inv()</code> 引入了先进的数值计算的概念。例如，在预测住房价格时，如果${ x_{ 1 } }$是以英尺为尺寸规格计算的房子，${ x_{ 2 } }$是以平方米为尺寸规格计算的房子，同时，你也知道1米等于3.28英尺 ( 四舍五入到两位小数 )，这样，你的这两个特征值将始终满足约束：${ x_{ 1 } }={ x_{ 2 } }*{ { \left( 3.28 \right) }^{ 2 } }$。<br>实际上，你可以用这样的一个线性方程，来展示那两个相关联的特征值，矩阵$X’X$将是不可逆的。</p>
+<p>第二个原因是，在你想用大量的特征值，尝试实践你的学习算法的时候，可能会导致矩阵$X’X$的结果是不可逆的。<br>具体地说，在$m$小于或等于n的时候，例如，有$m$等于10个的训练样本也有$n$等于100的特征数量。要找到适合的$(n +1)$ 维参数矢量$\theta$，这将会变成一个101维的矢量，尝试从10个训练样本中找到满足101个参数的值，这工作可能会让你花上一阵子时间，但这并不总是一个好主意。因为，正如我们所看到你只有10个样本，以适应这100或101个参数，数据还是有些少。</p>
+<p>稍后我们将看到，如何使用小数据样本以得到这100或101个参数，通常，我们会使用一种叫做正则化的线性代数方法，通过删除某些特征或者是使用某些技术，来解决当$m$比$n$小的时候的问题。即使你有一个相对较小的训练集，也可使用很多的特征来找到很多合适的参数。<br>总之当你发现的矩阵$X’X$的结果是奇异矩阵，或者找到的其它矩阵是不可逆的，我会建议你这么做。</p>
+<p>首先，看特征值里是否有一些多余的特征，像这些${ x_{ 1 } }$和${ x_{ 2 } }$是线性相关的，互为线性函数。同时，当有一些多余的特征时，可以删除这两个重复特征里的其中一个，无须两个特征同时保留，将解决不可逆性的问题。因此，首先应该通过观察所有特征检查是否有多余的特征，如果有多余的就删除掉，直到他们不再是多余的为止，如果特征数量实在太多，我会删除些 用较少的特征来反映尽可能多内容，否则我会考虑使用正规化方法。<br>如果矩阵$X’X$是不可逆的，（通常来说，不会出现这种情况），如果在<strong>Octave</strong>里，可以用伪逆函数<code>pinv()</code> 来实现。这种使用不同的线性代数库的方法被称为伪逆。即使$X’X$的结果是不可逆的，但算法执行的流程是正确的。总之，出现不可逆矩阵的情况极少发生，所以在大多数实现线性回归中，出现不可逆的问题不应该过多的关注${ X^{ T } }X$是不可逆的。</p>
+<p><strong>增加内容：</strong></p>
+<p>$\theta ={ { \left( { X^{ T } }X \right) }^{ -1 } } { X^{ T } }y$ 的推导过程：</p>
+<p>$J\left( \theta  \right)=\frac{ 1 } { 2m }\sum\limits_{ i=1 }^{ m } { { { \left( { h_{ \theta } }\left( { x^{ (i) } } \right)-{ y^{ (i) } } \right) }^{ 2 } } }$<br>其中：${ h_{ \theta } }\left( x \right)={ \theta^{ T } }X={ \theta_{ 0 } } { x_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 } }+…+{ \theta_{ n } } { x_{ n } }$</p>
+<p>将向量表达形式转为矩阵表达形式，则有$J(\theta )=\frac{ 1 } { 2 } { { \left( X\theta -y\right) }^{ 2 } }$ ，其中$X$为$m$行$n$列的矩阵（$m$为样本个数，$n$为特征个数），$\theta$为$n$行1列的矩阵，$y$为$m$行1列的矩阵，对$J(\theta )$进行如下变换</p>
+<p>$J(\theta )=\frac{ 1 } { 2 } { { \left( X\theta -y\right) }^{ T } }\left( X\theta -y \right)$</p>
+<p>​     $=\frac{ 1 } { 2 }\left( { { \theta  }^{ T } } { { X }^{ T } }-{ { y }^{ T } } \right)\left(X\theta -y \right)$</p>
+<p>​     $=\frac{ 1 } { 2 }\left( { { \theta  }^{ T } } { { X }^{ T } }X\theta -{ { \theta }^{ T } } { { X }^{ T } }y-{ { y }^{ T } }X\theta -{ { y }^{ T } }y \right)$</p>
+<p>接下来对$J(\theta )$偏导，需要用到以下几个矩阵的求导法则:</p>
+<p>$\frac{ dAB } { dB }={ { A }^{ T } }$ </p>
+<p>$\frac{ d{ { X }^{ T } }AX } { dX }=2AX$                            </p>
+<p>所以有:</p>
+<p>$\frac{ \partial J\left( \theta  \right) } { \partial \theta  }=\frac{ 1 } { 2 }\left(2{ { X }^{ T } }X\theta -{ { X }^{ T } }y -{  }({ { y }^{ T } }X )^{ T }-0 \right)$</p>
+<p>$=\frac{ 1 } { 2 }\left(2{ { X }^{ T } }X\theta -{ { X }^{ T } }y -{ { X }^{ T } }y -0 \right)$</p>
+<p>​           $={ { X }^{ T } }X\theta -{ { X }^{ T } }y$</p>
+<p>令$\frac{ \partial J\left( \theta  \right) } { \partial \theta  }=0$,</p>
+<p>则有$\theta ={ { \left( { X^{ T } }X \right) }^{ -1 } } { X^{ T } }y$</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/10/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/" rel="next" title="操作系统专题实践">
+                  操作系统专题实践 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gch</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

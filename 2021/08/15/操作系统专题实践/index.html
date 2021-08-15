@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="操作系统专题实践记录一下是我在大三上选修操作系统专题实践课程的一些实验内容和过程的记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统专题实践">
+<meta property="og:url" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="gch&#39;home">
+<meta property="og:description" content="操作系统专题实践记录一下是我在大三上选修操作系统专题实践课程的一些实验内容和过程的记录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815214348729.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815214642384-16290352088551.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815224420340-16290386641732.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815224751694-16290388741593.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/1930162-20200908120947346-577429588.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815225653003-16290394164195.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815230110104-16290396714426.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/1930162-20200908121016503-449793639.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/1930162-20200908121025443-870625883.png">
+<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/1930162-20200908121033635-1046241699.png">
+<meta property="article:published_time" content="2021-08-15T12:34:07.000Z">
+<meta property="article:modified_time" content="2021-08-15T15:11:07.922Z">
+<meta property="article:author" content="gch">
+<meta property="article:tag" content="操作系统、Linux、Fedora、进程隐藏、Shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815214348729.png">
+
+
+<link rel="canonical" href="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/","path":"2021/08/15/操作系统专题实践/","title":"操作系统专题实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>操作系统专题实践 | gch'home</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">gch'home</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">操作系统专题实践记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%89%8D%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">实验前准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fedora7%E5%90%AF%E7%94%A8SSH"><span class="nav-number">1.1.1.</span> <span class="nav-text">　Fedora7启用SSH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8Evscode%E5%88%B0samba"><span class="nav-number">1.1.2.</span> <span class="nav-text">从vscode到samba</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%8A%A0%E9%80%9F%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.</span> <span class="nav-text">内核编译加速技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%BC%96%E8%AF%91"><span class="nav-number">1.2.2.</span> <span class="nav-text">多线编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E8%A3%81%E5%89%AA"><span class="nav-number">1.2.3.</span> <span class="nav-text">内核裁剪</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="gch"
+      src="https://c-ssl.duitang.com/uploads/item/201605/26/20160526160556_FcBGT.jpeg">
+  <p class="site-author-name" itemprop="name">gch</p>
+  <div class="site-description" itemprop="description">This is gch' home</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/coding-famer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;coding-famer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gchseu@outlook.com" title="E-Mail → mailto:gchseu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/FC3vM8yn6Dl9Yyg" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;FC3vM8yn6Dl9Yyg" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100068779494099" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100068779494099" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://c-ssl.duitang.com/uploads/item/201605/26/20160526160556_FcBGT.jpeg">
+      <meta itemprop="name" content="gch">
+      <meta itemprop="description" content="This is gch' home">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gch'home">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          操作系统专题实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-08-15 20:34:07 / 修改时间：23:11:07" itemprop="dateCreated datePublished" datetime="2021-08-15T20:34:07+08:00">2021-08-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="操作系统专题实践记录"><a href="#操作系统专题实践记录" class="headerlink" title="操作系统专题实践记录"></a>操作系统专题实践记录</h1><p>一下是我在大三上选修操作系统专题实践课程的一些实验内容和过程的记录。</p>
+<span id="more"></span>
+<p>由于是线上上课，老师就把实验内容发给我们，什么也不教就让我们自己做了，对于操作系统和Linux内核的版本也没有明确的要求，只是说推荐Fedora7和Linux-2.6.21。</p>
+<p>搜集了各种往年资料后，发现往年都是要求用Fedora7和Linux-2.6.21做的，但是一看Fedora官方版本，都已经更新到34了，Linux的低版本也几乎找不到。最后还要感谢我女朋友，帮我从之前上过该课的同学那要到了他们老师发的资料，好家伙，Fedora7的镜像里Linux-2.6.21也已经给准备好了，亏我花了一天找资源+尝试用Fedora34。</p>
+<h2 id="实验前准备"><a href="#实验前准备" class="headerlink" title="实验前准备"></a>实验前准备</h2><p>多亏了在github中一直关注的一位17级大佬，在他的博客中写了许多踩坑和技巧，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zxuuu/p/13631755.html">这里贴一下大佬的博客地址</a></p>
+<h3 id="Fedora7启用SSH"><a href="#Fedora7启用SSH" class="headerlink" title="　Fedora7启用SSH"></a>　Fedora7启用SSH</h3><p>先是学着学长给Fedora7启用SSH，几乎就是照着学长的博客一步一步来的。</p>
+<ul>
+<li><p>关闭防火墙和SELinux</p>
+<p>只是在本地做实验，果断关了虚拟机的防火墙。执行 <code>setup</code> 命令 </p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815214348729.png" alt="image-20210815214348729"></p>
+<p>​    选择Firewall configuration 防火墙配置，然后按下图配置 </p>
+<p>​    空格选择 上下左右移动</p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815214642384-16290352088551.png" alt="image-20210815214642384"></p>
+<p>至于关闭SELinux，修改/etc/sysconfig/selinux 把enforcing改成disabled；然后命令行<code>setenforce 0</code>； </p>
+</li>
+<li><p>检查是否已安装ssh服务</p>
+<p>执行 <code>rpm -qa | grep openssh-server</code>。如果有内容就说明已安装，否则用 <code>yum install openssh-server</code> 安装之。</p>
+</li>
+<li><p>修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<p>放开如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Port 22</span><br><span class="line">Protocol 2</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">MaxAuthTries 6</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启SSH服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/rc.d/init.d/sshd restart</span><br><span class="line">$ service sshd status</span><br></pre></td></tr></table></figure>
+<p>成功的话是这样滴</p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815224420340-16290386641732.png" alt="image-20210815224420340"></p>
+<p>如果报<code>bash: service: command not found</code>的错，需要<code>su - root</code>进入root模式，单纯<code>su</code>是不行的。</p>
+</li>
+<li><p>查看ip</p>
+<p>在root模式运行<code>ip add</code> </p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815224751694-16290388741593.png" alt="image-20210815224751694"></p>
+<p>可以看到虚拟机的ip</p>
+</li>
+</ul>
+<h3 id="从vscode到samba"><a href="#从vscode到samba" class="headerlink" title="从vscode到samba"></a>从vscode到samba</h3><p>照着学长的博客想要用vscode的 Remote SSH 插件连接虚拟机，然而和学长一样，发现Fedora7过于古老，直接报错</p>
+<p>  <img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/1930162-20200908120947346-577429588.png" alt="img"></p>
+<p>于是照着学长用古老的Samba</p>
+<ul>
+<li><p>安装Samba</p>
+<p>执行 <code>rpm -qa | grep samba</code>，观察是否输出如下三个包：</p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815225653003-16290394164195.png" alt="image-20210815225653003"></p>
+<p>如果没有，则缺哪个装哪个：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install samba samba-common samba-client</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑 Samba 配置文件</p>
+<p>执行 <code>vim /etc/samba/smb.conf</code>，修改如下几个地方：</p>
+<ul>
+<li><p>```<br>(74行左右) workgroup = WORKGROUP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  (101行左右) security = user</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 246 行左右 Share Definitions 下新增：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[samba]</span><br><span class="line">        comment = samba</span><br><span class="line">        path = /</span><br><span class="line">        public = yes</span><br><span class="line">        writable = yes</span><br><span class="line">        valid users = root</span><br><span class="line">        create mask = 0700</span><br><span class="line">        directory mask = 0700</span><br></pre></td></tr></table></figure>
+<p>最后看起来大概是这样：</p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815230110104-16290396714426.png" alt="image-20210815230110104"></p>
+</li>
+</ul>
+</li>
+<li><p>添加 Samba 用户并激活</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> smbpasswd -a root</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> smbpasswd -e root</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>守护 Samba 服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> chkconfig smb on</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chkconfig --list smb  <span class="comment"># 检查2~5为on</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chkconfig nmb on</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chkconfig --list nmb  <span class="comment"># 检查2~5为on</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> /etc/rc.d/init.d/smb start</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> /etc/rc.d/init.d/nmb start</span></span><br></pre></td></tr></table></figure>
+<p>配置至此，reboot 虚拟机。</p>
+</li>
+<li><p>在 Windows 下启用 Samba</p>
+<p>Samba 在 Windows 10 下默认是关闭的。我们需要将它手动启动。打开控制面板 - 程序和功能 - 启用或关闭 Windows 功能，将 SMB 打勾：</p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/1930162-20200908121016503-449793639.png" alt="img"></p>
+</li>
+<li><p>通过 Samba 连接虚拟机</p>
+<p>在文件资源管理器任意页面用双反斜杠加 IP 即可访问。如有需要也可将该地址做成快捷方式放到桌面。</p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/1930162-20200908121025443-870625883.png" alt="img"></p>
+<p>这时，所有的文件都可以访问：</p>
+<p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/1930162-20200908121033635-1046241699.png" alt="(https://img2020.cnblogs.com/blog/1930162/202009/1930162-20200908121033635-1046241699.png)"></p>
+<p>使用 VSCode 也可自由打开、编辑其中的文件。</p>
+</li>
+<li><p>配置 VSCode includePath</p>
+<p>此时 VSCode 由于不了解 Linux 的 include 文件，无法正确进行代码提示，存在头文件划红线的情况。为此，可增加工作区配置。在项目目录新建 <code>.vscode/settings.json</code> 文件，键入如下内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;C_Cpp.default.includePath&quot;</span>: [<span class="string">&quot;\\\\&lt;ip_to_linux&gt;/samba/usr/include&quot;</span>, <span class="string">&quot;\\\\&lt;ip_to_linux&gt;/samba/usr/local/include&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="内核编译加速技巧"><a href="#内核编译加速技巧" class="headerlink" title="内核编译加速技巧"></a>内核编译加速技巧</h2><h3 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h3><p>众所周知，增大系统内存、使用 SSD、增加 CPU 核心数，都可以有效加快编译速度。如有条件，使用内存盘可以成吨加快编译。由于是虚拟机，咱不折腾，多给点内存就好了。</p>
+<h3 id="多线编译"><a href="#多线编译" class="headerlink" title="多线编译"></a>多线编译</h3><p>make 命令可带参数 -j2、-j4 等启用二线、四线并发编译，这也可以有效加快编译速度，但并不一定是数字越大越好。在我的机器上，使用 -j2 ，按照实验指导书的配置，全套编译流程在 20 分钟左右。这个加速比较可观。</p>
+<h3 id="内核裁剪"><a href="#内核裁剪" class="headerlink" title="内核裁剪"></a>内核裁剪</h3><p>按照实验指导书的配置，make 内核时，用的配置文件直接是 Fedora 7 系统带的配置。这意味着大量根本用不到的内核功能都会编译进去…在编译前 make menuconfig ，对不需要的功能进行裁剪，使用自定义的配置文件来编译内核，必然可以有效缩小内核大小，加快编译流程。对内核裁剪有兴趣的，可自行搜索相关资料研究，此处不述。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%81Linux%E3%80%81Fedora%E3%80%81%E8%BF%9B%E7%A8%8B%E9%9A%90%E8%97%8F%E3%80%81Shell/" rel="tag"># 操作系统、Linux、Fedora、进程隐藏、Shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" rel="prev" title="机器学习 线性回归">
+                  <i class="fa fa-chevron-left"></i> 机器学习 线性回归
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gch</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
