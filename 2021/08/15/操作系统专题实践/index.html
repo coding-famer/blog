@@ -264,14 +264,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span></span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>NaN:aN</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -303,10 +303,10 @@
 <li><p>修改配置文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
 <p>放开如下配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Port 22</span><br><span class="line">Protocol 2</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">MaxAuthTries 6</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Port</span> <span class="number">22</span></span><br><span class="line"><span class="attribute">Protocol</span> <span class="number">2</span></span><br><span class="line"><span class="attribute">PermitRootLogin</span> yes</span><br><span class="line"><span class="attribute">MaxAuthTries</span> <span class="number">6</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>重启SSH服务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/rc.d/init.d/sshd restart</span><br><span class="line">$ service sshd status</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="regexp">/etc/</span>rc.d<span class="regexp">/init.d/</span>sshd restart</span><br><span class="line">$ service sshd status</span><br></pre></td></tr></table></figure>
 <p>成功的话是这样滴</p>
 <p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815224420340-16290386641732.png" alt="image-20210815224420340"></p>
 <p>如果报<code>bash: service: command not found</code>的错，需要<code>su - root</code>进入root模式，单纯<code>su</code>是不行的。</p>
@@ -331,10 +331,10 @@
 <p>执行 <code>vim /etc/samba/smb.conf</code>，修改如下几个地方：</p>
 <ul>
 <li><p>```<br>(74行左右) workgroup = WORKGROUP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  (101行左右) security = user</span><br></pre></td></tr></table></figure>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  (<span class="number">101</span>行左右) security = user</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在 246 行左右 Share Definitions 下新增：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[samba]</span><br><span class="line">        comment = samba</span><br><span class="line">        path = /</span><br><span class="line">        public = yes</span><br><span class="line">        writable = yes</span><br><span class="line">        valid users = root</span><br><span class="line">        create mask = 0700</span><br><span class="line">        directory mask = 0700</span><br></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[samba]</span><br><span class="line">        <span class="attr">comment</span> = samba</span><br><span class="line">        <span class="attr">path</span> = /</span><br><span class="line">        <span class="attr">public</span> = yes</span><br><span class="line">        <span class="attr">writable</span> = yes</span><br><span class="line">        valid <span class="attr">users</span> = root</span><br><span class="line">        create <span class="attr">mask</span> = <span class="number">0700</span></span><br><span class="line">        directory <span class="attr">mask</span> = <span class="number">0700</span></span><br></pre></td></tr></table></figure>
 <p>最后看起来大概是这样：</p>
 <p><img src="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/image-20210815230110104-16290396714426.png" alt="image-20210815230110104"></p>
 </li>
@@ -418,13 +418,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">NaNm</span>
+    <span title="站点总字数">16k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">NaN:aN</span>
+    <span title="站点阅读时长">14 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
