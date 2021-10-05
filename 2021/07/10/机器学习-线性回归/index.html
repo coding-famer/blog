@@ -7,12 +7,12 @@
 <meta name="generator" content="Hexo 5.4.0">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/%E7%88%B1%E5%BF%83.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/%E7%88%B1%E5%BF%83.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/blog/css/main.css">
 
 
 
@@ -20,43 +20,43 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
 <meta name="description" content="线性回归这部分是我学习线性回归的记录，同时完成了吴恩达机器学习ex1，用python实现了简单的线性回归，参考了和鲸社区中大佬的代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习 线性回归">
-<meta property="og:url" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/index.html">
+<meta property="og:url" content="https://coding-famer.github.io/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/index.html">
 <meta property="og:site_name" content="gch&#39;home">
 <meta property="og:description" content="线性回归这部分是我学习线性回归的记录，同时完成了吴恩达机器学习ex1，用python实现了简单的线性回归，参考了和鲸社区中大佬的代码">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_36_0-1625977550088.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/pz93k52pek.jpg">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/591785837c95bca369021efa14a8bb1c.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/41797ceb7293b838a3125ba945624cf6.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/6bdaff07783e37fcbb1f8765ca06b01b.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/dd33179ceccbd8b0b59a5ae698847049.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/966e5a9b00687678374b8221fdd33475.jpg">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b8167ff0926046e112acf789dba98057.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/cd4e3df45c34f6a8e2bb7cd3a2849e6c.jpg">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/8ffaa10ae1138f1873bc65e1e3657bd4.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/3a47e15258012b06b34d4e05fb3af2cf.jpg">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/a47ec797d8a9c331e02ed90bca48a24b.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/261a11d6bce6690121f26ee369b9e9d1.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/c8eedc42ed9feb21fac64e4de8d39a06.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b62d24a1f709496a6d7c65f87464e911.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_36_0-1625977550088.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/pz93k52pek.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/591785837c95bca369021efa14a8bb1c.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/41797ceb7293b838a3125ba945624cf6.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/6bdaff07783e37fcbb1f8765ca06b01b.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/dd33179ceccbd8b0b59a5ae698847049.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/966e5a9b00687678374b8221fdd33475.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b8167ff0926046e112acf789dba98057.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/cd4e3df45c34f6a8e2bb7cd3a2849e6c.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/8ffaa10ae1138f1873bc65e1e3657bd4.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/3a47e15258012b06b34d4e05fb3af2cf.jpg">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/a47ec797d8a9c331e02ed90bca48a24b.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/261a11d6bce6690121f26ee369b9e9d1.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/c8eedc42ed9feb21fac64e4de8d39a06.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b62d24a1f709496a6d7c65f87464e911.jpg">
 <meta property="article:published_time" content="2021-07-10T08:59:15.000Z">
 <meta property="article:modified_time" content="2021-07-13T05:35:22.964Z">
 <meta property="article:author" content="gch">
 <meta property="article:tag" content="blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png">
+<meta name="twitter:image" content="https://coding-famer.github.io/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png">
 
 
-<link rel="canonical" href="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
+<link rel="canonical" href="https://coding-famer.github.io/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/","path":"2021/07/10/机器学习-线性回归/","title":"机器学习 线性回归"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/","path":"2021/07/10/机器学习-线性回归/","title":"机器学习 线性回归"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>机器学习 线性回归 | gch'home</title>
@@ -66,7 +66,7 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
+    <link rel="stylesheet" href="/blog/css/noscript.css">
   </noscript>
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
@@ -90,7 +90,7 @@
 
   <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <i class="logo-line"></i>
       <h1 class="site-title">gch'home</h1>
       <i class="logo-line"></i>
@@ -107,13 +107,13 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
-        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
-        <li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+        <li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/blog/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
   </ul>
 </nav>
 
@@ -152,14 +152,14 @@
           <div class="site-overview">
             <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="gch"
-      src="/uploads/head.jpg">
+      src="/blog/uploads/head.jpg">
   <p class="site-author-name" itemprop="name">gch</p>
   <div class="site-description" itemprop="description">This is gch' home</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+          <a href="/blog/archives/">
         
           <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
@@ -221,10 +221,10 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
+    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/head.jpg">
+      <meta itemprop="image" content="/blog/uploads/head.jpg">
       <meta itemprop="name" content="gch">
       <meta itemprop="description" content="This is gch' home">
     </span>
@@ -342,7 +342,7 @@
 
 <p>&lt;/div&gt;</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.plot(kind=<span class="string">&#x27;scatter&#x27;</span>, x=<span class="string">&#x27;Population&#x27;</span>, y=<span class="string">&#x27;Profit&#x27;</span>, figsize=(<span class="number">12</span>,<span class="number">8</span>))plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png" alt="png"><br>​    </p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_7_0-1625977558812.png" alt="png"><br>​    </p>
 <h2 id="2-2-梯度下降"><a href="#2-2-梯度下降" class="headerlink" title="2.2 梯度下降"></a>2.2 梯度下降</h2><p>这个部分你需要在现有数据集上，训练线性回归的参数θ</p>
 <h3 id="2-2-1-公式"><a href="#2-2-1-公式" class="headerlink" title="2.2.1 公式"></a>2.2.1 公式</h3><script type="math/tex; mode=display">
 J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\theta } }\left( { {x}^{(i)} } \right)-{ {y}^{(i)} } \right)}^{2} } }</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost</span>(<span class="params">X, y, theta</span>):</span>    </span><br><span class="line">    inner = np.power(((X * theta.T) - y), <span class="number">2</span>)    </span><br><span class="line">    <span class="keyword">return</span> np.<span class="built_in">sum</span>(inner) / (<span class="number">2</span> * <span class="built_in">len</span>(X))<span class="comment">#这个部分计算J(Ѳ)，X是矩阵</span></span><br></pre></td></tr></table></figure>
@@ -451,9 +451,9 @@ J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\
 </code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predict1 = [<span class="number">1</span>,<span class="number">3.5</span>]*g.Tprint(<span class="string">&quot;predict1:&quot;</span>,predict1)predict2 = [<span class="number">1</span>,<span class="number">7</span>]*g.Tprint(<span class="string">&quot;predict2:&quot;</span>,predict2)<span class="comment">#预测35000和70000城市规模的小吃摊利润</span></span><br></pre></td></tr></table></figure>
 <pre><code>predict1: [[0.45197679]]predict2: [[4.53424501]]
 </code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">x = np.linspace(data.Population.<span class="built_in">min</span>(), data.Population.<span class="built_in">max</span>(), <span class="number">100</span>)</span><br><span class="line">f = g[<span class="number">0</span>, <span class="number">0</span>] + (g[<span class="number">0</span>, <span class="number">1</span>] * x)</span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>))</span><br><span class="line">ax.plot(x, f, <span class="string">&#x27;r&#x27;</span>, label=<span class="string">&#x27;Prediction&#x27;</span>)</span><br><span class="line">ax.scatter(data.Population, data.Profit, label=<span class="string">&#x27;Traning Data&#x27;</span>)</span><br><span class="line">ax.legend(loc=<span class="number">2</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">&#x27;Population&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Profit&#x27;</span>)</span><br><span class="line">ax.set_title(<span class="string">&#x27;Predicted Profit vs. Population Size&#x27;</span>)</span><br><span class="line">plt.show()<span class="comment">#原始数据以及拟合的直线</span></span><br></pre></td></tr></table></figure>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_36_0-1625977550088.png" alt="png"><br>​    </p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/output_36_0-1625977550088.png" alt="png"><br>​    </p>
 <h2 id="2-4-可视化J-θ"><a href="#2-4-可视化J-θ" class="headerlink" title="2.4 可视化J(θ)"></a>2.4 可视化J(θ)</h2><p>此步可以便于你理解J($\theta$)以及梯度下降。<br>三维图显示了${   {  \theta  } _ {  0  }   }$和$ {   {  \theta  } _ {  1  }   } $与J($\theta$)的对应关系，J($\theta$)是一个碗状的图形，并且有全局最小值。这个最小值就是$ {   {  \theta  } _ {  0  }   } $和$ {   {  \theta  } _ {  1  }   } $的最优解。梯度下降的每一步都会更接近这个最小值</p>
-<h1 id="并不会用python复现，截个图意思一下"><a href="#并不会用python复现，截个图意思一下" class="headerlink" title="并不会用python复现，截个图意思一下"></a>并不会用python复现，截个图意思一下</h1><p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/pz93k52pek.jpg" alt="Image Name"></p>
+<h1 id="并不会用python复现，截个图意思一下"><a href="#并不会用python复现，截个图意思一下" class="headerlink" title="并不会用python复现，截个图意思一下"></a>并不会用python复现，截个图意思一下</h1><p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/pz93k52pek.jpg" alt="Image Name"></p>
 <h1 id="3-多变量线性回归"><a href="#3-多变量线性回归" class="headerlink" title="3 多变量线性回归"></a>3 多变量线性回归</h1><p>ex1data2.txt里的数据，第一列是房屋大小，第二列是卧室数量，第三列是房屋售价<br>根据已有数据，建立模型，预测房屋的售价</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path =  <span class="string">&#x27;./ex1data2.txt&#x27;</span>data2 = pd.read_csv(path, header=<span class="literal">None</span>, names=[<span class="string">&#x27;Size&#x27;</span>, <span class="string">&#x27;Bedrooms&#x27;</span>, <span class="string">&#x27;Price&#x27;</span>])data2.head()</span><br></pre></td></tr></table></figure>
 <p>&lt;/style&gt;</p>
@@ -563,7 +563,7 @@ J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\
 </code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#梯度下降得到的结果是matrix([[-3.24140214,  1.1272942 ]])</span></span><br></pre></td></tr></table></figure>
 <h2 id="黄海广博士的笔记"><a href="#黄海广博士的笔记" class="headerlink" title="黄海广博士的笔记"></a>黄海广博士的笔记</h2><p>=====</p>
 <h2 id="四、多变量线性回归-Linear-Regression-with-Multiple-Variables"><a href="#四、多变量线性回归-Linear-Regression-with-Multiple-Variables" class="headerlink" title="四、多变量线性回归(Linear Regression with Multiple Variables)"></a>四、多变量线性回归(Linear Regression with Multiple Variables)</h2><h3 id="4-1-多维特征"><a href="#4-1-多维特征" class="headerlink" title="4.1 多维特征"></a>4.1 多维特征</h3><p>目前为止，我们探讨了单变量/特征的回归模型，现在我们对房价模型增加更多的特征，例如房间数楼层等，构成一个含有多个变量的模型，模型中的特征为$\left( { x_{ 1 } },{ x_{ 2 } },…,{ x_{ n } } \right)$。</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/591785837c95bca369021efa14a8bb1c.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/591785837c95bca369021efa14a8bb1c.png" alt></p>
 <p>增添更多特征后，我们引入一系列新的注释：</p>
 <p>$n$ 代表特征的数量</p>
 <p>${ x^{ \left( i \right) } }$代表第 $i$ 个训练实例，是特征矩阵中的第$i$行，是一个<strong>向量</strong>（<strong>vector</strong>）。</p>
@@ -578,11 +578,11 @@ J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\
 <p>与单变量线性回归类似，在多变量线性回归中，我们也构建一个代价函数，则这个代价函数是所有建模误差的平方和，即：$J\left( { \theta_{ 0 } },{ \theta_{ 1 } }…{ \theta_{ n } } \right)=\frac{ 1 } { 2m }\sum\limits_{ i=1 }^{ m } { { { \left( h_{ \theta } \left({ x }^{ \left( i \right) } \right)-{ y }^{ \left( i \right) } \right) }^{ 2 } } }$ ，</p>
 <p>其中：$h_{ \theta }\left( x \right)=\theta^{ T }X={ \theta_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 } }+…+{ \theta_{ n } } { x_{ n } }$ ，</p>
 <p>我们的目标和单变量线性回归问题中一样，是要找出使得代价函数最小的一系列参数。<br>多变量线性回归的批量梯度下降算法为：</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/41797ceb7293b838a3125ba945624cf6.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/41797ceb7293b838a3125ba945624cf6.png" alt></p>
 <p>即：</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/6bdaff07783e37fcbb1f8765ca06b01b.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/6bdaff07783e37fcbb1f8765ca06b01b.png" alt></p>
 <p>求导数后得到：</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/dd33179ceccbd8b0b59a5ae698847049.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/dd33179ceccbd8b0b59a5ae698847049.png" alt></p>
 <p>当$n&gt;=1$时，<br>${ { \theta  }_{ 0 } }:={ { \theta  }_{ 0 } }-a\frac{ 1 } { m }\sum\limits_{ i=1 }^{ m } { ({ { h }_{ \theta  } }({ { x }^{ (i) } })-{ { y }^{ (i) } }) }x_{ 0 }^{ (i) }$</p>
 <p>${ { \theta  }_{ 1 } }:={ { \theta  }_{ 1 } }-a\frac{ 1 } { m }\sum\limits_{ i=1 }^{ m } { ({ { h }_{ \theta  } }({ { x }^{ (i) } })-{ { y }^{ (i) } }) }x_{ 1 }^{ (i) }$</p>
 <p>${ { \theta  }_{ 2 } }:={ { \theta  }_{ 2 } }-a\frac{ 1 } { m }\sum\limits_{ i=1 }^{ m } { ({ { h }_{ \theta  } }({ { x }^{ (i) } })-{ { y }^{ (i) } }) }x_{ 2 }^{ (i) }$</p>
@@ -594,23 +594,23 @@ J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\
 <h3 id="4-3-梯度下降法实践1-特征缩放"><a href="#4-3-梯度下降法实践1-特征缩放" class="headerlink" title="4.3 梯度下降法实践1-特征缩放"></a>4.3 梯度下降法实践1-特征缩放</h3><p>参考视频: 4 - 3 - Gradient Descent in Practice I - Feature Scaling (9 min).mkv</p>
 <p>在我们面对多维特征问题的时候，我们要保证这些特征都具有相近的尺度，这将帮助梯度下降算法更快地收敛。</p>
 <p>以房价问题为例，假设我们使用两个特征，房屋的尺寸和房间的数量，尺寸的值为 0-2000平方英尺，而房间数量的值则是0-5，以两个参数分别为横纵坐标，绘制代价函数的等高线图能，看出图像会显得很扁，梯度下降算法需要非常多次的迭代才能收敛。</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/966e5a9b00687678374b8221fdd33475.jpg" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/966e5a9b00687678374b8221fdd33475.jpg" alt></p>
 <p>解决的方法是尝试将所有特征的尺度都尽量缩放到-1到1之间。如图：</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b8167ff0926046e112acf789dba98057.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b8167ff0926046e112acf789dba98057.png" alt></p>
 <p>最简单的方法是令：${ { x }_{ n } }=\frac{ { { x }_{ n } }-{ { \mu }_{ n } } } { { { s }_{ n } } }$，其中 ${ \mu_{ n } }$是平均值，${ s_{ n } }$是标准差。</p>
 <h3 id="4-4-梯度下降法实践2-学习率"><a href="#4-4-梯度下降法实践2-学习率" class="headerlink" title="4.4 梯度下降法实践2-学习率"></a>4.4 梯度下降法实践2-学习率</h3><p>参考视频: 4 - 4 - Gradient Descent in Practice II - Learning Rate (9 min).mkv</p>
 <p>梯度下降算法收敛所需要的迭代次数根据模型的不同而不同，我们不能提前预知，我们可以绘制迭代次数和代价函数的图表来观测算法在何时趋于收敛。</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/cd4e3df45c34f6a8e2bb7cd3a2849e6c.jpg" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/cd4e3df45c34f6a8e2bb7cd3a2849e6c.jpg" alt></p>
 <p>也有一些自动测试是否收敛的方法，例如将代价函数的变化值与某个阀值（例如0.001）进行比较，但通常看上面这样的图表更好。</p>
 <p>梯度下降算法的每次迭代受到学习率的影响，如果学习率$a$过小，则达到收敛所需的迭代次数会非常高；如果学习率$a$过大，每次迭代可能不会减小代价函数，可能会越过局部最小值导致无法收敛。</p>
 <p>通常可以考虑尝试些学习率：</p>
 <p>$\alpha=0.01，0.03，0.1，0.3，1，3，10$</p>
 <h3 id="4-5-特征和多项式回归"><a href="#4-5-特征和多项式回归" class="headerlink" title="4.5 特征和多项式回归"></a>4.5 特征和多项式回归</h3><p>参考视频: 4 - 5 - Features and Polynomial Regression (8 min).mkv</p>
 <p>如房价预测问题，</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/8ffaa10ae1138f1873bc65e1e3657bd4.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/8ffaa10ae1138f1873bc65e1e3657bd4.png" alt></p>
 <p>$h_{ \theta }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } }\times{ frontage }+{ \theta_{ 2 } }\times{ depth }$ </p>
 <p>${ x_{ 1 } }=frontage$（临街宽度），${ x_{ 2 } }=depth$（纵向深度），$x=frontage*depth=area$（面积），则：${ h_{ \theta } }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } }x$。<br>线性回归并不适用于所有数据，有时我们需要曲线来适应我们的数据，比如一个二次方模型：$h_{ \theta }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 }^2 }$<br> 或者三次方模型： $h_{ \theta }\left( x \right)={ \theta_{ 0 } }+{ \theta_{ 1 } } { x_{ 1 } }+{ \theta_{ 2 } } { x_{ 2 }^2 }+{ \theta_{ 3 } } { x_{ 3 }^3 }$ </p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/3a47e15258012b06b34d4e05fb3af2cf.jpg" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/3a47e15258012b06b34d4e05fb3af2cf.jpg" alt></p>
 <p>通常我们需要先观察数据然后再决定准备尝试怎样的模型。 另外，我们可以令：</p>
 <p>${ { x }_{ 2 } }=x_{ 2 }^{ 2 },{ { x }_{ 3 } }=x_{ 3 }^{ 3 }$，从而将模型转化为线性回归模型。</p>
 <p>根据函数图形特性，我们还可以使：</p>
@@ -620,13 +620,13 @@ J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\
 <p>注：如果我们采用多项式回归模型，在运行梯度下降算法前，特征缩放非常有必要。</p>
 <h3 id="4-6-正规方程"><a href="#4-6-正规方程" class="headerlink" title="4.6 正规方程"></a>4.6 正规方程</h3><p>参考视频: 4 - 6 - Normal Equation (16 min).mkv</p>
 <p>到目前为止，我们都在使用梯度下降算法，但是对于某些线性回归问题，正规方程方法是更好的解决方案。如：</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/a47ec797d8a9c331e02ed90bca48a24b.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/a47ec797d8a9c331e02ed90bca48a24b.png" alt></p>
 <p>正规方程是通过求解下面的方程来找出使得代价函数最小的参数的：$\frac{ \partial } { \partial{ \theta_{ j } } }J\left( { \theta_{ j } } \right)=0$ 。<br> 假设我们的训练集特征矩阵为 $X$（包含了 ${ { x }_{ 0 } }=1$）并且我们的训练集结果为向量 $y$，则利用正规方程解出向量 $\theta ={ { \left( { X^T }X \right) }^{ -1 } } { X^{ T } }y$ 。<br>上标<strong>T</strong>代表矩阵转置，上标-1 代表矩阵的逆。设矩阵$A={ X^{ T } }X$，则：${ { \left( { X^T }X \right) }^{ -1 } }={ A^{ -1 } }$<br>以下表示数据为例：</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/261a11d6bce6690121f26ee369b9e9d1.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/261a11d6bce6690121f26ee369b9e9d1.png" alt></p>
 <p>即：</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/c8eedc42ed9feb21fac64e4de8d39a06.png" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/c8eedc42ed9feb21fac64e4de8d39a06.png" alt></p>
 <p>运用正规方程方法求解参数：</p>
-<p><img src="/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b62d24a1f709496a6d7c65f87464e911.jpg" alt></p>
+<p><img src="/blog/blog/2021/07/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/b62d24a1f709496a6d7c65f87464e911.jpg" alt></p>
 <p>在 <strong>Octave</strong> 中，正规方程写作：</p>
 <figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pinv(<span class="name">X</span>&#x27;*X)*X&#x27;*y</span><br></pre></td></tr></table></figure>
 <p>注：对于那些不可逆的矩阵（通常是因为特征之间不独立，如同时包含英尺为单位的尺寸和米为单位的尺寸两个特征，也有可能是特征数量大于训练集的数量），正规方程方法是不能用的。</p>
@@ -702,12 +702,12 @@ J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/07/10/hello-world/" rel="prev" title="Hello World">
+                <a href="/blog/2021/07/10/hello-world/" rel="prev" title="Hello World">
                   <i class="fa fa-chevron-left"></i> Hello World
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/" rel="next" title="操作系统专题实践——隐藏进程">
+                <a href="/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/" rel="next" title="操作系统专题实践——隐藏进程">
                   操作系统专题实践——隐藏进程 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -794,9 +794,9 @@ J\left( \theta  \right)=\frac{1} {2m}\sum\limits_{i=1}^{m } { { {\left( { {h}_{\
 
 
   <script src="[object Object]"></script>
-  <script src="/%5Bobject%20Object%5D"></script>
-  <script src="/%5Bobject%20Object%5D"></script>
-  <script src="/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
 
 
 <script>
@@ -816,7 +816,7 @@ var options = {
 const darkmode = new Darkmode(options);
 darkmode.showWidget();
 </script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
 
   
 
@@ -832,11 +832,11 @@ darkmode.showWidget();
   
 
   <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
-<script src="/js/third-party/math/mathjax.js"></script>
+<script src="/blog/js/third-party/math/mathjax.js"></script>
 
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+<script src="/blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/blog/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>
 <!-- 页面点击小红心 -->
 <script type="text/javascript" src="/js/clicklove.js"></script>
