@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
+<meta name="description" content="操作系统实验2，Linux Shell的实现记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统专题实践——Linux Shell">
+<meta property="og:url" content="https://coding-famer.github.io/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/index.html">
+<meta property="og:site_name" content="gch&#39;home">
+<meta property="og:description" content="操作系统实验2，Linux Shell的实现记录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png">
+<meta property="article:published_time" content="2021-10-15T06:33:09.000Z">
+<meta property="article:modified_time" content="2021-10-22T16:27:47.941Z">
+<meta property="article:author" content="gch">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://coding-famer.github.io/blog/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png">
+
+
+<link rel="canonical" href="https://coding-famer.github.io/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/","path":"2021/10/15/操作系统专题实践——Linux-Shell/","title":"操作系统专题实践——Linux Shell"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>操作系统专题实践——Linux Shell | gch'home</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/coding-famer" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> 
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">gch'home</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/blog/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text">实验要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC"><span class="nav-number">2.</span> <span class="nav-text">实验指导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">shell的基本工作流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">实验过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">功能设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%95%E7%A4%BA%E6%8F%90%E7%A4%BA%E7%AC%A6"><span class="nav-number">3.1.1.</span> <span class="nav-text">展示提示符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%BB%BA%E6%8C%87%E4%BB%A4"><span class="nav-number">3.1.2.</span> <span class="nav-text">内建指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E5%86%85%E5%AE%B9"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">指令内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E7%B1%BB"><span class="nav-number">3.1.3.</span> <span class="nav-text">指令类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E7%B1%BBcmd"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">基类cmd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B4%BE%E7%94%9F%E7%B1%BB"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">派生类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E5%88%86%E6%9E%90"><span class="nav-number">3.1.4.</span> <span class="nav-text">指令分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%8C%87%E4%BB%A4"><span class="nav-number">3.1.5.</span> <span class="nav-text">运行指令</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="gch"
+      src="/blog/uploads/head.jpg">
+  <p class="site-author-name" itemprop="name">gch</p>
+  <div class="site-description" itemprop="description">This is gch' home</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/coding-famer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;coding-famer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gchseu@outlook.com" title="E-Mail → mailto:gchseu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/FC3vM8yn6Dl9Yyg" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;FC3vM8yn6Dl9Yyg" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100068779494099" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100068779494099" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/uploads/head.jpg">
+      <meta itemprop="name" content="gch">
+      <meta itemprop="description" content="This is gch' home">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gch'home">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          操作系统专题实践——Linux Shell
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-15 14:33:09" itemprop="dateCreated datePublished" datetime="2021-10-15T14:33:09+08:00">2021-10-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-23 00:27:47" itemprop="dateModified" datetime="2021-10-23T00:27:47+08:00">2021-10-23</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">操作系统实验2，Linux Shell的实现记录。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__          __  _                            _                     _     _          _____ _          _ _ </span><br><span class="line">\ \        / / | |                          | |                   | |   ( )        / ____| |        | | |</span><br><span class="line"> \ \  /\  / /__| | ___ ___  _ __ ___   ___  | |_ ___     __ _  ___| |__ |/   ___  | (___ | |__   ___| | |</span><br><span class="line">  \ \/  \/ / _ \ |/ __/ _ \| &#x27;_ ` _ \ / _ \ | __/ _ \   / _` |/ __| &#x27;_ \    / __|  \___ \| &#x27;_ \ / _ \ | |</span><br><span class="line">   \  /\  /  __/ | (_| (_) | | | | | |  __/ | || (_) | | (_| | (__| | | |   \__ \  ____) | | | |  __/ | |</span><br><span class="line">    \/  \/ \___|_|\___\___/|_| |_| |_|\___|  \__\___/   \__, |\___|_| |_|   |___/ |_____/|_| |_|\___|_|_|</span><br><span class="line">                                                         __/ |                                           </span><br><span class="line">                                                        |___/                                            </span><br></pre></td></tr></table></figure>
+<hr>
+<p>​                       </p>
+<h1 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h1><p>实现具有管道、重定向功能的shell，能够执行一些简 单的基本命令，如进程执行、列目录等</p>
+<p><strong>具体要求</strong></p>
+<ol>
+<li><p>设计一个C语言程序，完成最基本的shell角色：给出 命令行提示符、能够逐次接受命令； 对于命令分成三种</p>
+<ul>
+<li>内部命令（例如help命令、exit命令等）</li>
+</ul>
+<ul>
+<li>外部命令（常见的ls、cp等，以及其他磁盘上的可执行程 序HelloWrold等）</li>
+<li>无效命令（不是上述二种命令）</li>
+</ul>
+</li>
+<li><p>具有支持管道的功能，即在shell中输入诸如 “dir | more”能够执行dir命令并将其输出通过管道将 其输入传送给more。</p>
+</li>
+<li><p>具有支持重定向的功能，即在shell中输入诸如“dir  &gt; direct.txt”能够执行dir命令并将结果输出到direct.txt</p>
+</li>
+<li><p>将上述步骤直接合并完成</p>
+</li>
+</ol>
+<h1 id="实验指导"><a href="#实验指导" class="headerlink" title="实验指导"></a>实验指导</h1><p>老师给的一些指导</p>
+<h2 id="shell的基本工作流程"><a href="#shell的基本工作流程" class="headerlink" title="shell的基本工作流程"></a>shell的基本工作流程</h2><p><img src="/blog/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png" alt></p>
+<h1 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h1><h2 id="功能设计"><a href="#功能设计" class="headerlink" title="功能设计"></a>功能设计</h2><h3 id="展示提示符"><a href="#展示提示符" class="headerlink" title="展示提示符"></a>展示提示符</h3><p>这个函数用于显示类似于 <code>[root@localhost tmp]λ</code> 的东西，需要获取用户名，主机名，当前工作目录等内容。</p>
+<ul>
+<li><p>获取用户名</p>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">passwd</span> *<span class="variable">pwd</span> = <span class="function"><span class="title">getpwuid</span>(<span class="title">getuid</span>());</span></span><br><span class="line"><span class="function"><span class="variable">string</span> <span class="title">username</span>(<span class="variable">pwd</span>-&gt;<span class="variable">pw_name</span>);</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取当前目录</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">getcwd</span>(char_buf, CHAR_BUF_SIZE);</span><br><span class="line"><span class="function">string <span class="title">cwd</span><span class="params">(char_buf)</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>prompt 中目录只显示最近一级，此处用 <code>/</code> 来 split 后取最后一个即可</li>
+<li>家目录需要折叠为 <code>~</code>，这里顺便把家目录地址存到全局变量 <code>home_dir</code>，后续要用到</li>
+</ul>
+</li>
+<li><p>获取主机名</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">gethostname</span>(char_buf, CHAR_BUF_SIZE);</span><br><span class="line"><span class="function">string <span class="title">hostname</span><span class="params">(char_buf)</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>有时 hostname 会是形如 <code>localhost.locald.xxx</code> 的形式，也 split 处理一下</li>
+</ul>
+</li>
+<li><p>输出之即可</p>
+<p>这里为了区别于普通的terminal，将输出设为了红色。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; RED &lt;&lt; <span class="string">&quot;[&quot;</span> &lt;&lt; username &lt;&lt; <span class="string">&quot;@&quot;</span> &lt;&lt; hostname &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; cwd &lt;&lt; <span class="string">&quot;]λ &quot;</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="内建指令"><a href="#内建指令" class="headerlink" title="内建指令"></a>内建指令</h3><p>cd、quit、history</p>
+<h4 id="指令内容"><a href="#指令内容" class="headerlink" title="指令内容"></a>指令内容</h4><p><strong>cd</strong></p>
+<p>cd主要是使用<code>chdir()</code>函数更换当前目录。同时一个比较重要的点是对家目录的处理。如输入cd即更改目录到家目录，以及用”~”替代家目录。</p>
+<p><strong>quit</strong></p>
+<p>调用exit(0)退出即可</p>
+<p><strong>history</strong></p>
+<p>用一个全局的vector记录历史命令，输出即可。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">process_builtin_command</span><span class="params">(string line)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 1 - cd</span></span><br><span class="line">  <span class="keyword">if</span> (line == <span class="string">&quot;cd&quot;</span>) &#123;</span><br><span class="line">    <span class="built_in">chdir</span>(home_dir.<span class="built_in">c_str</span>()); <span class="comment">// cd 视为 cd~</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (line.<span class="built_in">substr</span>(<span class="number">0</span>, <span class="number">2</span>) == <span class="string">&quot;cd&quot;</span>) &#123;</span><br><span class="line">    <span class="comment">// 用家目录替换~</span></span><br><span class="line">    string arg1 = <span class="built_in">string_split</span>(line, WHITE_SPACE)[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">if</span> (arg1.<span class="built_in">find</span>(<span class="string">&quot;~&quot;</span>) == <span class="number">0</span>)</span><br><span class="line">      line = <span class="string">&quot;cd &quot;</span> + home_dir + arg1.<span class="built_in">substr</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// change directory</span></span><br><span class="line">    <span class="keyword">int</span> chdir_ret = <span class="built_in">chdir</span>(<span class="built_in">trim</span>(line.<span class="built_in">substr</span>(<span class="number">2</span>)).<span class="built_in">c_str</span>());</span><br><span class="line">    <span class="keyword">if</span> (chdir_ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">panic</span>(<span class="string">&quot;chdir failed&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 2 - quit</span></span><br><span class="line">  <span class="keyword">if</span> (line == <span class="string">&quot;quit&quot;</span>) &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Bye from ExpShell.&quot;</span> &lt;&lt; BLACK &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 3 - history</span></span><br><span class="line">  <span class="keyword">if</span> (line == <span class="string">&quot;history&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = cmd_history.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">      cout &lt;&lt; <span class="string">&quot;\t&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;\t&quot;</span> &lt;&lt; cmd_history.<span class="built_in">at</span>(i) &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="指令类"><a href="#指令类" class="headerlink" title="指令类"></a>指令类</h3><h4 id="基类cmd"><a href="#基类cmd" class="headerlink" title="基类cmd"></a>基类cmd</h4><p>设计一个基类，其余类都派生自cmd类。</p>
+<p>含有一个数据成员type即指令类型。指令类型共有以下几个：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CMD_TYPE_NULL 0      </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CMD_TYPE_EXEC 1     </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CMD_TYPE_PIPE 2     </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CMD_TYPE_REDIR_IN 4  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CMD_TYPE_REDIR_OUT 8 </span></span><br></pre></td></tr></table></figure>
+<h4 id="派生类"><a href="#派生类" class="headerlink" title="派生类"></a>派生类</h4><p>共有三个派生类 exec_cmd、 pipe_cmd、 redirect_cmd，分别为普通的指令，具有管道的指令和具有重定向的指令。</p>
+<p>exec_cmd含有一个表示参数列表的数据成员，pipe_cmd 含有两个cmd类指针作为其两侧的指令，redirect_cmd含有一个文件名和一个fd。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">cmd</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="keyword">int</span> type;</span><br><span class="line">  <span class="built_in">cmd</span>() &#123; <span class="keyword">this</span>-&gt;type = CMD_TYPE_NULL; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 普通指令</span></span><br><span class="line"><span class="comment">// argv[0] ...argv[1~n]</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">exec_cmd</span> :</span> <span class="keyword">public</span> cmd &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  vector&lt;string&gt; argv;</span><br><span class="line">  <span class="built_in">exec_cmd</span>(vector&lt;string&gt; &amp;argv) &#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;type = CMD_TYPE_EXEC;</span><br><span class="line">    <span class="keyword">this</span>-&gt;argv = vector&lt;string&gt;(argv);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 管道指令</span></span><br><span class="line"><span class="comment">// left | right</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">pipe_cmd</span> :</span> <span class="keyword">public</span> cmd &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  cmd *left;</span><br><span class="line">  cmd *right;</span><br><span class="line">  <span class="built_in">pipe_cmd</span>() &#123; <span class="keyword">this</span>-&gt;type = CMD_TYPE_PIPE; &#125;</span><br><span class="line">  <span class="built_in">pipe_cmd</span>(cmd *left, cmd *right) &#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;type = CMD_TYPE_PIPE;</span><br><span class="line">    <span class="keyword">this</span>-&gt;left = left;</span><br><span class="line">    <span class="keyword">this</span>-&gt;right = right;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重定向指令</span></span><br><span class="line"><span class="comment">// ls &gt; a.txt; some_program &lt; b.txt</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">redirect_cmd</span> :</span> <span class="keyword">public</span> cmd &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  cmd *cmd_;</span><br><span class="line">  string file;</span><br><span class="line">  <span class="keyword">int</span> fd;</span><br><span class="line">  <span class="built_in">redirect_cmd</span>() &#123;&#125;</span><br><span class="line">  <span class="built_in">redirect_cmd</span>(<span class="keyword">int</span> type, cmd *cmd_, string file, <span class="keyword">int</span> fd) &#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;type = type;</span><br><span class="line">    <span class="keyword">this</span>-&gt;cmd_ = cmd_;</span><br><span class="line">    <span class="keyword">this</span>-&gt;file = file;</span><br><span class="line">    <span class="keyword">this</span>-&gt;fd = fd;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="指令分析"><a href="#指令分析" class="headerlink" title="指令分析"></a>指令分析</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cmd *<span class="title">parse</span><span class="params">(string line)</span> </span>&#123;</span><br><span class="line">  line = <span class="built_in">trim</span>(line);</span><br><span class="line">  string cur_read = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  cmd *cur_cmd = <span class="keyword">new</span> <span class="built_in">cmd</span>();</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (i &lt; line.<span class="built_in">length</span>()) &#123;</span><br><span class="line">    <span class="comment">//处理重定向指令</span></span><br><span class="line">    <span class="keyword">if</span> (line[i] == <span class="string">&#x27;&lt;&#x27;</span> || line[i] == <span class="string">&#x27;&gt;&#x27;</span>) &#123;</span><br><span class="line">      cmd *lhs = <span class="built_in">parse_exec_cmd</span>(cur_read); <span class="comment">// [lhs] &lt; (or &gt;) [rhs] 先提取左边的指令</span></span><br><span class="line">      <span class="keyword">int</span> j = i + <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">while</span> (j &lt; line.<span class="built_in">length</span>() &amp;&amp; !<span class="built_in">is_symbol</span>(line[j]))</span><br><span class="line">        j++;</span><br><span class="line">      string file = <span class="built_in">trim</span>(line.<span class="built_in">substr</span>(i + <span class="number">1</span>, j - i));  <span class="comment">//得到重定向的文件名</span></span><br><span class="line">      cur_cmd = <span class="keyword">new</span> <span class="built_in">redirect_cmd</span>(line[i] == <span class="string">&#x27;&lt;&#x27;</span> ? CMD_TYPE_REDIR_IN</span><br><span class="line">                                                : CMD_TYPE_REDIR_OUT,</span><br><span class="line">                                 lhs, file, <span class="number">-1</span>); </span><br><span class="line">      i = j;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (line[i] == <span class="string">&#x27;|&#x27;</span>) &#123;</span><br><span class="line">      cmd *rhs = <span class="built_in">parse</span>(line.<span class="built_in">substr</span>(i + <span class="number">1</span>)); <span class="comment">//递归解析右边指令</span></span><br><span class="line">      <span class="keyword">if</span> (cur_cmd-&gt;type == CMD_TYPE_NULL)</span><br><span class="line">        cur_cmd = <span class="built_in">parse_exec_cmd</span>(cur_read);</span><br><span class="line">      cur_cmd = <span class="keyword">new</span> <span class="built_in">pipe_cmd</span>(cur_cmd, rhs);</span><br><span class="line">      <span class="keyword">return</span> cur_cmd;</span><br><span class="line">    &#125; <span class="keyword">else</span></span><br><span class="line">      cur_read += line[i++];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (cur_cmd-&gt;type == CMD_TYPE_NULL)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parse_exec_cmd</span>(cur_read);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> cur_cmd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="运行指令"><a href="#运行指令" class="headerlink" title="运行指令"></a>运行指令</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">run_cmd</span><span class="params">(cmd *cmd_)</span> </span>&#123;</span><br><span class="line">  <span class="built_in"><span class="keyword">switch</span></span> (cmd_-&gt;type) &#123;</span><br><span class="line">  <span class="keyword">case</span> CMD_TYPE_EXEC: &#123;</span><br><span class="line">    exec_cmd *ecmd = <span class="keyword">static_cast</span>&lt;exec_cmd *&gt;(cmd_);</span><br><span class="line">    <span class="comment">// process alias</span></span><br><span class="line">    <span class="keyword">if</span> (alias_map.<span class="built_in">count</span>(ecmd-&gt;argv[<span class="number">0</span>]) != <span class="number">0</span>) &#123;</span><br><span class="line">      vector&lt;string&gt; arg0_replace =</span><br><span class="line">          <span class="built_in">string_split</span>(alias_map.<span class="built_in">at</span>(ecmd-&gt;argv[<span class="number">0</span>]), WHITE_SPACE); <span class="comment">//仍需拆分成多个指令</span></span><br><span class="line">      <span class="comment">//用新的拆分后的指令替换原指令</span></span><br><span class="line">      ecmd-&gt;argv.<span class="built_in">erase</span>(ecmd-&gt;argv.<span class="built_in">begin</span>());</span><br><span class="line">      <span class="keyword">for</span> (vector&lt;string&gt;::reverse_iterator it = arg0_replace.<span class="built_in">rbegin</span>();</span><br><span class="line">           it &lt; arg0_replace.<span class="built_in">rend</span>(); it++) &#123;</span><br><span class="line">        ecmd-&gt;argv.<span class="built_in">insert</span>(ecmd-&gt;argv.<span class="built_in">begin</span>(), (*it));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// prepare vector&lt;string&gt; for execvp</span></span><br><span class="line">    <span class="comment">// execp函数参数不能是string，去除指令序列中的空格，在序列最后加入NULL（execp函数参数要求）</span></span><br><span class="line">    vector&lt;<span class="keyword">char</span> *&gt; argv_c_str;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ecmd-&gt;argv.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">      string arg_trim = <span class="built_in">trim</span>(ecmd-&gt;argv[i]);</span><br><span class="line">      <span class="keyword">if</span> (arg_trim.<span class="built_in">length</span>() &gt; <span class="number">0</span>) &#123; <span class="comment">// skip blank string</span></span><br><span class="line">        <span class="keyword">char</span> *tmp = <span class="keyword">new</span> <span class="keyword">char</span>[MAX_ARGV_LEN];</span><br><span class="line">        <span class="built_in">strcpy</span>(tmp, arg_trim.<span class="built_in">c_str</span>());</span><br><span class="line">        argv_c_str.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    argv_c_str.<span class="built_in">push_back</span>(<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">char</span> **argv_c_arr = &amp;argv_c_str[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">// vscode made wrong marco expansion here</span></span><br><span class="line">    <span class="comment">// second argument is ok for char** rather than char *const (*(*)())[]</span></span><br><span class="line">    <span class="keyword">int</span> execvp_ret = <span class="built_in">execvp</span>(argv_c_arr[<span class="number">0</span>], argv_c_arr);</span><br><span class="line">    <span class="keyword">if</span> (execvp_ret &lt; <span class="number">0</span>)</span><br><span class="line">      <span class="built_in">panic</span>(<span class="string">&quot;execvp failed&quot;</span>);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">case</span> CMD_TYPE_PIPE: &#123;</span><br><span class="line">    pipe_cmd *pcmd = <span class="keyword">static_cast</span>&lt;pipe_cmd *&gt;(cmd_);</span><br><span class="line">    <span class="built_in">pipe_wrap</span>(pipe_fd);</span><br><span class="line">    <span class="comment">// fork twice to run lhs and rhs of pipe</span></span><br><span class="line">    <span class="keyword">if</span> (fork_wrap() == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// i&#x27;m a child, let&#x27;s satisfy lhs</span></span><br><span class="line">      <span class="built_in">close</span>(pipe_fd[<span class="number">0</span>]);</span><br><span class="line">      <span class="built_in">dup2_wrap</span>(pipe_fd[<span class="number">1</span>], <span class="built_in">fileno</span>(stdout)); <span class="comment">// lhs_stdout -&gt; pipe_write</span></span><br><span class="line">      <span class="comment">// close the original ones</span></span><br><span class="line">      <span class="built_in">run_cmd</span>(pcmd-&gt;left);</span><br><span class="line">      <span class="built_in">close</span>(pipe_fd[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (fork_wrap() == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// i&#x27;m also a child, let&#x27;s satisfy rhs</span></span><br><span class="line">      <span class="built_in">close</span>(pipe_fd[<span class="number">1</span>]);</span><br><span class="line">      <span class="built_in">dup2_wrap</span>(pipe_fd[<span class="number">0</span>], <span class="built_in">fileno</span>(stdin)); <span class="comment">// pipe_read -&gt; rhs_stdin</span></span><br><span class="line">      <span class="built_in">run_cmd</span>(pcmd-&gt;right);</span><br><span class="line">      <span class="built_in">close</span>(pipe_fd[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// really good. now we have lhs_stdout -&gt; pipe -&gt; rhs_stdin</span></span><br><span class="line">    <span class="comment">// if fork &gt; 0, then i&#x27;m the father</span></span><br><span class="line">    <span class="comment">// let&#x27;s wait for my children</span></span><br><span class="line">    <span class="built_in">close</span>(pipe_fd[<span class="number">0</span>]);</span><br><span class="line">    <span class="built_in">close</span>(pipe_fd[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">int</span> wait_status_1, wait_status_2;</span><br><span class="line">    <span class="built_in">wait</span>(&amp;wait_status_1);</span><br><span class="line">    <span class="built_in">wait</span>(&amp;wait_status_2);</span><br><span class="line">    <span class="built_in">check_wait_status</span>(wait_status_1);</span><br><span class="line">    <span class="built_in">check_wait_status</span>(wait_status_2);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">case</span> CMD_TYPE_REDIR_IN:</span><br><span class="line">  <span class="keyword">case</span> CMD_TYPE_REDIR_OUT: &#123;</span><br><span class="line">    redirect_cmd *rcmd = <span class="keyword">static_cast</span>&lt;redirect_cmd *&gt;(cmd_);</span><br><span class="line">    <span class="keyword">if</span> (fork_wrap() == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// i&#x27;m a child, let&#x27;s satisfy the file being redirected to (or from)</span></span><br><span class="line">      rcmd-&gt;fd = <span class="built_in">open_wrap</span>(rcmd-&gt;file.<span class="built_in">c_str</span>(), rcmd-&gt;type == CMD_TYPE_REDIR_IN</span><br><span class="line">                                                   ? REDIR_IN_OFLAG</span><br><span class="line">                                                   : REDIR_OUT_OFLAG);</span><br><span class="line">      <span class="built_in">dup2_wrap</span>(rcmd-&gt;fd, rcmd-&gt;type == CMD_TYPE_REDIR_IN ? <span class="built_in">fileno</span>(stdin)</span><br><span class="line">                                                          : <span class="built_in">fileno</span>(stdout));</span><br><span class="line">      <span class="built_in">run_cmd</span>(rcmd-&gt;cmd_);</span><br><span class="line">      <span class="built_in">close</span>(rcmd-&gt;fd);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// if fork &gt; 0, then i&#x27;m the father</span></span><br><span class="line">    <span class="comment">// let&#x27;s wait for my children</span></span><br><span class="line">    <span class="keyword">int</span> wait_status;</span><br><span class="line">    <span class="built_in">wait</span>(&amp;wait_status);</span><br><span class="line">    <span class="built_in">check_wait_status</span>(wait_status);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">&quot;unknown or null cmd type&quot;</span>, <span class="literal">true</span>, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/blog/tags/Shell/" rel="tag"># Shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94%E9%9A%90%E8%97%8F%E8%BF%9B%E7%A8%8B/" rel="prev" title="操作系统专题实践——隐藏进程">
+                  <i class="fa fa-chevron-left"></i> 操作系统专题实践——隐藏进程
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gch</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">31k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">29 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="powered-by">
+	<i class="fa fa-user-md"></i>
+	<span id="busuanzi_container_site_uv">
+		本站访客数:<span id="busuanzi_value_site_uv"></span>
+	</span>
+	<span class="post-meta-divider">|</span>
+	<span id="busuanzi_container_site_pv">
+		本站访问量<span id="busuanzi_value_site_pv"></span>
+	</span>
+</div>
+<div id="days"></div>
+<script type="text/javascript" src="/js/blog-run-time.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+
+  <script src="[object Object]"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/blog/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<!-- 樱花特效 -->
+  
+      <script async src="/js/fairyDustCursor.js"></script>
+  
+  <!-- 数字雨 -->
+  <canvas id="canvas" width="1440" height="900" ></canvas>
+  <script type="text/javascript" src="/js/DigitalRain.js"></script>
