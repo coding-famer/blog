@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
+<meta name="description" content="大二下算法课程的一些笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法课程笔记">
+<meta property="og:url" content="https://coding-famer.github.io/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="gch&#39;home">
+<meta property="og:description" content="大二下算法课程的一些笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdn.net/20180928151510626?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM1Njc4NDA3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2380513-20210702132608425-1069921921.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2380513-20210702132640807-1780843805.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2380513-20210702132850415-394555172.jpg">
+<meta property="article:published_time" content="2021-11-10T03:16:15.000Z">
+<meta property="article:modified_time" content="2021-11-10T03:25:35.454Z">
+<meta property="article:author" content="gch">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180928151510626?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM1Njc4NDA3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+
+<link rel="canonical" href="https://coding-famer.github.io/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/","path":"2021/11/10/算法课程笔记/","title":"算法课程笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>算法课程笔记 | gch'home</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/coding-famer" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> 
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">gch'home</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/blog/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A7%E4%BA%8C%E4%B8%8B%E7%9A%84%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">大二下的算法笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E5%85%B3%E5%BF%AB%E6%8E%92%E7%9A%84%E8%AE%A8%E8%AE%BA"><span class="nav-number">1.1.</span> <span class="nav-text">有关快排的讨论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E7%94%A8%E4%BA%A4%E6%8D%A2%E7%9A%84%E5%81%9A%E6%B3%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">不用交换的做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E7%AC%ACk%E5%A4%A7%E7%9A%84%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">找第k大的数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E4%B8%AD%E9%97%B4%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">找中间数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E6%9C%80%E5%A4%A7%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">找最大最小的数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%9B%E9%A9%AC%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.</span> <span class="nav-text">赛马问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">1.5.1.</span> <span class="nav-text">复杂度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E8%BF%91%E7%82%B9%E5%AF%B9%E9%97%AE%E9%A2%98"><span class="nav-number">1.6.</span> <span class="nav-text">最近点对问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%BD%A2%E5%9C%B0%E5%AF%B9%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B8%83%E7%BA%BF"><span class="nav-number">1.7.</span> <span class="nav-text">分形地对二叉树布线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E4%B8%80%E5%BC%80%E5%A7%8B%E7%9A%84%E4%B8%80%E7%82%B9%E6%83%B3%E6%B3%95"><span class="nav-number">1.7.1.</span> <span class="nav-text">我一开始的一点想法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E5%87%B8%E5%8C%85"><span class="nav-number">1.8.</span> <span class="nav-text">求凸包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%8B%E7%9B%98%E8%A6%86%E7%9B%96"><span class="nav-number">1.9.</span> <span class="nav-text">棋盘覆盖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E8%B5%9B%E6%97%A5%E7%A8%8B%E8%A1%A8"><span class="nav-number">1.10.</span> <span class="nav-text">循环赛日程表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4%E9%80%89%E6%8B%A9"><span class="nav-number">1.11.</span> <span class="nav-text">线性时间选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">贪心法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%8C%BA%E9%97%B4%E6%9C%80%E5%A4%A7%E5%AD%90%E9%9B%86"><span class="nav-number">2.1.</span> <span class="nav-text">寻找区间最大子集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E6%80%A7%E8%AF%81%E6%98%8E"><span class="nav-number">2.1.1.</span> <span class="nav-text">正确性证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91MST"><span class="nav-number">2.2.</span> <span class="nav-text">最小生成树MST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E6%80%A7%E8%AF%81%E6%98%8E-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">正确性证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%A4%BC%E7%89%A9%E9%97%AE%E9%A2%98%EF%BC%88%E4%B8%8D%E6%98%AF%E6%AD%A3%E7%A1%AE%E8%A7%A3%E6%B3%95%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">分礼物问题（不是正确解法）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E8%A7%A3%E6%B3%95"><span class="nav-number">2.3.1.</span> <span class="nav-text">错误解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%9C%BA%E8%B0%83%E5%BA%A6%EF%BC%88%E4%B8%8D%E6%98%AF%E6%AD%A3%E7%A1%AE%E8%A7%A3%E6%B3%95%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">多机调度（不是正确解法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="nav-number">2.5.</span> <span class="nav-text">背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85"><span class="nav-number">2.5.1.</span> <span class="nav-text">完全背包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85"><span class="nav-number">2.5.2.</span> <span class="nav-text">多重背包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E6%96%B9%E6%A1%88%E6%80%BB%E6%95%B0"><span class="nav-number">2.5.3.</span> <span class="nav-text">求方案总数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%9C%80%E4%BC%98%E6%96%B9%E6%A1%88"><span class="nav-number">2.5.4.</span> <span class="nav-text">输出最优方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E9%95%BF%E7%9B%B8%E5%90%8C%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">2.6.</span> <span class="nav-text">最长相同子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%9C%80%E5%A4%A7%E4%BB%B7%E5%80%BC%E4%B8%8D%E9%87%8D%E5%8C%BA%E9%97%B4%E9%9B%86"><span class="nav-number">2.7.</span> <span class="nav-text">选最大价值不重区间集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%A4%BC%E7%89%A9%E9%97%AE%E9%A2%98"><span class="nav-number">2.8.</span> <span class="nav-text">分礼物问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E5%8F%B0%E9%98%B6%E9%97%AE%E9%A2%98"><span class="nav-number">2.9.</span> <span class="nav-text">上台阶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">2.10.</span> <span class="nav-text">最长上升子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E5%92%8C"><span class="nav-number">2.11.</span> <span class="nav-text">最大子数组和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E6%96%87%E6%9C%80%E5%B0%8F%E5%88%92%E5%88%86%E6%AC%A1%E6%95%B0"><span class="nav-number">2.12.</span> <span class="nav-text">回文最小划分次数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8"><span class="nav-number">2.13.</span> <span class="nav-text">买卖股票</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%91%E7%BC%96%E8%BE%91%E6%AC%A1%E6%95%B0"><span class="nav-number">2.14.</span> <span class="nav-text">最少编辑次数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E8%AE%BA"><span class="nav-number">3.</span> <span class="nav-text">博弈论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#voting-game"><span class="nav-number">3.1.</span> <span class="nav-text">voting game</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B6%E8%83%9C%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">制胜策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%8D%E5%8D%96%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">拍卖问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%AE%9A%E4%B9%89"><span class="nav-number">3.4.</span> <span class="nav-text">相关定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#knapsack"><span class="nav-number">3.5.</span> <span class="nav-text">knapsack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E7%85%A7%E6%80%A7%E4%BB%B7%E6%AF%94%E9%80%89%EF%BC%9F%E6%97%A0%E7%A9%B7%E5%9D%8F"><span class="nav-number">3.5.1.</span> <span class="nav-text">按照性价比选？无穷坏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E4%BB%B7%E5%80%BC%E6%9C%80%E5%A4%A7%E8%B4%AA%E5%BF%83%EF%BC%9F%E6%97%A0%E7%A9%B7%E5%9D%8F"><span class="nav-number">3.5.2.</span> <span class="nav-text">按价值最大贪心？无穷坏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max%E4%B8%80%E4%B8%8B%E4%B8%8A%E9%9D%A2%E4%B8%A4%E4%B8%AA%E7%AE%97%E6%B3%95"><span class="nav-number">3.5.3.</span> <span class="nav-text">max一下上面两个算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E7%A5%9E%E5%A5%87%E7%9A%84%E5%81%9A%E6%B3%95"><span class="nav-number">3.5.4.</span> <span class="nav-text">另一个神奇的做法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%87%E8%A1%A1%E9%97%AE%E9%A2%98"><span class="nav-number">3.6.</span> <span class="nav-text">均衡问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%A1%BE%E8%99%91%E5%92%8C%E6%88%91%E4%BB%AC%E7%9A%84%E6%83%B3%E6%B3%95"><span class="nav-number">3.6.1.</span> <span class="nav-text">一些顾虑和我们的想法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%BD%92%EF%BC%9A%E4%B8%80%E5%AE%9A%E6%98%AF%E4%B8%80%E8%BD%AE%E4%B8%80%E8%BD%AE%E6%94%BE%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.6.2.</span> <span class="nav-text">数归：一定是一轮一轮放任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E7%AE%97%E6%B3%95online"><span class="nav-number">3.7.</span> <span class="nav-text">在线算法online</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95"><span class="nav-number">3.7.1.</span> <span class="nav-text">解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BF%E5%B0%94%E5%8D%91%E6%96%AF%E5%B1%B1%E6%BB%91%E9%9B%AA"><span class="nav-number">3.7.2.</span> <span class="nav-text">阿尔卑斯山滑雪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95-1"><span class="nav-number">3.7.3.</span> <span class="nav-text">解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%81%AF%E9%97%AE%E9%A2%98"><span class="nav-number">3.8.</span> <span class="nav-text">关灯问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="gch"
+      src="/blog/uploads/head.jpg">
+  <p class="site-author-name" itemprop="name">gch</p>
+  <div class="site-description" itemprop="description">This is gch' home</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/coding-famer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;coding-famer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gchseu@outlook.com" title="E-Mail → mailto:gchseu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/FC3vM8yn6Dl9Yyg" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;FC3vM8yn6Dl9Yyg" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100068779494099" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100068779494099" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/uploads/head.jpg">
+      <meta itemprop="name" content="gch">
+      <meta itemprop="description" content="This is gch' home">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gch'home">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法课程笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-10 11:16:15 / 修改时间：11:25:35" itemprop="dateCreated datePublished" datetime="2021-11-10T11:16:15+08:00">2021-11-10</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>17k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">大二下算法课程的一些笔记</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="大二下的算法笔记"><a href="#大二下的算法笔记" class="headerlink" title="大二下的算法笔记"></a>大二下的算法笔记</h1><h2 id="有关快排的讨论"><a href="#有关快排的讨论" class="headerlink" title="有关快排的讨论"></a>有关快排的讨论</h2><h3 id="不用交换的做法"><a href="#不用交换的做法" class="headerlink" title="不用交换的做法"></a>不用交换的做法</h3><p>利用一个和数组等长的空间。</p>
+<p>把数组扫一遍，若a[i]<pivot则从前向后往那个空间放，若a[i]>pivot则从后向前放。</pivot则从前向后往那个空间放，若a[i]></p>
+<p>随便选个pivot，要不就选中间的数。</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">int</span> <span class="comment">p=l</span><span class="string">,</span><span class="comment">q=r</span><span class="literal">-</span><span class="comment">1</span><span class="string">,</span><span class="comment">pivot=a</span><span class="title">[</span><span class="comment">(l</span><span class="literal">+</span><span class="comment">r)/2</span><span class="title">]</span><span class="comment">;</span></span><br><span class="line"><span class="comment">while(p</span>&lt;<span class="comment">=q)&#123;</span></span><br><span class="line">    <span class="comment">while(a</span><span class="title">[</span><span class="comment">p</span><span class="title">]</span>&lt;<span class="comment">=pivot)</span>++<span class="comment">p;</span></span><br><span class="line">    <span class="comment">while(a</span><span class="title">[</span><span class="comment">q</span><span class="title">]</span>&gt;<span class="comment">=pivot)</span>--<span class="comment">q;</span></span><br><span class="line">    <span class="comment">if(p</span>&lt;<span class="comment">=q)&#123;swap(p</span><span class="string">,</span><span class="comment">q)</span><span class="string">,</span>++<span class="comment">p</span><span class="string">,</span>--<span class="comment">q;&#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">if(p</span>&lt;<span class="comment">r</span><span class="literal">-</span><span class="comment">1)qsort(p</span><span class="string">,</span><span class="comment">r);</span></span><br><span class="line"><span class="comment">if(l</span>&lt;<span class="comment">q)qsort(l</span><span class="string">,</span><span class="comment">q</span><span class="literal">-</span><span class="comment">1);</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>大概这样。</p>
+<p>设长为n的数组的时间复杂度是T(n)；开始推导：</p>
+<p>$T(n)=\sum_{i=1}^{n-1}P_i(T(i)+T(n-1-i))+O(n) \\ O(n)是~partition算法的耗时，设~pivotpos落在0到~n-1的概率均等。 \\ T(n)=\frac{2}{n}\sum_{i=1}^{n-1}T(i)+O(n)=\frac{2}{n}S(n-1)+O(n) \\ S(n)=\frac{n+1}{2}(T(n+1)-O(n+1)) \\ S(n)-S(n-1)=T(n) \\ 2T(n)=2S(n)-2S(n-1)=n(T(n+1)-T(n))+T(n+1)+2n+1 \\ (n+1)T(n+1)=(n+2)T(n)-2n-1 \\ T(n+1)-(n+1)(2n-1)=\frac{n+2}{n+1}(T(n)-(n+1)(2n-1))$ </p>
+<p>我推不出来了，反正是o(nlogn)。</p>
+<h2 id="找第k大的数"><a href="#找第k大的数" class="headerlink" title="找第k大的数"></a>找第k大的数</h2><p>跑partition，得到pivotpos。</p>
+<p>若pivotpos==k，则返回pivot；</p>
+<p>若pivotpos&lt;k，则递归搜右半边；</p>
+<p>若pivotpos&gt;k，则递归搜左半边；</p>
+<h2 id="找中间数"><a href="#找中间数" class="headerlink" title="找中间数"></a>找中间数</h2><p>对一个数：若前面的数都比它小，后面的数都比他大，则它是中间数。</p>
+<p>找出一个数组所有的中间数。</p>
+<p>对每一个数a[i]维护一个max[i]一个min[i]；</p>
+<p>max[i]是从0到i（取到i）最大的数；min[i]是从n-1到i（取到i）最小的数；</p>
+<p>从前向后扫一遍确定max，从后向前扫一遍确定min；</p>
+<p>最后扫一遍，若max[i]==min[i]，则a[i]是中间数。</p>
+<p>注意：对数组进行排序，中间数排序前后位置不变，但排序前后位置不变的数不一定是中间数。12345，54321，3不是中间数。</p>
+<h2 id="找最大最小的数"><a href="#找最大最小的数" class="headerlink" title="找最大最小的数"></a>找最大最小的数</h2><p>递归终止条件：若区间里只有2个数，则比较出结果。</p>
+<p>先partition得到pivot；</p>
+<p>对左半边跑【找最大最小的数】，对右半边跑【找最大最小的数】，得到lmin,lmax,rmin,rmax；</p>
+<p>比较得到整个数组的最大最小。</p>
+<h2 id="赛马问题"><a href="#赛马问题" class="headerlink" title="赛马问题"></a>赛马问题</h2><p>有n匹马，比赛方法是每5个赛一次。想找出最快的3匹马，怎么办？</p>
+<p>递归终止条件：若n&lt;=5，则赛一次就找出123。</p>
+<p>首先赛n/5向上取整（将其设为k）次，找出每一次的123。</p>
+<p>然后对这k场的第一，再跑一遍【3匹马解法】，找到它们中间的123。</p>
+<p>1那一场的2和3是23候选，2那一场的第二是3候选。也就是：</p>
+<p>1 2 3</p>
+<p>2 3</p>
+<p>3</p>
+<p>1已经确定了。第二第三的候选正好5个，再赛一场就行了。</p>
+<h3 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h3><p>一开始赛k场是o(n)。然后是T(n/5)。最后一场是o(1)。</p>
+<p>T(n)=o(n)+T(n/5)+o(1)。累加，o(1)累加是logn。</p>
+<p>o(n)累加，n+n/5+n/5/5+…=n/(1-1/5)，还是o(n)？</p>
+<p>那就o(n)了。</p>
+<p>递归终止条件：若n&lt;=5，则赛一次。</p>
+<p>前面跟【3匹马解法】是一样的。只不过，是对这k场的第一跑一遍【5匹马解法】。</p>
+<p>现在，我们对这k场的第一得到了12345。形势是：</p>
+<p>1 2 3 4 5</p>
+<p>2 3 4 5</p>
+<p>3 4 5</p>
+<p>4 5</p>
+<p>5</p>
+<p>1已经确定了。23赛一场也可以确定，和【3匹马解法】的赛法一样。</p>
+<p>接下来，对各种23的情况一通讨论。就暴力讨论。最多再赛两次。</p>
+<h2 id="最近点对问题"><a href="#最近点对问题" class="headerlink" title="最近点对问题"></a>最近点对问题</h2><p>k维空间内有n个点，找到距离最近的点对。</p>
+<p>先nlogn排序，按x坐标排序。</p>
+<p>递归终止条件：若区间里只有两个点，那就返回这两个点的距离。</p>
+<p>mid=(xmax+xmin)/2，按照mid划分成左右两半。</p>
+<p>对左右两半执行【最近点对解法】，得到左右两半的距离最小值。</p>
+<p>令d为左右距离最小值的最小值。</p>
+<p>考虑跨区间最近点对的可能性。若最近点对跨区间，则一个点在左边，一个点在右边。</p>
+<p>无论如何，这两个点的横坐标离mid不应该超过d。</p>
+<p>因此，对[mid-d,mid+d]里的点两两枚举，像二分图一样。比较这样得到的最小距离和d。</p>
+<p>复杂度是nlogn。首先排序是nlogn。</p>
+<p>然后递归深度是logn。去证每次合并的复杂度是o(n)。</p>
+<p>感觉上最糟的情况是可以达到o(n^2)的，但事实上因为抽屉原理，有下面的结论：</p>
+<p>考虑[mid-d,d]的点p，它的对应点q只可能在[mid,mid+d]*[yp-d,yp+d]上，这个区域里面最多有6个点，所以o(n)。</p>
+<blockquote>
+<p>反证法，划成6个小长方形，如图所示：  若存在超过6个点，则必然有一个小长方形里面有2个（及以上）点，小长方形的对角线长度就是小于d的。 那么，左边的最近点对距离就是小于d的，推出矛盾。 <a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_35678407/article/details/82874216">https://blog.csdn.net/sinat_35678407/article/details/82874216</a></p>
+</blockquote>
+<p><img src="https://img-blog.csdn.net/20180928151510626?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM1Njc4NDA3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+<h2 id="分形地对二叉树布线"><a href="#分形地对二叉树布线" class="headerlink" title="分形地对二叉树布线"></a>分形地对二叉树布线</h2><p>对于一个高为h的满二叉树，将所有的节点布在一个网格纸的格点上，每个格点只能放一个节点。问怎样布线得到的图形所占的矩形面积（长*宽）最小？</p>
+<p>分型。用四分来做。如图所示：</p>
+<p><img src="/blog/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2380513-20210702132608425-1069921921.png" alt></p>
+<p>分形扩张的次数是h/2。长和宽都是o(2(h/2))的。因此面积是o(2h)的，大概。</p>
+<h3 id="我一开始的一点想法"><a href="#我一开始的一点想法" class="headerlink" title="我一开始的一点想法"></a>我一开始的一点想法</h3><p>一开始我觉得不能用分治做。考虑构造左子树和右子树的最优解，如果左子树占了某个格点，右子树就不能占这个格点了，即子问题之间是相互影响的。</p>
+<p>换一个角度考虑：要想让左右子树不相互影响，应该怎么布线呢？可能会有帮助。</p>
+<h2 id="求凸包"><a href="#求凸包" class="headerlink" title="求凸包"></a>求凸包</h2><p>给定平面上n个点，求一个最小的凸包，即一个顶点为给定点的凸图形，所有点要不在边上，要不在里面。</p>
+<p>还是分治的思想，有点像最近点对。先把平面划分为左右两个半平面，对左右求凸包。</p>
+<p>终止条件：若2个点或3个点。3个点显然三角形，或者正好共线就和两个点一样处理，总之把它们连起来。</p>
+<p>现在合并左右的凸包。假设对于左右的凸包，我们已经维护了它们的一个逆时针方向的顺序的记录。</p>
+<p>最后的大凸包由3部分组成：左凸包的左轮廓，右凸包的右轮廓，还有连接两个凸包的两条边。现在我们去找连接它们的边。</p>
+<p>一个点在左边，一个点在右边。如果左边的凸包和右边的凸包都全部在这两个点连成的线的同一边，则这就是我们要找的线。能找到两条。</p>
+<p>有这样一个结论：设右边的点为i。若i+1和i-1在连线同一侧，则右边的凸包就在连线同一侧了。</p>
+<ul>
+<li>若它们在同一侧。画出i到i+1和i到i-1的射线，它们围出一个区域。因为是凸包，所以右边所有的点都在这个区域里。这个区域在线的一侧，ok。</li>
+<li>若它们不在同一侧。即使某一侧只有i+1这一个点。如果将这条线作为轮廓，它就不是凸包了，会凹下去。如图。</li>
+<li><p><img src="/blog/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2380513-20210702132640807-1780843805.png" alt></p>
+</li>
+<li><p>因此【在同一侧】和【选这条线】是充要的关系。</p>
+</li>
+</ul>
+<p>依靠已经维护好的顺序记录，对于每一个边都可以用o(1)的时间判断是否可以。这有点像最近点对，合并时并不是每一个点都要两两算距离，并不是每一个点都要判断是否在直线同一侧。</p>
+<p>如果找到了这个边，就顺势修改顺序记录，然后再绕着右边的凸包继续找第二条边。其实感觉上用链表记录可能会更好一点。</p>
+<p>但是我不知道怎么找边。o(n^2)枚举吗？</p>
+<p>对于合并：首先在左凸包上找到那个x坐标最小的点，将其作为原点。站在这个点往右看，找到张角最大和最小的两个右凸包上的点。这一步o(n)。</p>
+<p>张角以逆时针方向为正，可以用正切代替。</p>
+<p>从原点开始迭代，顺时针迭代。站在原点看，若【左凸包顺时针相邻的那个点】的张角不如【右凸包张角最大点】的张角大，则原点与【右凸包张角最大点】连线。去连下面的线。</p>
+<p>若【左凸包顺时针相邻的那个点】的张角比【右凸包张角最大点】的张角大，迭代原点，原点变到【左凸包顺时针相邻的那个点】，我们接下来站在这个点看。重复上一步，直到可以连线。</p>
+<p>下面的线同理，把角的比较条件从大换成小。</p>
+<p>不用分治。首先在所有点中找到那个x坐标最小的点，将其作为原点。这一步o(n)。</p>
+<p>站在这个点往右看，找到张角最大和最小的两个点，连起来。这一步o(n)。</p>
+<p>站在【刚刚找的张角最大点】上，继续找张角最大点。直到到达【所有点中x坐标最大的点】。</p>
+<p>站在【刚刚找的张角最小点】上，继续找张角最小点。直到到达【所有点中x坐标最大的点】。</p>
+<p>此时已经构造好凸包啦。每次迭代o(n)，要迭代o(n)次，是o(n^2)。</p>
+<h2 id="棋盘覆盖"><a href="#棋盘覆盖" class="headerlink" title="棋盘覆盖"></a>棋盘覆盖</h2><p>在一个2n*2n的棋盘上，有一个方格是奇异点。用L形的地砖来覆盖方格。</p>
+<p>如果方格是2*2的，并且有一个奇异点，那么正好是L形，很好办。</p>
+<p>如果是2n<em>2n的，将其分为4块(2(n-1)</em>2(n-1))的棋盘。在最中间填一个L形，保证每一个子棋盘都有一个奇异点，问题划分为4个小问题。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> count=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fill</span><span class="params">(<span class="keyword">int</span> x1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y1,<span class="keyword">int</span> y2,<span class="keyword">int</span> xq,<span class="keyword">int</span> yq)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x1+<span class="number">1</span>==x2)&#123;</span><br><span class="line">        <span class="keyword">if</span>(xq==x1&amp;&amp;yq==y2)</span><br><span class="line">            board[x1][y2]=board[x2][y2]=board[x2][y1]=count++;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ...;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> xmid=(x1+x2)/<span class="number">2</span>,ymid=(y1+y2)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(x1&lt;=xq&lt;=xmid&amp;&amp;y1&lt;=yq&lt;=ymid)&#123;</span><br><span class="line">            board[xmid][ymid+<span class="number">1</span>]=board[xmid+<span class="number">1</span>][ymid]=board[xmid+<span class="number">1</span>][ymid+<span class="number">1</span>]=count++;</span><br><span class="line">            <span class="built_in">fill</span>(x1,xmid,y1,ymid,xq,yq);</span><br><span class="line">            <span class="built_in">fill</span>(x1,xmid,ymid+<span class="number">1</span>,y2,xmid,ymid+<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">fill</span>(xmid+<span class="number">1</span>,x2,y1,ymid,xmid+<span class="number">1</span>,ymid);</span><br><span class="line">            <span class="built_in">fill</span>(xmid+<span class="number">1</span>,x2,ymid+<span class="number">1</span>,y2,xmid+<span class="number">1</span>,ymid+<span class="number">1</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="循环赛日程表"><a href="#循环赛日程表" class="headerlink" title="循环赛日程表"></a>循环赛日程表</h2><p>有N=2^n个运动员，要求每个人都与别的N-1个人赛一次，只能赛N-1天，排一个日程表。</p>
+<p>为使问题更对称，假设第0天每个人要与自己赛一场。现在是赛N天了。</p>
+<p>我们搞一个N*N的数组，表示第j天第i个人的对手。</p>
+<p>1-N/2的人和N/2+1-N的人在前N/2天和自己这一组赛，在后N/2天和另一组赛。</p>
+<p>和另一组赛的日程，就是和自己赛的日程，对手编号平移N/2。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int ans<span class="comment">[N]</span><span class="comment">[N]</span>;for(int i=0;i&lt;N;++i)ans<span class="comment">[0]</span><span class="comment">[i]</span>=i;</span><br><span class="line">void schedule(int x)&#123;</span><br><span class="line">    if(x==0)return;</span><br><span class="line">    schedule(x/2);</span><br><span class="line">    for(int i=0;i&lt;x/2;++i)</span><br><span class="line">        for(int j=0;j&lt;x/2;++j)&#123;</span><br><span class="line">            ans<span class="comment">[i+n/2]</span><span class="comment">[j]</span>=ans<span class="comment">[i]</span><span class="comment">[j+n/2]</span>=ans<span class="comment">[i]</span><span class="comment">[j]</span>+n/2;</span><br><span class="line">            ans<span class="comment">[i+n/2]</span><span class="comment">[j+n/2]</span>=ans<span class="comment">[i]</span><span class="comment">[j]</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="线性时间选择"><a href="#线性时间选择" class="headerlink" title="线性时间选择"></a>线性时间选择</h2><p>给定线性序集中n个元素和一个整数k，1≤k≤n，要求找出这n个元素中第k小的元素。</p>
+<p>其实前面好像写到排序里了，用partition方法。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pivot=a[l],pivotpos=l+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=l+<span class="number">1</span>;i&lt;=r;++i)</span><br><span class="line">        <span class="keyword">if</span>(a[i]&lt;pivot)<span class="built_in">swap</span>(i,pivotpos),++pivotpos;</span><br><span class="line">    <span class="built_in">swap</span>(l,pivotpos);<span class="keyword">return</span> pivotpos;</span><br><span class="line">    <span class="comment">// 现在，pivotpos之前都比它小，之后都比它大</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>所以pivot就是第pivotpos大的元素，如果pos&gt;k，那么对(l,pivotpos-1)作partition；如果pos&lt;k，(pivotpos+1,r)；如果pos==k，直接返回pivot。</p>
+<p>时间复杂度真的是线性的吗？如果每次都选到中位数，那么只会找logn次…等比数列求和，总的来说会扫n个元素，因此是线性的。</p>
+<p>如果选不到中位数？就强行使pivot=中位数。</p>
+<p><img src="/blog/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2380513-20210702132850415-394555172.jpg" alt></p>
+<h1 id="贪心法"><a href="#贪心法" class="headerlink" title="贪心法"></a>贪心法</h1><h2 id="寻找区间最大子集"><a href="#寻找区间最大子集" class="headerlink" title="寻找区间最大子集"></a>寻找区间最大子集</h2><p>给出n个区间[l_i,r_i]，找出这些区间的一个子集，使得子集内的区间没有重合部分，并且数目最大。</p>
+<p>按照r_i的大小（结束时间）排序，然后依次选择。如果下一个区间不与被选择的上一个区间重合，则选择它。</p>
+<h3 id="正确性证明"><a href="#正确性证明" class="headerlink" title="正确性证明"></a>正确性证明</h3><p>首先，一定要选排序后的第一个区间。如果选第一个还能选第二个，当然要选第一个了。</p>
+<p>如果选了第一个就不能选第二个，那么在二选一里面还是要选第一个，结束的早后面就不那么被动了。</p>
+<p>现在已经选了第一个。然后把和第一个冲突的区间去掉，得到新的序列，继续选第一个……</p>
+<p>更严谨的一版：</p>
+<p>某一个最优解里面一定包含第一个区间。反证法，假设最优解的第一个区间是第i个而非第一个。</p>
+<p>如果选第i个之后还能选第1个，当然要选第一个了，这个最优解不是最优解，矛盾。</p>
+<p>如果选第i个之后不能选第1个，为什么不选第一个呢，即使2-i的区间还是都不能选，至少i+1后的区间选择情况不会比最优解更差，毕竟1比i结束早。</p>
+<p>然后把和第一个冲突的区间去掉，得到新的区间序列，继续选第一个……</p>
+<h2 id="最小生成树MST"><a href="#最小生成树MST" class="headerlink" title="最小生成树MST"></a>最小生成树MST</h2><p>prim和kruskal。</p>
+<p>kruskal：不断地选择边权最小且不会与【已选择的边】成环的边。</p>
+<p>prim：不断地选择边，选择从【已加入点的集合】连接到【未加入点的集合】的权值最小的边。</p>
+<p>prim是直接反证就行了。设e是prim得到的 第一条 不在最优解中的边，最优解中连接prim的【已加入点集合S1】【未加入点集合S2】的边是w。把e加入最优解会得到一个环。</p>
+<p>证明e比w好。S1连通，S2连通，直接把e换成w就会得到更好的MST。矛盾，得证。</p>
+<p>要求无负权值边。</p>
+<p>类似prim：不断地选择边，选择【未加入点的集合】中路径长度最小的边。贪心的规则变了。</p>
+<p>路径长度：要求经过的点只能在【已加入点的集合】里。</p>
+<p>基于这样的观察：全局最优由局部最优构成，若u到v的最优路径是u-&gt;…-&gt;a-&gt;…-&gt;v，则u到a的最优路径也是u-&gt;…-&gt;a。</p>
+<p>因此，v的最优路径是【所有与v邻接的点的最优路径+它到v的边】中最优的。</p>
+<p>然后我们反过来看：如何利用这个性质从原点开始迭代找最优路径？？</p>
+<p>所有与原点邻接的点的最优路径要不就是别的什么，要不就是它与原点的连边。</p>
+<p>如果是别的什么，那这个路径的第一步肯定也是和原点的连边啊。</p>
+<p>所以与原点邻接的点中【与原点连边】权值最小的点，它的最短路径就是它与原点的连边。把它加入集合S。</p>
+<p>再往下看：所有与集合S邻接的点的最优路径要不就是别的什么，要不就是【它与某已经确定最短路径的点的连边+那个最短路径（S中）】。</p>
+<p>对【与集合S邻接的点】中，【它与某已经确定最短路径的点的连边+那个最短路径】最小的点，设为v。</p>
+<p>设这个路径是u-&gt;…-&gt;w-&gt;v。</p>
+<p>这个就是它的最短路径了！为什么呢？如果它是别的什么u-&gt;…-&gt;a-&gt;…-&gt;v，那么从u到a里面一定有一段是在S中的。再不济也要从原点出发吧！</p>
+<p>设这一段为u-&gt;…-&gt;b-&gt;c-&gt;…-&gt;a。可以知道u-&gt;…-&gt;b-&gt;c不如u-&gt;…-&gt;w-&gt;v短。任何别的路径都不如现在这条短。</p>
+<p>给定一些字符和频率，用01对这些字符进行编码，希望使平均码长最小。</p>
+<h3 id="正确性证明-1"><a href="#正确性证明-1" class="headerlink" title="正确性证明"></a>正确性证明</h3><p>叶节点都是字符。内节点的值为两个子节点值的和。</p>
+<p>我们要构造一个二叉树，使得所有内节点的值的和最小。</p>
+<p>首先，构造的二叉树中，不会有度为1的节点。不然把它的子节点提上来，立刻得到更优的解。</p>
+<p>然后，频率越低的点越深，不然可以把它与更深且频率更高的点互换，立刻得到更优的解。</p>
+<p>这样，频率最低和第二低的字符在二叉树里是兄弟。它们俩的父节点值为它们俩的频率之和。</p>
+<p>我们拿掉这两个节点，改放上他们的父节点。然后以此类推，就构造了huffman树。</p>
+<p>大概这样吧……</p>
+<h2 id="分礼物问题（不是正确解法）"><a href="#分礼物问题（不是正确解法）" class="headerlink" title="分礼物问题（不是正确解法）"></a>分礼物问题（不是正确解法）</h2><p>有n个礼物，每个价值是vi，分给两个人，问怎么分才能使两人得到的价值差距尽量小？</p>
+<h3 id="错误解法"><a href="#错误解法" class="headerlink" title="错误解法"></a>错误解法</h3><ul>
+<li>按价值从大到小排序；把第一个给A。</li>
+<li>如果A比B少，下一个给A；否则给B。</li>
+</ul>
+<p>19，16，9，8，8，8，8；</p>
+<p>A：19，8，8=35；</p>
+<p>B：16，9，8，8=41；</p>
+<p>其实可以：</p>
+<p>A：19，9，8=36；</p>
+<p>B：16，8，8，8=40；</p>
+<p>19，8，8=35</p>
+<p>16，11，8，8=43</p>
+<p>19，11，8=38</p>
+<p>16，8，8，8=40</p>
+<p>现在贪心解法和的比是4了。我不太清楚是不是approximation。</p>
+<h2 id="多机调度（不是正确解法）"><a href="#多机调度（不是正确解法）" class="headerlink" title="多机调度（不是正确解法）"></a>多机调度（不是正确解法）</h2><p>N个机器，M个任务，每个任务耗时ti，希望完成所有任务总时间最短。</p>
+<ul>
+<li>把任务按耗时从大到小排序；</li>
+<li>把下一个任务分给当前总完成时间最小的机器。</li>
+</ul>
+<p>这不就是后面那个makespan吗……</p>
+<h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>给出n个物品，每一个有体积ci和价值wi，背包容量为C。要求 Σc &lt;= C。希望Σw最大。</p>
+<p>www三步走方法：</p>
+<p>第一步：以什么为输入比较合适？就是dp数组的维度。</p>
+<p>第二步：有什么可能的子问题？</p>
+<p>第三步：总问题和子问题有什么关系？</p>
+<p>建dp数组dp[i][s]，表示只从前i个物品中取，且取到的体积和为s时，最大的价值和。</p>
+<p>这是神奇的思路啊，发现去决定第i个物品放不放，就要去观察前i-1个物品并且背包空间更小的情况。反正神奇。</p>
+<p>初始化物品情况时，一定要从1而非0开始计数！！！</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">memset(dp,0,sizeof(dp));</span><br><span class="line">for(int i=1;i&lt;=n;++i)&#123;</span><br><span class="line">    for(int s=1;s&lt;=C;++s)&#123;</span><br><span class="line">        //dp<span class="comment">[i]</span><span class="comment">[s+c<span class="comment">[i]</span>]</span>=max(w<span class="comment">[i]</span>+dp<span class="comment">[i-1]</span><span class="comment">[s]</span>,dp<span class="comment">[i-1]</span><span class="comment">[s+c<span class="comment">[i]</span>]</span>);</span><br><span class="line">        dp<span class="comment">[i]</span><span class="comment">[s]</span>=dp<span class="comment">[i-1]</span><span class="comment">[s]</span>;</span><br><span class="line">        if(s-c<span class="comment">[i]</span>&gt;=0 &amp;&amp; dp<span class="comment">[i]</span><span class="comment">[s]</span>&lt;w<span class="comment">[i]</span>+dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>) dp<span class="comment">[i]</span><span class="comment">[s]</span>=w<span class="comment">[i]</span>+dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>;</span><br><span class="line">        // 这两种都合理吗？或许是的</span><br><span class="line">        // 后一种是对背包容量进行遍历</span><br><span class="line">        // 下标要从1开始记录w<span class="comment">[i]</span>哦</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 若其实是装不满的，就正好错过去了呢？导致dp<span class="comment">[n-1]</span><span class="comment">[C]</span>=0。</span><br><span class="line">// 不会的哦！由于它是向后递推，就是只要能放得下（s-c<span class="comment">[i]</span>&gt;=0），就把它放进去，此时其实可能是放不满的。</span><br><span class="line"></span><br><span class="line">// 更高更妙的解法，省空间</span><br><span class="line">for(int i=0;i&lt;n;++i)</span><br><span class="line">    for(int s=C;s&gt;0;--s)&#123;</span><br><span class="line">        if(s-c<span class="comment">[i]</span>&gt;=0&amp;&amp;dp<span class="comment">[i]</span><span class="comment">[s]</span>&lt;w<span class="comment">[i]</span>+dp<span class="comment">[i]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>) dp<span class="comment">[i]</span><span class="comment">[s]</span>=w<span class="comment">[i]</span>+dp<span class="comment">[i]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>;</span><br><span class="line">        // 是因为考虑dp<span class="comment">[i]</span><span class="comment">[s]</span>时要考虑dp<span class="comment">[i]</span><span class="comment">[s&#x27;&lt;s]</span>，希望此时dp<span class="comment">[i]</span><span class="comment">[s&#x27;&lt;s]</span>的值没有被更新（还是旧值），所以s要从后往前遍历</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h3><p>每一种物品有无数个。</p>
+<p>这是我的想法：</p>
+<p>还是for i从1到n，考虑前i个物品。</p>
+<p>然后对于s从C到0。我们现在看第i个物品。</p>
+<p>如果放不下，那么就i-1，这个没有问题。</p>
+<p>如果放得下？放一个，效果更好了。能不能再放一个？</p>
+<p>为什么放一个会效果更好？感觉推不出感性的结论，就是那种【放一个效果好，那么就应该使劲放直到放不下】。</p>
+<p>那么我们就一个一个放，直到再放一个效果不如原来。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">memset(dp,0,sizeof(dp));</span><br><span class="line">for(int i=1;i&lt;=n;++i)</span><br><span class="line">    for(int s=C;s&gt;0;--s)&#123;</span><br><span class="line">        for(int k=1;;++k)</span><br><span class="line">            if(s-k*c<span class="comment">[i]</span>&gt;=0&amp;&amp;dp<span class="comment">[s]</span>&lt;k*w<span class="comment">[i]</span>+dp<span class="comment">[i]</span><span class="comment">[s-k*c<span class="comment">[i]</span>]</span>)</span><br><span class="line">                dp<span class="comment">[s]</span>=k*w<span class="comment">[i]</span>+dp<span class="comment">[i]</span><span class="comment">[s-k*c<span class="comment">[i]</span>]</span>;</span><br><span class="line">            else break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>会不会有这样的情况。我们现在一个不放。放了一个，发现更好了。放了2个，发现不如1个好。放了3个，发现比1个好？？</p>
+<p>不会。把放3个的【放2个】换成【放1个的方法】，应该能立刻得到更优解，并且有趣的是这个最优解就是【放2个的方法】，还不如【放1个】好。</p>
+<p>更高更妙的代码：从前向后遍历背包容量。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">memset(dp,0,sizeof(dp));</span><br><span class="line">for(int i=1;i&lt;=n;++i)</span><br><span class="line">    for(int s=c<span class="comment">[i]</span>;s&lt;=c;++s)</span><br><span class="line">        if(dp<span class="comment">[s]</span>&lt;dp<span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>)dp<span class="comment">[s]</span>=dp<span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h3><p>bounded knapsack problem。</p>
+<p>听说要对【每一个约束维度】+【限制取前i个】进行dp。</p>
+<p>比如说最多选M个物品：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">memset(dp,0,sizeof(dp));</span><br><span class="line">for(int i=1;i&lt;=n;++i)</span><br><span class="line">    for(int s=0;s&lt;=C;++s)</span><br><span class="line">        for(int m=1;m&lt;=M;++m)</span><br><span class="line">            if(s-c<span class="comment">[i]</span>&gt;=0) dp<span class="comment">[i]</span><span class="comment">[s]</span><span class="comment">[m]</span>=max(dp<span class="comment">[i-1]</span><span class="comment">[s]</span><span class="comment">[m]</span>,dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span><span class="comment">[m-1]</span>+w<span class="comment">[i]</span>);</span><br><span class="line"></span><br><span class="line">// 尝试更高更妙</span><br><span class="line">for(int i=1;i&lt;=n;++i)</span><br><span class="line">    for(int s=C;s&gt;=c<span class="comment">[i]</span>;++s)</span><br><span class="line">        for(int m=M;m&gt;0;--m)</span><br><span class="line">            dp<span class="comment">[s]</span><span class="comment">[m]</span>=max(dp<span class="comment">[s]</span><span class="comment">[m]</span>,dp<span class="comment">[s-c<span class="comment">[i]</span>]</span><span class="comment">[m-1]</span>+w<span class="comment">[i]</span>);</span><br><span class="line">// 貌似是都要逆向遍历</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">memset(dp,0,sizeof(dp));</span><br><span class="line">// 我的想法是，如果它的上一步不是装满的，那么推过来的这一步也不是合法的</span><br><span class="line">for(int i=1;i&lt;=n;++i)&#123;</span><br><span class="line">    for(int s=0;s&lt;=C;++s)&#123;</span><br><span class="line">        dp<span class="comment">[i]</span><span class="comment">[s]</span>=dp<span class="comment">[i-1]</span><span class="comment">[s]</span>;  // 这个是合法的，上一步会正好装满</span><br><span class="line">        if(s-c<span class="comment">[i]</span>&gt;=0&amp;&amp;(s-c<span class="comment">[i]</span>==0||dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>!=0))</span><br><span class="line">            dp<span class="comment">[i]</span><span class="comment">[s]</span>=max(dp<span class="comment">[i]</span><span class="comment">[s]</span>,dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>);</span><br><span class="line">        // 若s==c<span class="comment">[i]</span>，则更新后恰好只装第i件物品，合法的</span><br><span class="line">        // 若dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>!=0，那么再装一个i也是合法的</span><br><span class="line">        // 注意，物品还是要从1开始计数</span><br><span class="line">    &#125;</span><br><span class="line">&#125;  // 这样或许可以？</span><br><span class="line"></span><br><span class="line">// 听说这样比较麻烦，直接用-inf会更方便</span><br><span class="line">for(int i=0;i&lt;=n;++i)</span><br><span class="line">    for(int s=0;s&lt;=C;++s)&#123;</span><br><span class="line">        dp<span class="comment">[i]</span><span class="comment">[s]</span>=-inf;</span><br><span class="line">        if(!s)dp<span class="comment">[i]</span><span class="comment">[s]</span>=0;</span><br><span class="line">    &#125; // 听说要先这样初始化。对于s=0的时候，什么都不装就是装满，是合法的状态。</span><br><span class="line">for(int i=1;i&lt;=n;++i)&#123;</span><br><span class="line">    for(int s=1;s&lt;=C;++s)&#123;</span><br><span class="line">        dp<span class="comment">[i]</span><span class="comment">[s]</span>=max(dp<span class="comment">[i-1]</span><span class="comment">[s]</span>,dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>);</span><br><span class="line">        // 假设非-inf值是合法的，我们数归</span><br><span class="line">        // 若dp<span class="comment">[i-1]</span><span class="comment">[s]</span>合法，则合法，不然不合法</span><br><span class="line">        // 若dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>合法，则合法，不然也不合法</span><br><span class="line">        // 在i=1时，若正好装满，则s==c<span class="comment">[i]</span>，此时dp<span class="comment">[i-1]</span><span class="comment">[s-c<span class="comment">[i]</span>]</span>=0而非-inf。</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="求方案总数"><a href="#求方案总数" class="headerlink" title="求方案总数"></a>求方案总数</h3><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">memset(dp,0,sizeof(dp));</span><br><span class="line">memset(c,0,sizeof(c));</span><br><span class="line">for(int i=1;i&lt;=n;++i)</span><br><span class="line">    for(int s=C;s&gt;0;--s)</span><br><span class="line">        if(s-c<span class="comment">[i]</span>&gt;=0&amp;&amp;dp<span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>&gt;dp<span class="comment">[s]</span>)</span><br><span class="line">            dp<span class="comment">[s]</span>=dp<span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>,c<span class="comment">[s]</span>=c<span class="comment">[s-c<span class="comment">[i]</span>]</span>; // 放i更优，放i有多少种做法呢？</span><br><span class="line">		else if(s-c<span class="comment">[i]</span>&gt;=0&amp;&amp;dp<span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>==dp<span class="comment">[s]</span>)</span><br><span class="line">            c<span class="comment">[s]</span>+=c<span class="comment">[s-c<span class="comment">[i]</span>]</span>; // 无论是放还是不放i，都有最优解，要把两种做法的数量加起来</span><br><span class="line">// 如果放i还不如不放，那就和不放的时候（i-1）做法一样</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>二维背包</p>
+<h3 id="输出最优方案"><a href="#输出最优方案" class="headerlink" title="输出最优方案"></a>输出最优方案</h3><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">memset(dp,0,sizeof(dp));</span><br><span class="line">memset(plan,0,sizeof(plan));</span><br><span class="line">for(int i=1;i&lt;=n;++i)</span><br><span class="line">    for(int s=C;s&gt;0;--s)</span><br><span class="line">        if(s-c<span class="comment">[i]</span>&gt;=0&amp;&amp;dp<span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>&gt;dp<span class="comment">[s]</span>)</span><br><span class="line">            dp<span class="comment">[s]</span>=dp<span class="comment">[s-c<span class="comment">[i]</span>]</span>+w<span class="comment">[i]</span>,plan<span class="comment">[s]</span>=plan<span class="comment">[s-c<span class="comment">[i]</span>]</span>|(1&lt;&lt;i);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>给出n个数，选某些数使得加和正好为C，可以做到吗？如何选？（给出的数不能重复用）</p>
+<p>若dp[i-1][s]可以，或c[i]+dp[i-1][s-c[i]]可以，则dp[i][s]可以。</p>
+<h2 id="最长相同子序列"><a href="#最长相同子序列" class="headerlink" title="最长相同子序列"></a>最长相同子序列</h2><p>longest common sequence.</p>
+<p>给两个字符串，返回最长相同子序列。只要是子序列就行了，不用连续。</p>
+<p>dp[i][j]：取串1前i个字符，取串2前j个字符，最长是多长。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for(int i=1;i&lt;=l1;++i)</span><br><span class="line">    for(int j=1;j&lt;l2;++j)&#123;</span><br><span class="line">        dp<span class="comment">[i]</span><span class="comment">[j]</span>=max(dp<span class="comment">[i-1]</span><span class="comment">[j]</span>,dp<span class="comment">[i]</span><span class="comment">[j-1]</span>);</span><br><span class="line">        if(s1<span class="comment">[i]</span>==s2<span class="comment">[j]</span>)dp<span class="comment">[i]</span><span class="comment">[j]</span>=max(dp<span class="comment">[i]</span><span class="comment">[j]</span>,dp<span class="comment">[i-1]</span><span class="comment">[j-1]</span>+1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>www观察最优解：我们看串1，若1的最后一个与2的最后一个匹配，那么dp[i-1][j-1]+1。</p>
+<p>若1的最后一个与2的前面的元素（不是最后一个）匹配，那么dp[i][j-1]。把2最后一个删了也没关系的吧。</p>
+<p>同理，也要考虑dp[i-1][j]；</p>
+<p>当做到ij的时候，i-1已经做完了；i，j-1也刚刚做完。因此递推是可行的。</p>
+<h2 id="选最大价值不重区间集"><a href="#选最大价值不重区间集" class="headerlink" title="选最大价值不重区间集"></a>选最大价值不重区间集</h2><p>题目和贪心的版本差不多。是有n个区间，每一个区间有一个价值wi，要求选价值最大的区间集，并且它们在时间轴上不冲突。</p>
+<p>约定dp[s]是0到s时间段内可以选的最大价值和的区间。</p>
+<p>考虑第i个区间。默认的情况是不选。</p>
+<p>然后如果end[i]&lt;=s&amp;&amp;dp[s]&lt;dp[start[i]]+w[i]，就dp[s]=dp[start[i]]+w[i]。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">memset(dp,<span class="number">0</span>,sizeof(dp));</span><br><span class="line">sort(<span class="built_in">sec</span>+<span class="number">1</span>,<span class="built_in">sec</span>+<span class="built_in">n</span>+<span class="number">1</span>); // 按照结束时间从早到晚排序</span><br><span class="line">for(<span class="built_in">int</span> i=<span class="number">1</span>;i&lt;=<span class="built_in">n</span>;++i)</span><br><span class="line">    for(<span class="built_in">int</span> s=C;s&gt;<span class="number">0</span>;--s)</span><br><span class="line">        <span class="built_in">if</span>(<span class="built_in">sec</span>[i].end&lt;=s&amp;&amp;dp[s]&lt;dp[<span class="built_in">sec</span>[i].start]+<span class="built_in">sec</span>[i].w)</span><br><span class="line">            dp[s]=dp[<span class="built_in">sec</span>[i].start]+<span class="built_in">sec</span>[i].w;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>为什么是按照结束时间从早到晚排序呢？如果不是这样，递推合法吗？</p>
+<p>我感觉现在这样的递推是合法的。</p>
+<p>内层循环是遍历截止时间。</p>
+<p>选第i门课不会影响start[i]之前的选课。start[i]之前的选课要在前面就被确定。要求所有在start[i]之前结束的课都被考虑过了。</p>
+<p>那，结束时间早的课就要排在前面，所以就要按结束时间排序了。</p>
+<h2 id="分礼物问题"><a href="#分礼物问题" class="headerlink" title="分礼物问题"></a>分礼物问题</h2><p>有n个礼物，每个价值是vi，分给两个人，问怎么分才能使两人得到的价值差距尽量小？</p>
+<p>o(n*m)，m是价值总和：也就是希望其中一人得到的价值与m/2尽量相近，维护dp[i]表示其中一人得到价值i的分法。然后考察每一个礼物，递推。是背包问题，价值即重量，背包容量为m/2。</p>
+<p>o(n^3)：维护一个集合（链表或bool，或int按位记录分法）表示可以得到的价值，最后找与m/2最相近的方案。如果m非常大，可以用这个方法。找与m/2最相近的方案：维护一个小于等于m/2的价值，遇到更接近m/2的方案就更新它。</p>
+<p>感觉上，就是【找到价值与m/2尽可能相近的方案】思路的延伸。</p>
+<p>如果要求一人只能拿n/2个礼物：</p>
+<p>dp：维护dp[i][k]表示其中一人拿k个礼物得到价值i的分法，相当于限制背包物品个数。最后看dp[尽量靠近m/2][n/2]。o(n<em>(n/2)</em>m)。</p>
+<p>o(n^3)：链表或结构体数组（下标为价值），记录礼物个数信息。每次礼物个数=n/2时，才比较价值是否更接近m/2，更新那个最优方案。</p>
+<h2 id="上台阶问题"><a href="#上台阶问题" class="headerlink" title="上台阶问题"></a>上台阶问题</h2><p>这是个大水题了。有n个台阶，我们一串可以走1或2阶，有多少种上台阶的方法？</p>
+<p>dp[i]是前i个台阶的走法。dp[0]=0, dp[1]=1; dp[i]=dp[i-1]+dp[i-2]。嗯。</p>
+<h2 id="最长上升子序列"><a href="#最长上升子序列" class="headerlink" title="最长上升子序列"></a>最长上升子序列</h2><p>有名的LIS问题：一个序列的子序列是可以不连续的，上升要求严格单调上升（不能等于）。</p>
+<p>普通解法：设dp[i]是以i结尾的LIS的长度。对dp[i]，初始化为1，遍历前面所有元素，若有比它小的j就更新成dp[j]+1。o(n^2)。</p>
+<p>更高更妙的解法：设dp[i]是长度为i的LIS的最后一个元素。对第k个元素，若大于等于dp[max_length]就dp[max_length+1]=k，若大于等于dp[j]且小于dp[j+1]就dp[j+1]=k，若比dp[1]小就dp[1]=k。</p>
+<p>事实上啊，可以证明更高更妙的dp[i]是递增的数组。所以只会修改一个，修改一个就break出去。然后怎么修改这一个呢？二分查找！</p>
+<p>此时复杂度已经是o(nlogn)！</p>
+<h2 id="最大子数组和"><a href="#最大子数组和" class="headerlink" title="最大子数组和"></a>最大子数组和</h2><p>一个数列，求最大子数组和，这个【子数组】要求连续。</p>
+<p>设dp[i]是以i结尾的最大连续子数组和。对第i个数来说，要不加入前面的子数组，要不自己作为开头起一个子数组。</p>
+<p>dp[i]=max(dp[i-1]+a[i],a[i])。也就是若dp[i-1]&lt;0，我就自己起头一个子数组。</p>
+<h2 id="回文最小划分次数"><a href="#回文最小划分次数" class="headerlink" title="回文最小划分次数"></a>回文最小划分次数</h2><p>一个字符串s，切几刀才能让每个字串都是palindrome？如aab，切一刀，aa b。</p>
+<p>居然是dp，可太神奇了。</p>
+<p>记忆化搜索版本：</p>
+<p>dp[i][j]=solve(i,j)是从i到j的字串的划分数。</p>
+<p>dp[i][j]=min{solve(i,k)+1+solve(k+1,j)}。</p>
+<p>如果ij是palindrome，solve=0，直接return；</p>
+<p>自底而上递推版本：</p>
+<p>dp[i][i+gap]，gap从1到n-1。</p>
+<h2 id="买卖股票"><a href="#买卖股票" class="headerlink" title="买卖股票"></a>买卖股票</h2><p>有一个代表股票价值的序列a，如果第i天买入第j天卖出的话，可以挣a[j]-a[i]。只有一笔钱，钱已经在股市中就不能买入了，卖出才能再买入。</p>
+<p>一直找最长上升子序列？然后把各个子序列进行【选最大价值不重区间集】？</p>
+<p>对！太有道理了！</p>
+<h2 id="最少编辑次数"><a href="#最少编辑次数" class="headerlink" title="最少编辑次数"></a>最少编辑次数</h2><p>编辑多少次才能使两个字符串相等，编辑包含增删改3种操作。</p>
+<p>还是dp。dp[i][j]表示【串1前i个】【串2前j个】的编辑距离。</p>
+<p>若a[i]==b[j]，dp[i][j]=dp[i-1][j-1]；</p>
+<p>不等：</p>
+<p>把a[i]删掉 或 给b[j]后面加一个a[i]：dp[i][j]=dp[i-1][j]+1；</p>
+<p>把b[j]删掉 或 给a[i]后面加一个b[j]：dp[i][j]=dp[i][j-1]+1；</p>
+<p>把a[i]改成b[j]：dp[i][j]=dp[i-1][j-1]+1；</p>
+<p>就是最长相同子序列的递推公式。</p>
+<h1 id="博弈论"><a href="#博弈论" class="headerlink" title="博弈论"></a>博弈论</h1><p>优化问题：系统的utility；博弈问题：个体的utility。</p>
+<p>均衡：我不会再改变策略了，反正怎么改变也不会比现在更好。大家都不改变。</p>
+<p>utility：(u_i(a_i,a_{-i}))；a_-i就是别人的策略。</p>
+<h2 id="voting-game"><a href="#voting-game" class="headerlink" title="voting game"></a>voting game</h2><p>假设第一排有10个座位，我们要选1个位置，对手要选1个位置。</p>
+<p>对10个位置：离谁近就归谁。怎么选自己获得的位置最多？认为我们和对方同时选，选到同一个位置就平局。</p>
+<p>在中间是最佳防守策略。貌似就是无论如何也不会比对方差的意思。</p>
+<p>纳什均衡点。</p>
+<p>所有玩家都不想改变自己当前的策略。</p>
+<h2 id="制胜策略"><a href="#制胜策略" class="headerlink" title="制胜策略"></a>制胜策略</h2><p>dominant strategy。</p>
+<p>无论对方选择什么策略，我的这个策略总是最好的，相比于我的其他各种策略。相比均衡更强。</p>
+<p>若 上：x，100；下：100，x；（两端路的通过代价，x是路上人数）总人数100。则上50人，下50人。</p>
+<p>但是，若上下路的两段路之间有一个代价为0的高速公路，则x=100。</p>
+<p>努力反而让局面变得更糟？</p>
+<h2 id="拍卖问题"><a href="#拍卖问题" class="headerlink" title="拍卖问题"></a>拍卖问题</h2><p>有一个东西，拍卖方也不知道它的价格。希望设计一个策略，让理性人报出自己心目中的估价。</p>
+<p>假设只有少数人知道它其实很值钱，少数人可以用相对低的价格赢得拍卖。现在看来好像就是要避免这种情况。</p>
+<p>收益：若得到，ui=vi-c，估价-拍卖定价。若没得到，ui=0；</p>
+<p>第一步，在纸上提交报价；</p>
+<p>第二步，出价最高仍然赢；</p>
+<p>第三步，付给我第二高的价格；</p>
+<p>假设别人都定好将要出的价格了，我要定自己的价格。</p>
+<p>若我的估价和别人的出价一起排序之后我的估价是第一，则直接出估价就能得到。没必要上调报价，因为反正付第二高的价格。不能下调，若下调就可能拿不到了，而拿到的收益肯定是正数。</p>
+<p>若我的估价是第二，则上调之后要不拿不到，要不拿到了，但是这是要付原来那个第一的价格，那个价格比我估价高的……亏了。往下调无所谓，反正都是拿不到。</p>
+<p>第三第四……的情况和第二一样。</p>
+<p>只能得到第二高的价格+1（这时第二名如果继续加价就有可能亏）。拍卖方得到的收益差不多，但是不知道它的真实价格。</p>
+<p>并且过程很慢。</p>
+<p>P：多项式时间可解。</p>
+<p>decision problem：比如说给出一些物品和背包大小，问装的价值能不能到达V，决策问题。</p>
+<p>NP：在多项式时间内知道你给我的解是不是对/最优。</p>
+<p>验证是否为因子和背包问题的decision problem（能不能达到V）都是NP问题。</p>
+<p>归约reduction：A可以归约到B。B的一个特例是A。</p>
+<p>approximation：对于没法在多项式时间内求出最优解的问题，NP难。</p>
+<p>CIRCUIT-SAT（circuit satisfiability）是NP问题，所有NP问题都可以归约成它。</p>
+<p>和它难度一样的问题还有无数个。NPC：circuit-sat属于它，所有属于它的问题都可以互相归约。</p>
+<h2 id="相关定义"><a href="#相关定义" class="headerlink" title="相关定义"></a>相关定义</h2><p>感觉这个是可能考的。</p>
+<ul>
+<li>P：可以在多项式时间内找到解法的问题；</li>
+<li>NP：可以在多项式时间内确定一个答案是否正确的问题；</li>
+<li>NPC：NP完全问题，是一类NP问题，所有NP问题都可以归约到它们。</li>
+<li>NP hard：所有的NP问题都可以归约到它，但它不一定是一个NP问题。</li>
+<li>归约：A归约到B，A是B的特殊情况，会解B一定会解A。</li>
+</ul>
+<h2 id="knapsack"><a href="#knapsack" class="headerlink" title="knapsack"></a>knapsack</h2><p>在ci vi属于整数时，是可以在多项式时间解决的。</p>
+<p>但是实数呢？NP难。NP-hard。</p>
+<p>贪心：</p>
+<h3 id="按照性价比选？无穷坏"><a href="#按照性价比选？无穷坏" class="headerlink" title="按照性价比选？无穷坏"></a>按照性价比选？无穷坏</h3><p>比如C=1；</p>
+<p>10^-7 1</p>
+<p>1 10^7-0.0000001</p>
+<p>很坏。</p>
+<h3 id="按价值最大贪心？无穷坏"><a href="#按价值最大贪心？无穷坏" class="headerlink" title="按价值最大贪心？无穷坏"></a>按价值最大贪心？无穷坏</h3><p>C=1;</p>
+<p>1 100</p>
+<p>10^-7 60</p>
+<p>……</p>
+<p>10^-7 60</p>
+<h3 id="max一下上面两个算法"><a href="#max一下上面两个算法" class="headerlink" title="max一下上面两个算法"></a>max一下上面两个算法</h3><p>是可行的。那么c是多少？然而我们不知道OPT。</p>
+<p>我们尝试寻找OPT的上界。c&lt;=OPT上界/ALG&lt;=OPT上界/ALG下界。放缩。</p>
+<p>OPT(sigma)&lt;=ALG1+vmax</p>
+<p>ALG3&gt;=(ALG1+ALG2)/2&gt;=(ALG1+vmax)/2，因为vmax一定会被ALG2选。</p>
+<p>那么，c&lt;=2了……</p>
+<p>OPT(sigma)&lt;=ALG1+vmax怎么来的？？</p>
+<p>证明：设按照性价比贪心第一个装不下的物品的价值是vl，</p>
+<p>则OPT&lt;=ALG1+vl&lt;=ALG1+vmax，就得到了。</p>
+<p>设装入ALG1+vl所需的容量是Cl，那么这个方案就是OPT|容量=Cl。</p>
+<p>OPT|容量=Cl &gt; OPT|容量=C。</p>
+<p>或者这样说，我们引入FOPT（fraction OPT，此时物品可以随便切割）。</p>
+<p>OPT|容量=Cl &gt; FOPT|容量=C &gt; OPT|容量=C。</p>
+<h3 id="另一个神奇的做法"><a href="#另一个神奇的做法" class="headerlink" title="另一个神奇的做法"></a>另一个神奇的做法</h3><p>来源：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/cy0628/p/14023341.html%EF%BC%9B">https://www.cnblogs.com/cy0628/p/14023341.html；</a></p>
+<p>输入ε&gt;0, 令m=向上取整[1/ε]. 首先我们取 t=1:m 个物品(遍历Cnt种取法), 然后对剩下物品应用ALG1(性价比贪心).</p>
+<p>它的近似比为1+ε。</p>
+<h2 id="均衡问题"><a href="#均衡问题" class="headerlink" title="均衡问题"></a>均衡问题</h2><p>makespan最大完工时间。</p>
+<p>n个任务，每个任务有一个长度li，可以分到m台机器上，每台机器任务总长度是Li。</p>
+<p>要min{max Li}。</p>
+<p>贪心，动态调度思想，每次放到目前完工时间最小的那个机器上。</p>
+<p>这个不是最优解，如按照1 10 100的顺序放：</p>
+<p>100</p>
+<p>1 10，现在是101。</p>
+<p>其实是：</p>
+<p>10</p>
+<p>1 100，makespan是100。</p>
+<p>现在开始放缩：</p>
+<p>OPT &gt;= max{(Σli)/m,lmax} &gt;= ((Σli)/m+lmax)/2; 可以理解。</p>
+<p>ALG &lt;= (Σli)/m+lmax;</p>
+<p>考虑最后一个，它肯定被放在目前最矮的机器上，这台机器是&lt;= (Σli)/m的。</p>
+<p>然后放上最后一个，最后一个比lmax要矮。就得到了。</p>
+<p>万一最后一个放完了之后这个机器并不是最大makespan呢？</p>
+<h3 id="一些顾虑和我们的想法"><a href="#一些顾虑和我们的想法" class="headerlink" title="一些顾虑和我们的想法"></a>一些顾虑和我们的想法</h3><p>应该是先按照从短到长排序然后再动态调度吧。</p>
+<p>数归：假设m个机器时，对于k=1到n-1的情况，都有最后放任务的那个机器最长，证k=n。</p>
+<p>我们已经按照任务长度对任务升序排序并重新标号，最长的任务是n。设放最长的任务的机器是m1。</p>
+<p>反证法：设放完最长的任务n后，还有一个机器m2比m1更长。去推矛盾。</p>
+<p>设m2顶端是任务j，m1放n前顶端是任务i。（若m2顶端无任务，则不可能比m1长。若m1的n下无任务，可以认为是长度为0的任务。）</p>
+<p>若i比j先放，即i比j短。那么根据规则，m2放j之前比m1短（每次挑最短的放）。m2原来比m1短，m2再放一个j，m1再放一个n。显然m1长于m2，矛盾。</p>
+<p>若j比i先放，即j比i短。那么根据数归，放i之后m1已经比m2长了，但是m2顶端就是以前放的j，再往m1上放n不符合规则，矛盾。</p>
+<p>进而可推出结论，某机器顶端任务一定比另一个机器非顶端任务后放。即，往某一机器放两个任务的间隔中，其他机器一定都放过任务了。</p>
+<h3 id="数归：一定是一轮一轮放任务"><a href="#数归：一定是一轮一轮放任务" class="headerlink" title="数归：一定是一轮一轮放任务"></a>数归：一定是一轮一轮放任务</h3><p>假设前m个任务按照1到m的顺序放，这个没问题。</p>
+<p>设现在放km+x个任务，那么应该放在第x个机器。</p>
+<p>如果放在第y个机器，y&lt;x。y上已有k+1个任务，x上有k个任务，y的顶端k个任务比x的顶端k个任务每个长度都大，y还多最底端那个任务。y的长度大于现在的x（未放km+x的x）。</p>
+<p>如果放在第y个机器，y&gt;x。y的k个任务比x的k个任务每个长度都大。y的长度大于现在的x（未放km+x的x）。</p>
+<p>所以只能把km+x放在x上。</p>
+<p>若x=m呢？同理只能放在第m个机器，只是不用考虑“y&gt;x”了。</p>
+<h2 id="在线算法online"><a href="#在线算法online" class="headerlink" title="在线算法online"></a>在线算法online</h2><p>若信息是一点一点被告诉的。</p>
+<p>假设有一堵很长的城墙，我站在原点，知道某一个地方有一个门，去找门。</p>
+<p>先往右走1，然后回到原点，然后往左走2回到原点，然后往右走4回到原点，往左走8回到原点，…</p>
+<p>c可以到12。</p>
+<p>牌面值为1到13（可重复），陆续发牌给我看，我决定要不要这张牌。我只能要3张。目标是最大化a1+a2+a3；</p>
+<p>对任意情况都有OPT/ALG&lt;=c。要考虑比较极端的情况。</p>
+<p>第一张不会是13或1。最后一张给1。</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>min{13/ALG, ALG/1}，在一张牌的情况下。如果我要了这一张，接着出13。如果不要，最后出1。</p>
+<p>sqrt(13)。若比sqrt13大，就拿。若不大于sqrt13，等。</p>
+<p>所以3张牌怎么办？？每次发牌都是独立的吧，大概。</p>
+<h3 id="阿尔卑斯山滑雪"><a href="#阿尔卑斯山滑雪" class="headerlink" title="阿尔卑斯山滑雪"></a>阿尔卑斯山滑雪</h3><p>买或租滑雪装备。买15k，租1k/天。</p>
+<h3 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h3><p>租到第15天，然后买设备。c=2。</p>
+<p>天数小于15时，我们是OPT。天数大于15时，c=2。</p>
+<h2 id="关灯问题"><a href="#关灯问题" class="headerlink" title="关灯问题"></a>关灯问题</h2><p>随机叫同学进一个屋子，屋子里有k个灯。我们有n个同学。</p>
+<p>灯在外面是看不见的。同学在屋外不能交流。</p>
+<p>每个同学进屋之后可以操作灯，下一个同学会看到操作后的状态。</p>
+<p>问：什么时候可以确定每个同学都进屋一次？</p>
+<p>首先：若一个同学第二次进入屋子，不要改变灯的状态。</p>
+<p>设log2(n)向上取整个灯，做二进制加法。</p>
+<p>一个灯的情况：事先商量一个关灯的同学。</p>
+<p>一个不关灯的同学进入屋子，若：1. 灯是关的；2. 自己原来没开过灯，则开灯；</p>
+<p>若关灯同学进屋时发现灯是开的，则关灯，count++。count一开始是0。</p>
+<p>若count==n-1，则每个同学都进屋一次。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/" rel="prev" title="操作系统专题实践——Linux Shell">
+                  <i class="fa fa-chevron-left"></i> 操作系统专题实践——Linux Shell
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gch</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">49k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">45 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="powered-by">
+	<i class="fa fa-user-md"></i>
+	<span id="busuanzi_container_site_uv">
+		本站访客数:<span id="busuanzi_value_site_uv"></span>
+	</span>
+	<span class="post-meta-divider">|</span>
+	<span id="busuanzi_container_site_pv">
+		本站访问量<span id="busuanzi_value_site_pv"></span>
+	</span>
+</div>
+<div id="days"></div>
+<script type="text/javascript" src="/js/blog-run-time.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+
+  <script src="[object Object]"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/blog/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<!-- 樱花特效 -->
+  
+      <script async src="/js/fairyDustCursor.js"></script>
+  
+  <!-- 数字雨 -->
+  <canvas id="canvas" width="1440" height="900" ></canvas>
+  <script type="text/javascript" src="/js/DigitalRain.js"></script>
