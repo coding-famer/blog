@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
+<meta name="description" content="数字图像处理实验1——图像几何变换的实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字图像处理实验——几何变换">
+<meta property="og:url" content="https://coding-famer.github.io/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="gch&#39;home">
+<meta property="og:description" content="数字图像处理实验1——图像几何变换的实现。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/image-20211112214025061.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/image-20211112221049518.png">
+<meta property="article:published_time" content="2021-11-12T07:07:43.000Z">
+<meta property="article:modified_time" content="2021-11-12T14:12:18.748Z">
+<meta property="article:author" content="gch">
+<meta property="article:tag" content="数字图像处理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://coding-famer.github.io/blog/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/image-20211112214025061.png">
+
+
+<link rel="canonical" href="https://coding-famer.github.io/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/","path":"2021/11/12/数字图像处理实验——几何变换/","title":"数字图像处理实验——几何变换"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数字图像处理实验——几何变换 | gch'home</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/coding-famer" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style> 
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">gch'home</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/blog/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.</span> <span class="nav-text">图像几何变换实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%9E%E9%AA%8C%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">1. 实验目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%B7%E4%BD%93%E8%A6%81%E6%B1%82%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">2. 具体要求：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">3. 实现方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BFCWnd%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AA%97%E5%8F%A3%E7%B1%BB"><span class="nav-number">1.3.1.</span> <span class="nav-text">继承CWnd实现一个窗口类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E8%AF%BB%E5%85%A5%E5%8F%8A%E6%98%BE%E7%A4%BA"><span class="nav-number">1.3.2.</span> <span class="nav-text">图像读入及显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2%E7%B1%BB"><span class="nav-number">1.3.3.</span> <span class="nav-text">几何变换类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E5%8F%8A%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">数据成员及成员函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">双线性插值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">仿射变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B3%E7%A7%BB"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">平移</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%A9%E6%94%BE"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC"><span class="nav-number">1.3.3.6.</span> <span class="nav-text">旋转</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="gch"
+      src="/blog/uploads/head.jpg">
+  <p class="site-author-name" itemprop="name">gch</p>
+  <div class="site-description" itemprop="description">This is gch' home</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/coding-famer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;coding-famer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gchseu@outlook.com" title="E-Mail → mailto:gchseu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/FC3vM8yn6Dl9Yyg" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;FC3vM8yn6Dl9Yyg" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100068779494099" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100068779494099" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/uploads/head.jpg">
+      <meta itemprop="name" content="gch">
+      <meta itemprop="description" content="This is gch' home">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gch'home">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数字图像处理实验——几何变换
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-12 15:07:43 / 修改时间：22:12:18" itemprop="dateCreated datePublished" datetime="2021-11-12T15:07:43+08:00">2021-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C/" itemprop="url" rel="index"><span itemprop="name">数字图像处理实验</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">数字图像处理实验1——图像几何变换的实现。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="图像几何变换实验"><a href="#图像几何变换实验" class="headerlink" title="图像几何变换实验"></a>图像几何变换实验</h1><p>这是我在完成数字图像处理课程实验时的一些记录，其中实验目标和要求来自老师的实验讲义。第一个实验是完成图像的基本几何变换（包括平移、旋转、缩放）并将其显示出来，其中插值使用双线性插值。由于实验要求使用c++实现且不得调用相关的第三方库，因此选择了基于MFC实现，使用的平台是Visual Studio 2010。</p>
+<h2 id="1-实验目标"><a href="#1-实验目标" class="headerlink" title="1. 实验目标"></a>1. 实验目标</h2><p>本实验要求实现一个包含图像基本几何变换（包括平移、旋转、缩放）的实验程序。该程 序可以读取以 bmp 格式存放的灰度图像文件，提供简易的人机交互方式选择变换方式及输 入相关的参数，可以显示处理前及处理后的图像。 </p>
+<h2 id="2-具体要求："><a href="#2-具体要求：" class="headerlink" title="2. 具体要求："></a>2. 具体要求：</h2><p>（1） 程序使用 C++语言编写，集成开发环境可以选择 vs 或 Qt，几何变换的核心 代码（包括坐标映射、像素遍历、灰度插值等）不允许直接调用库函数实 现，不允许使用 opencv 等第三方库。 </p>
+<p>（2） 图像几何变换（包括插值）部分以类的形式封装（类及接口自由设计），与 人机交互功能分离。图像几何变换应该包含平移、旋转和缩放三种基本变换 的接口，并由接口函数导入变换的相关参数。其中，旋转的中心可以设定为 图像的几何中心或通过接口函数导入。原始图像以及结果图像的导入和导出 方式不限，可以自由设计。 </p>
+<p>（3） 人机交互方式可以自由设计，应该可以显示原始和结果图像（不限制显示方 式，例如可以直接在主界面上显示，或新建窗口显示，或同时显示处理前后 图像，或每一时刻只能显示一幅图像）。可以由用户选择加载以 BMP 格式保 存的灰度图像作为原始图像，不要求保存处理结果。</p>
+<h2 id="3-实现方法"><a href="#3-实现方法" class="headerlink" title="3. 实现方法"></a>3. 实现方法</h2><p>本实验基于MFC实现，使用的平台是visual studio 2010。窗口显示使用基于CWnd的类。图片使用CImage类。</p>
+<h3 id="继承CWnd实现一个窗口类"><a href="#继承CWnd实现一个窗口类" class="headerlink" title="继承CWnd实现一个窗口类"></a>继承CWnd实现一个窗口类</h3><p>考虑到会对一个窗口做一些适合我们的修改，我们从CWnd类中继承出一个自己的类CImgWnd，其中包含一个成员：一个指向CImage对象的指针。</p>
+<p>它的构造函数如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CImgWnd::<span class="built_in">CImgWnd</span>(CWnd *pParentWnd, RECT rect, CImage* img, LPCTSTR pname)</span><br><span class="line">:<span class="built_in">CWnd</span>()</span><br><span class="line">,<span class="built_in">CImg</span>(img)</span><br><span class="line">&#123;</span><br><span class="line">	CWnd::<span class="built_in">Create</span>(<span class="built_in">AfxRegisterWndClass</span>(<span class="literal">NULL</span>), pname, WS_CHILD | WS_CAPTION | WS_VISIBLE , rect, pParentWnd, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个类中实现对于图像的显示</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CImgWnd::OnPaint</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">CPaintDC <span class="title">dc</span><span class="params">(<span class="keyword">this</span>)</span></span>; <span class="comment">// device context for painting</span></span><br><span class="line">	<span class="keyword">if</span>(CImg!=<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		CImg-&gt;<span class="built_in">Draw</span>(dc,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>view中的显示窗口的消息函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CGeo_Lab1View::OnWndSrcwnd</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// <span class="doctag">TODO:</span> 在此添加命令处理程序代码</span></span><br><span class="line">	<span class="keyword">if</span>(mpSrcImgWnd == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		mpSrcImgWnd = <span class="keyword">new</span> <span class="built_in">CImgWnd</span>(<span class="keyword">this</span>, <span class="built_in">CRect</span>(<span class="number">100</span>,<span class="number">100</span>,<span class="number">500</span>,<span class="number">500</span>), &amp;CSrcImg, _T(<span class="string">&quot;Source Image&quot;</span>));</span><br><span class="line">		<span class="comment">//mpSrcImgWnd-&gt;CImg = CSrcImg;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">delete</span> mpSrcImgWnd;</span><br><span class="line">		mpSrcImgWnd = <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="图像读入及显示"><a href="#图像读入及显示" class="headerlink" title="图像读入及显示"></a>图像读入及显示</h3><p>使用CImage的Load函数来读入图像，在CImgWnd类的OnPaint函数中使用Draw函数来显示图像。而我们要写的几何变换实现的是对于一个CImage对象的内部的像素值的改变。具体可以看代码。</p>
+<h3 id="几何变换类"><a href="#几何变换类" class="headerlink" title="几何变换类"></a>几何变换类</h3><p>主要的函数为仿射变换和双线性插值。平移、旋转、缩放都是通过仿射变换</p>
+<h4 id="数据成员及成员函数"><a href="#数据成员及成员函数" class="headerlink" title="数据成员及成员函数"></a>数据成员及成员函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">GeometricTransform</span>(CImage* pt = <span class="literal">NULL</span>,CImage* ppt = <span class="literal">NULL</span>);</span><br><span class="line">	~<span class="built_in">GeometricTransform</span>(<span class="keyword">void</span>);</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	CImage* CSrcImg;</span><br><span class="line">	CImage* CWndImg;</span><br><span class="line">	<span class="keyword">int</span> Height;</span><br><span class="line">	<span class="keyword">int</span> Width;</span><br><span class="line">	<span class="keyword">int</span> Pitch;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Translation</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Scaling</span><span class="params">(<span class="keyword">double</span> sx, <span class="keyword">double</span> sy)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Rotation</span><span class="params">(<span class="keyword">int</span> Theta)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">AffTransform</span><span class="params">(<span class="keyword">double</span> a11, <span class="keyword">double</span> a12, <span class="keyword">double</span> a13, <span class="keyword">double</span> a21, <span class="keyword">double</span> a22, <span class="keyword">double</span> a23)</span></span>;</span><br><span class="line">	<span class="function">BYTE <span class="title">BiInter</span><span class="params">(BYTE x00, BYTE x10, BYTE x01, BYTE x11, <span class="keyword">double</span> r1, <span class="keyword">double</span> r2)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="双线性插值"><a href="#双线性插值" class="headerlink" title="双线性插值"></a>双线性插值</h4><p>算法原理如下图，还是很好理解和实现的。</p>
+<p><img src="/blog/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/image-20211112214025061.png" alt></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BYTE <span class="title">GeometricTransform::BiInter</span><span class="params">(BYTE x00, BYTE x10, BYTE x01, BYTE x11, <span class="keyword">double</span> r1, <span class="keyword">double</span> r2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//BYTE m = x00 + r1*(x10-x00);</span></span><br><span class="line">	<span class="comment">//BYTE n = x01 + r1*(x11-x01);</span></span><br><span class="line">	<span class="comment">//return m + r2*(n-m);</span></span><br><span class="line">	<span class="keyword">double</span> m = x00 + r2*(x10-x00);</span><br><span class="line">	<span class="keyword">double</span> n = x01 + r2*(x11-x01);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">BYTE</span>(m + r1*(n-m));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="仿射变换"><a href="#仿射变换" class="headerlink" title="仿射变换"></a>仿射变换</h4><p>假设每个获得的像素值都是通过插值实现的。变换公式如下图，实现时需反解出x和y。</p>
+<p><img src="/blog/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/image-20211112221049518.png" alt></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GeometricTransform::AffTransform</span><span class="params">(<span class="keyword">double</span> a11, <span class="keyword">double</span> a12, <span class="keyword">double</span> a13, <span class="keyword">double</span> a21, <span class="keyword">double</span> a22, <span class="keyword">double</span> a23)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	LPBYTE Srcptr;</span><br><span class="line">	LPBYTE Transptr;</span><br><span class="line"></span><br><span class="line">	Srcptr=(LPBYTE)CSrcImg-&gt;<span class="built_in">GetBits</span>();</span><br><span class="line">    Transptr=(LPBYTE)CWndImg-&gt;<span class="built_in">GetBits</span>();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; Height; i++)  </span><br><span class="line">	&#123;  </span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; Width; j++)  </span><br><span class="line">		&#123;  </span><br><span class="line">			<span class="keyword">double</span> xx = (a22*j-a12*i-a13*a22+a12*a23)/(a11*a22-a12*a21);</span><br><span class="line">			<span class="keyword">double</span> yy = (a11*i-a21*j-a23*a11+a13*a21)/(a11*a22-a12*a21);</span><br><span class="line">			<span class="keyword">if</span>(xx&gt;=<span class="number">0</span>&amp;&amp;yy&gt;=<span class="number">0</span>&amp;&amp;xx&lt;Width&amp;&amp;yy&lt;Height)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">int</span> yp = <span class="built_in"><span class="keyword">int</span></span>(<span class="built_in">floor</span>(xx)+<span class="built_in">floor</span>(yy)*Pitch);</span><br><span class="line">				BYTE x00 = Srcptr[<span class="built_in"><span class="keyword">int</span></span>(<span class="built_in">floor</span>(xx)+<span class="built_in">floor</span>(yy)*Pitch)];</span><br><span class="line">				BYTE x10 = Srcptr[<span class="built_in"><span class="keyword">int</span></span>(<span class="built_in">floor</span>(xx)+<span class="built_in">ceil</span>(yy)*Pitch)];</span><br><span class="line">				BYTE x01 = Srcptr[<span class="built_in"><span class="keyword">int</span></span>(<span class="built_in">ceil</span>(xx)+<span class="built_in">floor</span>(yy)*Pitch)];</span><br><span class="line">				BYTE x11 = Srcptr[<span class="built_in"><span class="keyword">int</span></span>(<span class="built_in">ceil</span>(xx)+<span class="built_in">ceil</span>(yy)*Pitch)];</span><br><span class="line">				Transptr[j+i*Pitch]=<span class="built_in">BiInter</span>(x00,x10,x01,x11,xx-<span class="built_in">floor</span>(xx),yy-<span class="built_in">floor</span>(yy));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;  </span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GeometricTransform::Translation</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">AffTransform</span>(<span class="number">1</span>, <span class="number">0</span>, x, <span class="number">0</span>, <span class="number">1</span>, y);	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GeometricTransform::Scaling</span><span class="params">(<span class="keyword">double</span> sx, <span class="keyword">double</span> sy)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">AffTransform</span>(sx, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, sy, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h4><p>旋转中心为图像中心而非坐标原点，所以需要增加两个常数项，可以通过公式计算出。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GeometricTransform::Rotation</span><span class="params">(<span class="keyword">int</span> Theta)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">AffTransform</span>(<span class="built_in">cos</span>(Theta*PI/<span class="number">180</span>), -<span class="built_in">sin</span>(Theta*PI/<span class="number">180</span>), Width*(<span class="number">1</span>-<span class="built_in">cos</span>(Theta*PI/<span class="number">180</span>))/<span class="number">2</span>+Height*<span class="built_in">sin</span>(Theta*PI/<span class="number">180</span>)/<span class="number">2</span>, </span><br><span class="line">		<span class="built_in">sin</span>(Theta*PI/<span class="number">180</span>), <span class="built_in">cos</span>(Theta*PI/<span class="number">180</span>), -Width*<span class="built_in">sin</span>(Theta*PI/<span class="number">180</span>)/<span class="number">2</span>+Height*(<span class="number">1</span>-<span class="built_in">cos</span>(Theta*PI/<span class="number">180</span>))/<span class="number">2</span>);	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 数字图像处理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="prev" title="算法课程笔记">
+                  <i class="fa fa-chevron-left"></i> 算法课程笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2021/11/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E7%81%B0%E5%BA%A6%E6%98%A0%E5%B0%84/" rel="next" title="数字图像处理实验——灰度映射">
+                  数字图像处理实验——灰度映射 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gch</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">53k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">48 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="powered-by">
+	<i class="fa fa-user-md"></i>
+	<span id="busuanzi_container_site_uv">
+		本站访客数:<span id="busuanzi_value_site_uv"></span>
+	</span>
+	<span class="post-meta-divider">|</span>
+	<span id="busuanzi_container_site_pv">
+		本站访问量<span id="busuanzi_value_site_pv"></span>
+	</span>
+</div>
+<div id="days"></div>
+<script type="text/javascript" src="/js/blog-run-time.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+
+  <script src="[object Object]"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/blog/%5Bobject%20Object%5D"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/blog/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<!-- 樱花特效 -->
+  
+      <script async src="/js/fairyDustCursor.js"></script>
+  
+  <!-- 数字雨 -->
+  <canvas id="canvas" width="1440" height="900" ></canvas>
+  <script type="text/javascript" src="/js/DigitalRain.js"></script>
