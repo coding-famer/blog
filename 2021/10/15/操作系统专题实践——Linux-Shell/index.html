@@ -7,12 +7,12 @@
 <meta name="generator" content="Hexo 5.4.0">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/%E7%88%B1%E5%BF%83.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/%E7%88%B1%E5%BF%83.png">
-  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/%E7%88%B1%E5%BF%83.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/blog/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
 
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 <meta name="description" content="操作系统实验2，Linux Shell的实现记录。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统专题实践——Linux Shell">
@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="gch&#39;home">
 <meta property="og:description" content="操作系统实验2，Linux Shell的实现记录。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://coding-famer.github.io/blog/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png">
 <meta property="og:image" content="https://camo.githubusercontent.com/86b81b60ddb18d37defc5950970977de073bde4001302d2c4087cf56db0a53be/68747470733a2f2f67697465652e636f6d2f7a3067536831752f696d6167652d7374617469632f7261772f6d61737465722f706963676f2d323032312f42644e554c377052476646327267442e706e67">
 <meta property="article:published_time" content="2021-10-15T06:33:09.000Z">
 <meta property="article:modified_time" content="2021-11-10T06:06:45.242Z">
@@ -36,7 +36,7 @@
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Shell">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://coding-famer.github.io/blog/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png">
+<meta name="twitter:image" content="https://coding-famer.github.io/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png">
 
 
 <link rel="canonical" href="https://coding-famer.github.io/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/">
@@ -53,7 +53,7 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/blog/css/noscript.css">
+    <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
@@ -77,7 +77,7 @@
 
   <div class="site-meta">
 
-    <a href="/blog/" class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
       <h1 class="site-title">gch'home</h1>
       <i class="logo-line"></i>
@@ -94,13 +94,13 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
-        <li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
-        <li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
-        <li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
-        <li class="menu-item menu-item-schedule"><a href="/blog/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
-        <li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
   </ul>
 </nav>
 
@@ -139,27 +139,27 @@
           <div class="site-overview">
             <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="gch"
-      src="/blog/uploads/head.jpg">
+      src="/uploads/head.jpg">
   <p class="site-author-name" itemprop="name">gch</p>
   <div class="site-description" itemprop="description">This is gch' home</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/blog/archives/">
+          <a href="/archives/">
         
           <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/blog/categories/">
+            <a href="/categories/">
           
         <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/blog/tags/">
+            <a href="/tags/">
           
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
@@ -219,7 +219,7 @@
     <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/uploads/head.jpg">
+      <meta itemprop="image" content="/uploads/head.jpg">
       <meta itemprop="name" content="gch">
       <meta itemprop="description" content="This is gch' home">
     </span>
@@ -255,7 +255,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/blog/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
         </span>
     </span>
 
@@ -316,7 +316,7 @@
 </li>
 </ol>
 <h1 id="实验指导"><a href="#实验指导" class="headerlink" title="实验指导"></a>实验指导</h1><p>老师给的一些指导</p>
-<h2 id="shell的基本工作流程"><a href="#shell的基本工作流程" class="headerlink" title="shell的基本工作流程"></a>shell的基本工作流程</h2><p><img src="/blog/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png" alt></p>
+<h2 id="shell的基本工作流程"><a href="#shell的基本工作流程" class="headerlink" title="shell的基本工作流程"></a>shell的基本工作流程</h2><p><img src="/blog/2021/10/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94Linux-Shell/image-20211015160212144.png" alt></p>
 <h1 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h1><h2 id="功能设计"><a href="#功能设计" class="headerlink" title="功能设计"></a>功能设计</h2><h3 id="展示提示符"><a href="#展示提示符" class="headerlink" title="展示提示符"></a>展示提示符</h3><p>这个函数用于显示类似于 <code>[root@localhost tmp]λ</code> 的东西，需要获取用户名，主机名，当前工作目录等内容。</p>
 <ul>
 <li><p>获取用户名</p>
@@ -452,20 +452,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/blog/tags/Linux/" rel="tag"># Linux</a>
-              <a href="/blog/tags/Shell/" rel="tag"># Shell</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Shell/" rel="tag"># Shell</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94%E9%9A%90%E8%97%8F%E8%BF%9B%E7%A8%8B/" rel="prev" title="操作系统专题实践——隐藏进程">
+                <a href="/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5%E2%80%94%E2%80%94%E9%9A%90%E8%97%8F%E8%BF%9B%E7%A8%8B/" rel="prev" title="操作系统专题实践——隐藏进程">
                   <i class="fa fa-chevron-left"></i> 操作系统专题实践——隐藏进程
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="next" title="算法课程笔记">
+                <a href="/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="next" title="算法课程笔记">
                   算法课程笔记 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -536,9 +536,9 @@
 
 
   <script src="[object Object]"></script>
-  <script src="/blog/%5Bobject%20Object%5D"></script>
-  <script src="/blog/%5Bobject%20Object%5D"></script>
-  <script src="/blog/%5Bobject%20Object%5D"></script>
+  <script src="/%5Bobject%20Object%5D"></script>
+  <script src="/%5Bobject%20Object%5D"></script>
+  <script src="/%5Bobject%20Object%5D"></script>
 
 
 <script>
@@ -558,7 +558,7 @@ var options = {
 const darkmode = new Darkmode(options);
 darkmode.showWidget();
 </script>
-<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -574,11 +574,11 @@ darkmode.showWidget();
   
 
   <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
-<script src="/blog/js/third-party/math/mathjax.js"></script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 
-<script src="/blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/blog/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>
 <!-- 页面点击小红心 -->
       <script type="text/javascript" src="/blog/js/clicklove.js"></script>
