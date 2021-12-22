@@ -21,26 +21,30 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coding-famer.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
-<meta name="description" content="This is gch&#39; home">
-<meta property="og:type" content="website">
-<meta property="og:title" content="gch&#39;home">
-<meta property="og:url" content="https://coding-famer.github.io/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/index.html">
+<meta name="description" content="数字图像处理实验2——图像灰度映射的实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字图像处理实验——灰度映射">
+<meta property="og:url" content="https://coding-famer.github.io/2021/11/15/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E7%81%B0%E5%BA%A6%E6%98%A0%E5%B0%84/index.html">
 <meta property="og:site_name" content="gch&#39;home">
-<meta property="og:description" content="This is gch&#39; home">
+<meta property="og:description" content="数字图像处理实验2——图像灰度映射的实现">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/seugch/image-bed/raw/master/img/image-20211201235119922.png">
+<meta property="article:published_time" content="2021-11-15T07:08:20.000Z">
+<meta property="article:modified_time" content="2021-12-01T15:55:00.377Z">
 <meta property="article:author" content="gch">
-<meta property="article:tag" content="blog">
+<meta property="article:tag" content="数字图像处理">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/seugch/image-bed/raw/master/img/image-20211201235119922.png">
 
 
-<link rel="canonical" href="https://coding-famer.github.io/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+<link rel="canonical" href="https://coding-famer.github.io/2021/11/15/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E7%81%B0%E5%BA%A6%E6%98%A0%E5%B0%84/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/课程笔记/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/2021/11/15/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E7%81%B0%E5%BA%A6%E6%98%A0%E5%B0%84/","path":"2021/11/15/数字图像处理实验——灰度映射/","title":"数字图像处理实验——灰度映射"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>标签: 课程笔记 | gch'home</title>
+<title>数字图像处理实验——灰度映射 | gch'home</title>
   
 
 
@@ -112,7 +116,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -125,6 +129,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E7%81%B0%E5%BA%A6%E6%98%A0%E5%B0%84%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.</span> <span class="nav-text">图像灰度映射实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%9E%E9%AA%8C%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">1.实验目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%B7%E4%BD%93%E8%A6%81%E6%B1%82%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">2.具体要求：</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -198,50 +203,144 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">课程笔记
-          <small>标签</small>
-        </h2>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/2021/11/15/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E7%81%B0%E5%BA%A6%E6%98%A0%E5%B0%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/uploads/head.jpg">
+      <meta itemprop="name" content="gch">
+      <meta itemprop="description" content="This is gch' home">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gch'home">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数字图像处理实验——灰度映射
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-15 15:08:20" itemprop="dateCreated datePublished" datetime="2021-11-15T15:08:20+08:00">2021-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-01 23:55:00" itemprop="dateModified" datetime="2021-12-01T23:55:00+08:00">2021-12-01</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C/" itemprop="url" rel="index"><span itemprop="name">数字图像处理实验</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
       </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>832</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+            <div class="post-description">数字图像处理实验2——图像灰度映射的实现</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="图像灰度映射实验"><a href="#图像灰度映射实验" class="headerlink" title="图像灰度映射实验"></a>图像灰度映射实验</h1><h2 id="1-实验目标"><a href="#1-实验目标" class="headerlink" title="1.实验目标"></a>1.实验目标</h2><p>本实验要求实现一个大灰度动态范围的灰度图像浏览器。该程序可以读取一个自定义格式 的灰度图像文件（格式定义见下文），设计简易的人机交互方式选择“灰度窗”，将灰度窗映 射到[0,255]并显示。 </p>
+<h2 id="2-具体要求："><a href="#2-具体要求：" class="headerlink" title="2.具体要求："></a>2.具体要求：</h2><ol>
+<li><p>程序使用 C++语言编写，集成开发环境可以选择 vs 或 Qt，不允许使用 opencv 等第三方库。 </p>
+</li>
+<li><p>设计人机交互界面，用户可以方便设置/调整灰度窗参数（窗宽和窗位），将 此灰度窗映射到[0,255]并显示。 </p>
+</li>
+<li><p>鼓励扩展图像浏览功能，但不做要求，也不计入本次实验成绩。 </p>
+</li>
+<li><p>自行编写程序从文件中读出实验图像数据。实验图像数据有效灰度范围[0,  4095]，即 12 位有效灰度，每像素 2 字节（最高 4 位数据无效，有效灰度保 存于低 12 位）。数据文件为自定义格式（非标准格式），文件中的数据存放 如下图：</p>
+<p><img src="https://gitee.com/seugch/image-bed/raw/master/img/image-20211201235119922.png" alt=""> </p>
+<p>文件开始的 4 字节存放图像宽，其后 4 字节存放图像高，此两参数均为无符 号长整型（unsigned long），紧随其后为按光栅扫描顺序（从左向右，逐行 扫描）存放的像素值，像素值为无符号短整型（unsigned short）。所有多字 节数据都按 intel 顺序（即低字节在前，高字节在后）存放。文件不包含其它 数据。 </p>
+</li>
+<li><p>当图像尺寸大于窗口尺寸时，应选择合适的方案由用户调整图像在窗口显示 的区域（如使用窗口滚动条、鼠标抓取图像拖动等），不允许缩小图像以适 应窗口尺寸显示。 </p>
+</li>
+<li>两幅实验图像保存于文件 lung.raw 和 knee.raw 中，上交的实验结果应包含 以下三幅截屏图像（以下灰度窗的位置记为 [窗位，窗宽]，其中窗位表示灰 度窗中央位置的灰度值，窗宽表示灰度窗的宽度）：[1] lung.raw 文件包含的 图像，以灰度窗[2048，4096]显示，并将胸脊（胸椎）置于画面的中间位 置；[2] lung.raw 文件包含的图像，以灰度窗[3000, 2000]显示，并将肺 （左、右肺任选）置于画面的中间位置；[3] knee.raw 文件包含的图像，以 灰度窗[250，500]显示，并将膝关节置于画面的中间位置。</li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-11-10T11:16:15+08:00"
-              content="2021-11-10">
-          11-10
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/blog/2021/11/10/%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url">
-            <span itemprop="name">算法课程笔记</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 数字图像处理</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2021/11/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%B0%8F%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/" rel="prev" title="编译原理小实验——一个简单的词法分析器">
+                  <i class="fa fa-chevron-left"></i> 编译原理小实验——一个简单的词法分析器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2021/12/02/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E7%BB%86%E8%8A%82%E5%A2%9E%E5%BC%BA/" rel="next" title="数字图像处理实验——细节增强">
+                  数字图像处理实验——细节增强 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>
