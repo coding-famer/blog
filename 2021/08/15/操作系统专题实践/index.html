@@ -24,62 +24,62 @@
 <meta name="description" content="以下是我在大三上选修操作系统专题实践课程的一些实验内容和过程的记录。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统专题实践——隐藏进程">
-<meta property="og:url" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:url" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/index.html">
 <meta property="og:site_name" content="gch&#39;home">
 <meta property="og:description" content="以下是我在大三上选修操作系统专题实践课程的一些实验内容和过程的记录。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815214348729.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815214642384-16290352088551.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815224420340-16290386641732.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815224751694-16290388741593.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/1930162-20200908120947346-577429588.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815225653003-16290394164195.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815230110104-16290396714426.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/1930162-20200908121016503-449793639.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/1930162-20200908121025443-870625883.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210816191516979-16291125184351.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821155036683.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821155621249.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821162207172.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821164241817.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821164631043.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821165105956.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821165253458.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210822151141257.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210822153156402.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210822152750866.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210822153110674.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829160251910.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829160350674.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829161642409.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829172124340.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829172158346.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829174059701.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829173852689.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915155625775.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915155735942.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915160056686.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915160125607.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915160232149.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915160258649.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915161534265.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915172623884.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915173944557.png">
-<meta property="og:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915174208209.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815214348729.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815214642384-16290352088551.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815224420340-16290386641732.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815224751694-16290388741593.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/1930162-20200908120947346-577429588.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815225653003-16290394164195.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815230110104-16290396714426.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/1930162-20200908121016503-449793639.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/1930162-20200908121025443-870625883.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210816191516979-16291125184351.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821155036683.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821155621249.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821162207172.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821164241817.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821164631043.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821165105956.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210821165253458.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210822151141257.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210822153156402.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210822152750866.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210822153110674.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829160251910.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829160350674.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829161642409.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829172124340.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829172158346.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829174059701.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210829173852689.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915155625775.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915155735942.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915160056686.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915160125607.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915160232149.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915160258649.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915161534265.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915172623884.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915173944557.png">
+<meta property="og:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210915174208209.png">
 <meta property="article:published_time" content="2021-08-15T12:34:07.000Z">
 <meta property="article:modified_time" content="2021-11-10T06:06:28.143Z">
 <meta property="article:author" content="gch">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815214348729.png">
+<meta name="twitter:image" content="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/操作系统专题实践/image-20210815214348729.png">
 
 
-<link rel="canonical" href="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/">
+<link rel="canonical" href="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/","path":"2021/08/15/操作系统专题实践/","title":"操作系统专题实践——隐藏进程"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/","path":"2021/08/15/操作系统专题实践/","title":"操作系统专题实践——隐藏进程"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>操作系统专题实践——隐藏进程 | gch'home</title>
@@ -252,7 +252,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/">
+    <link itemprop="mainEntityOfPage" href="https://coding-famer.github.io/blog/2021/08/15/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%93%E9%A2%98%E5%AE%9E%E8%B7%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/uploads/head.jpg">
@@ -723,13 +723,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">61k</span>
+    <span title="站点总字数">63k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">55 分钟</span>
+    <span title="站点阅读时长">57 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
