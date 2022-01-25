@@ -130,14 +130,14 @@
   </url>
   
   <url>
-    <loc>https://coding-famer.github.io/blog/tags/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
+    <loc>https://coding-famer.github.io/blog/tags/Git/</loc>
     <lastmod>2022-01-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://coding-famer.github.io/blog/tags/Git/</loc>
+    <loc>https://coding-famer.github.io/blog/tags/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
     <lastmod>2022-01-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -188,13 +188,6 @@
 
   
   <url>
-    <loc>https://coding-famer.github.io/blog/categories/Linux/</loc>
-    <lastmod>2022-01-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://coding-famer.github.io/blog/categories/Git/</loc>
     <lastmod>2022-01-25</lastmod>
     <changefreq>daily</changefreq>
@@ -203,6 +196,13 @@
   
   <url>
     <loc>https://coding-famer.github.io/blog/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2022-01-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coding-famer.github.io/blog/categories/Linux/</loc>
     <lastmod>2022-01-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
