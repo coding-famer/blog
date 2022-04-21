@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://coding-famer.github.io/blog/2022/04/20/Building-image-classifier-with-Differential-Privacy-Using-Opacus/</loc>
+    <loc>https://coding-famer.github.io/blog/2022/04/07/Differential-Privacy-Differential-Privacy-Fundamentals/</loc>
     
     <lastmod>2022-04-21</lastmod>
     
@@ -11,9 +11,9 @@
   </url>
   
   <url>
-    <loc>https://coding-famer.github.io/blog/2022/04/07/Differential-Privacy-Differential-Privacy-Fundamentals/</loc>
+    <loc>https://coding-famer.github.io/blog/2022/04/20/Building-image-classifier-with-Differential-Privacy-Using-Opacus/</loc>
     
-    <lastmod>2022-04-07</lastmod>
+    <lastmod>2022-04-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -205,7 +205,7 @@
   </url>
   
   <url>
-    <loc>https://coding-famer.github.io/blog/tags/Linux/</loc>
+    <loc>https://coding-famer.github.io/blog/tags/Git/</loc>
     <lastmod>2022-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -219,7 +219,7 @@
   </url>
   
   <url>
-    <loc>https://coding-famer.github.io/blog/tags/Git/</loc>
+    <loc>https://coding-famer.github.io/blog/tags/Linux/</loc>
     <lastmod>2022-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -277,14 +277,14 @@
   </url>
   
   <url>
-    <loc>https://coding-famer.github.io/blog/categories/Linux/</loc>
+    <loc>https://coding-famer.github.io/blog/categories/Git/</loc>
     <lastmod>2022-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://coding-famer.github.io/blog/categories/Git/</loc>
+    <loc>https://coding-famer.github.io/blog/categories/Linux/</loc>
     <lastmod>2022-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://coding-famer.github.io/blog/blog/2022/04/20/Building-image-classifier-with-Differential-Privacy-Using-Opacus/</loc>
+    <loc>https://coding-famer.github.io/blog/blog/2022/04/07/Differential-Privacy-Differential-Privacy-Fundamentals/</loc>
     <lastmod>2022-04-21</lastmod>
   </url>
   <url>
-    <loc>https://coding-famer.github.io/blog/blog/2022/04/07/Differential-Privacy-Differential-Privacy-Fundamentals/</loc>
-    <lastmod>2022-04-07</lastmod>
+    <loc>https://coding-famer.github.io/blog/blog/2022/04/20/Building-image-classifier-with-Differential-Privacy-Using-Opacus/</loc>
+    <lastmod>2022-04-21</lastmod>
   </url>
   <url>
     <loc>https://coding-famer.github.io/blog/blog/2022/03/10/Differential%20Privacy-Reconstruction%20Attacks/</loc>

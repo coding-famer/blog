@@ -28,8 +28,10 @@
 <meta property="og:description" content="Part 2 of the notes about differential privacy and Privacy in Statistics and Machine Learning">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/seugch/image-bed/raw/master/img/20220407193428.png">
+<meta property="og:image" content="https://colab.research.google.com/assets/colab-badge.svg">
+<meta property="og:image" content="https://gitee.com/seugch/image-bed/raw/master/img/20220421160453.png">
 <meta property="article:published_time" content="2022-04-07T08:07:25.000Z">
-<meta property="article:modified_time" content="2022-04-07T13:22:56.863Z">
+<meta property="article:modified_time" content="2022-04-21T13:11:13.765Z">
 <meta property="article:author" content="gch">
 <meta property="article:tag" content="Differential Privacy">
 <meta name="twitter:card" content="summary">
@@ -128,7 +130,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Privacy"><span class="nav-number">1.</span> <span class="nav-text">Privacy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Differential-Privacy"><span class="nav-number">2.</span> <span class="nav-text">Differential Privacy</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Privacy"><span class="nav-number">1.</span> <span class="nav-text">Privacy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Differential-Privacy"><span class="nav-number">2.</span> <span class="nav-text">Differential Privacy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Definition"><span class="nav-number">2.1.</span> <span class="nav-text">Definition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Randomized-Response"><span class="nav-number">2.2.</span> <span class="nav-text">Randomized Response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-RR"><span class="nav-number">2.2.1.</span> <span class="nav-text">Basic RR</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -236,10 +238,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-04-07 16:07:25 / 修改时间：21:22:56" itemprop="dateCreated datePublished" datetime="2022-04-07T16:07:25+08:00">2022-04-07</time>
+      <time title="创建时间：2022-04-07 16:07:25" itemprop="dateCreated datePublished" datetime="2022-04-07T16:07:25+08:00">2022-04-07</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-04-21 21:11:13" itemprop="dateModified" datetime="2022-04-21T21:11:13+08:00">2022-04-21</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -265,7 +273,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.6k</span>
+      <span>2.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -293,68 +301,26 @@
 <p>where $qi(D)$ is the quasi-identifiers of $D$, and $\Pi_{qi(D)} r$ represents the columns of $r$ containing quasi-identifiers (i.e. the projection of the quasi-identifiers)</p>
 </blockquote>
 <p>通俗来讲，就是指对于数据表中的某一属性，每种类型都至少有k个样本，即有k行。比如下图<br><img src="https://gitee.com/seugch/image-bed/raw/master/img/20220407193428.png" alt=""></p>
-<p>$k$-Anonymity仍然有可能泄露个人信息，从上图中我们依然可以推断出一些个人信息。比如：每个三十多岁的人都有cancer。</p>
-<details><summary>Checking for k-Anonymity(python)</summary>
-生成数据
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">raw_data = &#123;</span><br><span class="line">    <span class="string">&#x27;first_name&#x27;</span>: [<span class="string">&#x27;Jason&#x27;</span>, <span class="string">&#x27;Molly&#x27;</span>, <span class="string">&#x27;Tina&#x27;</span>, <span class="string">&#x27;Jake&#x27;</span>, <span class="string">&#x27;Amy&#x27;</span>], </span><br><span class="line">    <span class="string">&#x27;last_name&#x27;</span>: [<span class="string">&#x27;Miller&#x27;</span>, <span class="string">&#x27;Jacobson&#x27;</span>, <span class="string">&#x27;Ali&#x27;</span>, <span class="string">&#x27;Milner&#x27;</span>, <span class="string">&#x27;Cooze&#x27;</span>], </span><br><span class="line">    <span class="string">&#x27;age&#x27;</span>: [<span class="number">42</span>, <span class="number">52</span>, <span class="number">36</span>, <span class="number">24</span>, <span class="number">73</span>], </span><br><span class="line">    <span class="string">&#x27;preTestScore&#x27;</span>: [<span class="number">4</span>, <span class="number">24</span>, <span class="number">31</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">    <span class="string">&#x27;postTestScore&#x27;</span>: [<span class="number">25</span>, <span class="number">94</span>, <span class="number">57</span>, <span class="number">62</span>, <span class="number">70</span>]&#125;</span><br><span class="line"><span class="comment">#df = pd.DataFrame(raw_data, columns = [&#x27;first_name&#x27;, &#x27;last_name&#x27;, &#x27;age&#x27;, &#x27;preTestScore&#x27;, &#x27;postTestScore&#x27;])</span></span><br><span class="line">df = pd.DataFrame(raw_data, columns = [<span class="string">&#x27;age&#x27;</span>, <span class="string">&#x27;preTestScore&#x27;</span>, <span class="string">&#x27;postTestScore&#x27;</span>])</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>age</th>
-      <th>preTestScore</th>
-      <th>postTestScore</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>42</td>
-      <td>4</td>
-      <td>25</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>52</td>
-      <td>24</td>
-      <td>94</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>36</td>
-      <td>31</td>
-      <td>57</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>24</td>
-      <td>2</td>
-      <td>62</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>73</td>
-      <td>3</td>
-      <td>70</td>
-    </tr>
-  </tbody>
-</table>
-
-判断是否符合$k$-Anonymity
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isKAnonymized</span>(<span class="params">df, k</span>):</span></span><br><span class="line">    <span class="keyword">for</span> index, row <span class="keyword">in</span> df.iterrows():</span><br><span class="line">        query = <span class="string">&#x27; &amp; &#x27;</span>.join([<span class="string">f&#x27;<span class="subst">&#123;col&#125;</span> == &quot;<span class="subst">&#123;row[col]&#125;</span>&quot;&#x27;</span> <span class="keyword">for</span> col <span class="keyword">in</span> df.columns])</span><br><span class="line">        rows = df.query(query)</span><br><span class="line">        <span class="keyword">if</span> rows.shape[<span class="number">0</span>] &lt; k:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-</details>
-
-<h1 id="Differential-Privacy"><a href="#Differential-Privacy" class="headerlink" title="Differential Privacy"></a>Differential Privacy</h1><p>接下来引入Differential Privacy 差分隐私<br>令$\mathcal{X}$ 代表一个record所有可能情况的集合，那么一个数据集可以被视为由$\mathcal{X}$内的元素构成的集合，当$n$的大小固定时，可将其视为一个列表$x=(x_1,\dots,x_n) \in \mathcal{X}^n$（或常用直方图表示，可以写成$\mathcal{X} \rightarrow \mathbb{N}$）</p>
+<p>$k$-Anonymity仍然有可能泄露个人信息，从上图中我们依然可以推断出一些个人信息。比如：每个三十多岁的人都有cancer。<br>这里有些可以代码可以直观了解$k$-Anonymity  <a target="_blank" rel="noopener" href="https://colab.research.google.com/github/coding-famer/DP-in-ML/blob/master/Notes/code/k-Anonymity.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<h1 id="Differential-Privacy"><a href="#Differential-Privacy" class="headerlink" title="Differential Privacy"></a>Differential Privacy</h1><h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>接下来引入Differential Privacy 差分隐私<br>令$\mathcal{X}$ 代表一个record所有可能情况的集合，那么一个数据集可以被视为由$\mathcal{X}$内的元素构成的集合，当$n$的大小固定时，可将其视为一个列表$x=(x_1,\dots,x_n) \in \mathcal{X}^n$（或常用直方图表示，可以写成$\mathcal{X} \rightarrow \mathbb{N}$）</p>
 <p>我们称两个只有一个记录不同的两个数据集为neighbors。比如如果它们在下标$i$处不同，则它们应该是这样的：</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
 &\mathbf{x}=\left(x_{1}, x_{2}, \ldots, x_{i-1}, \quad x_{i}, \quad x_{i+1}, \ldots, x_{n}\right)\\
 &\mathbf{x}^{\prime}=\left(x_{1}, x_{2}, \ldots, x_{i-1}, \quad x_{i}^{\prime}, \quad x_{i+1}, \ldots, x_{n}\right)
 \end{aligned}</script><p>我们考虑一个算法$A$，对于每个可能的输入数据集$x$，它返回一个随机变量$A(x)$，当在两个相邻数据集上使用这种算法后，它们的输出的分布非常接近，我们称这个算法满足差分隐私。</p>
-<p><strong><em>Definition</em></strong>  ( $\varepsilon$-DP with fixed-size data sets). A randomized algorithm $A: \mathcal{X}^{n} \rightarrow \mathcal{Y}$ taking inputs in $\mathcal{X}^{n}$ is $\varepsilon$-differentially private for size $n$ data sets if, for every pair of neighboring data sets $\mathrm{x}^{\prime}, \mathrm{x}^{\prime}$, for all events $ E \subseteq \mathcal{Y}:$</p>
+<blockquote>
+<p><strong><em>Definition</em></strong>  ( $\varepsilon$-DP with fixed-size data sets).<br>A randomized algorithm $A: \mathcal{X}^{n} \rightarrow \mathcal{Y}$ taking inputs in $\mathcal{X}^{n}$ is $\varepsilon$-differentially private for size $n$ data sets if, for every pair of neighboring data sets $\mathrm{x}^{\prime}, \mathrm{x}^{\prime}$, for all events $ E \subseteq \mathcal{Y}:$</p>
 <script type="math/tex; mode=display">
-\mathbb{P}(A(\mathbf{x}) \in E) \leq e^{\varepsilon} \cdot \mathbb{P}\left(A\left(\mathbf{x}^{\prime}\right) \in E\right)</script>
+\mathbb{P}(A(\mathbf{x}) \in E) \leq e^{\varepsilon} \cdot \mathbb{P}\left(A\left(\mathbf{x}^{\prime}\right) \in E\right)</script></blockquote>
+<p><img src="https://gitee.com/seugch/image-bed/raw/master/img/20220421160453.png" alt=""><br>DP的定义使用$\varepsilon$来控制$A(\mathbf{x})$和$A(\mathbf{x}^{\prime})$分布的距离。比如上图就是一个满足$\varepsilon= \frac{1}{4}$的分布，$\epsilon$越小意味着输出的分布越接近，当$\epsilon$为0时，对于所有的输入，算法都将返回相同的随机变量，即不会体现输入的任何隐私信息，但也没有了实际意义。</p>
+<h2 id="Randomized-Response"><a href="#Randomized-Response" class="headerlink" title="Randomized Response"></a>Randomized Response</h2><p>随机化响应是一个满足DP的例子</p>
+<h3 id="Basic-RR"><a href="#Basic-RR" class="headerlink" title="Basic RR"></a>Basic RR</h3><p>一个简单的RR可以是：</p>
+<blockquote>
+<p>Input: Data set of $n$ bits: $\mathrm{x}=\left(x_{1}, \ldots, x_{n}\right) \in\{0,1\}^{n}$<br>Output: Bits $Y_{1}, \ldots, Y_{n}$<br>for $i=1$ to $n$ do<br>  $ \quad Y_{i}=\left\{\begin{array}{ll}x_{i} &amp; \text { w.p. } 2 / 3 \\ 1-x_{i} &amp; \text { w.p. } 1 / 3\end{array} ;\right.$<br>        return $\left(Y_{1}, \ldots, Y_{n}\right)$</p>
+</blockquote>
+<p>即对于输出是比特序列的算法，对于给定输入，有三分之二概率输出正确输出，有三分之一概率输出为原有的输出取反。</p>
+
     </div>
 
     
@@ -409,7 +375,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">70k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
