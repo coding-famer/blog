@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="gch&#39;home">
 <meta property="og:description" content="Part 2 of the notes about differential privacy and Privacy in Statistics and Machine Learning">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/seugch/image-bed/raw/master/img/20220407193428.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/coding-famer/image-bed/master/img/20220407193428.png">
 <meta property="og:image" content="https://colab.research.google.com/assets/colab-badge.svg">
-<meta property="og:image" content="https://gitee.com/seugch/image-bed/raw/master/img/20220421160453.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/coding-famer/image-bed/master/img/20220421160453.png">
 <meta property="article:published_time" content="2022-04-07T08:07:25.000Z">
-<meta property="article:modified_time" content="2022-04-21T13:11:13.765Z">
+<meta property="article:modified_time" content="2022-05-22T14:56:15.170Z">
 <meta property="article:author" content="gch">
 <meta property="article:tag" content="Differential Privacy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/seugch/image-bed/raw/master/img/20220407193428.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/coding-famer/image-bed/master/img/20220407193428.png">
 
 
 <link rel="canonical" href="https://coding-famer.github.io/blog/2022/04/07/Differential-Privacy-Differential-Privacy-Fundamentals/">
@@ -246,7 +246,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-21 21:11:13" itemprop="dateModified" datetime="2022-04-21T21:11:13+08:00">2022-04-21</time>
+        <time title="修改时间：2022-05-22 22:56:15" itemprop="dateModified" datetime="2022-05-22T22:56:15+08:00">2022-05-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -300,7 +300,7 @@
 </ul>
 <p>where $qi(D)$ is the quasi-identifiers of $D$, and $\Pi_{qi(D)} r$ represents the columns of $r$ containing quasi-identifiers (i.e. the projection of the quasi-identifiers)</p>
 </blockquote>
-<p>通俗来讲，就是指对于数据表中的某一属性，每种类型都至少有k个样本，即有k行。比如下图<br><img src="https://gitee.com/seugch/image-bed/raw/master/img/20220407193428.png" alt=""></p>
+<p>通俗来讲，就是指对于数据表中的某一属性，每种类型都至少有k个样本，即有k行。比如下图<br><img src="https://raw.githubusercontent.com/coding-famer/image-bed/master/img/20220407193428.png" alt=""></p>
 <p>$k$-Anonymity仍然有可能泄露个人信息，从上图中我们依然可以推断出一些个人信息。比如：每个三十多岁的人都有cancer。<br>这里有些可以代码可以直观了解$k$-Anonymity  <a target="_blank" rel="noopener" href="https://colab.research.google.com/github/coding-famer/DP-in-ML/blob/master/Notes/code/k-Anonymity.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
 <h1 id="Differential-Privacy"><a href="#Differential-Privacy" class="headerlink" title="Differential Privacy"></a>Differential Privacy</h1><h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>接下来引入Differential Privacy 差分隐私<br>令$\mathcal{X}$ 代表一个record所有可能情况的集合，那么一个数据集可以被视为由$\mathcal{X}$内的元素构成的集合，当$n$的大小固定时，可将其视为一个列表$x=(x_1,\dots,x_n) \in \mathcal{X}^n$（或常用直方图表示，可以写成$\mathcal{X} \rightarrow \mathbb{N}$）</p>
 <p>我们称两个只有一个记录不同的两个数据集为neighbors。比如如果它们在下标$i$处不同，则它们应该是这样的：</p>
@@ -313,7 +313,7 @@
 <p><strong><em>Definition</em></strong>  ( $\varepsilon$-DP with fixed-size data sets).<br>A randomized algorithm $A: \mathcal{X}^{n} \rightarrow \mathcal{Y}$ taking inputs in $\mathcal{X}^{n}$ is $\varepsilon$-differentially private for size $n$ data sets if, for every pair of neighboring data sets $\mathrm{x}^{\prime}, \mathrm{x}^{\prime}$, for all events $ E \subseteq \mathcal{Y}:$</p>
 <script type="math/tex; mode=display">
 \mathbb{P}(A(\mathbf{x}) \in E) \leq e^{\varepsilon} \cdot \mathbb{P}\left(A\left(\mathbf{x}^{\prime}\right) \in E\right)</script></blockquote>
-<p><img src="https://gitee.com/seugch/image-bed/raw/master/img/20220421160453.png" alt=""><br>DP的定义使用$\varepsilon$来控制$A(\mathbf{x})$和$A(\mathbf{x}^{\prime})$分布的距离。比如上图就是一个满足$\varepsilon= \frac{1}{4}$的分布，$\epsilon$越小意味着输出的分布越接近，当$\epsilon$为0时，对于所有的输入，算法都将返回相同的随机变量，即不会体现输入的任何隐私信息，但也没有了实际意义。</p>
+<p><img src="https://raw.githubusercontent.com/coding-famer/image-bed/master/img/20220421160453.png" alt=""><br>DP的定义使用$\varepsilon$来控制$A(\mathbf{x})$和$A(\mathbf{x}^{\prime})$分布的距离。比如上图就是一个满足$\varepsilon= \frac{1}{4}$的分布，$\epsilon$越小意味着输出的分布越接近，当$\epsilon$为0时，对于所有的输入，算法都将返回相同的随机变量，即不会体现输入的任何隐私信息，但也没有了实际意义。</p>
 <h2 id="Randomized-Response"><a href="#Randomized-Response" class="headerlink" title="Randomized Response"></a>Randomized Response</h2><p>随机化响应是一个满足DP的例子</p>
 <h3 id="Basic-RR"><a href="#Basic-RR" class="headerlink" title="Basic RR"></a>Basic RR</h3><p>一个简单的RR可以是：</p>
 <blockquote>
